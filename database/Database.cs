@@ -49,46 +49,18 @@ namespace ChocAnDatabase {
                     activeType = line.Substring(1, line.IndexOf(':') - 1);
                     continue;
                 }
-                String[] data = line.Trim().Split(';');
-                Dictionary<String, Object> dataMap = new Dictionary<string, object>();
                 switch (activeType) {
                     case "MEMBERS":
-                        dataMap.Add("name", data[0]);
-                        dataMap.Add("number", int.Parse(data[1]));
-                        dataMap.Add("address", data[2]);
-                        dataMap.Add("city", data[3]);
-                        dataMap.Add("state", data[4]);
-                        dataMap.Add("zip", data[5]);
-
-                        members.Add(new Record(dataMap));
-
+                        members.Add(MemberRecord.FromString(line));
                         break;
                     case "PROVIDERS":
-                        dataMap.Add("name", data[0]);
-                        dataMap.Add("number", int.Parse(data[1]));
-                        dataMap.Add("address", data[2]);
-                        dataMap.Add("city", data[3]);
-                        dataMap.Add("state", data[4]);
-                        dataMap.Add("zip", data[5]);
-
-                        providers.Add(new Record(dataMap));
+                           providers.Add(ProviderRecord.FromString(line));
                         break;
                     case "SERVICES":
-                        dataMap.Add("name", data[0]);
-                        dataMap.Add("number", int.Parse(data[1]));
-                        dataMap.Add("fee", data[2]);
-
-                        services.Add(new Record(dataMap));
+                        services.Add(ServiceRecord.FromString(line));
                         break;
                     case "CONSULTATIONS":
-                        dataMap.Add("current_date", DateTime.Parse(data[0]));
-                        dataMap.Add("service_date", DateTime.Parse(data[1]));
-                        dataMap.Add("provider_number", int.Parse(data[2]));
-                        dataMap.Add("member_number", int.Parse(data[3]));
-                        dataMap.Add("service_number", int.Parse(data[4]));
-                        dataMap.Add("comments", data[5]);
-
-                        consultations.Add(new Record(dataMap));
+                        consultations.Add(ConsultationRecord.FromString(line));
                         break;
                     default:
                         break;
@@ -102,29 +74,22 @@ namespace ChocAnDatabase {
             StreamWriter outStream = new StreamWriter(File.Open(rootPath + "database.db", FileMode.Truncate, FileAccess.Write));
             outStream.WriteLine("*MEMBERS:");
             foreach (var memb in members) {
-                outStream.WriteLine(memb.Get("name") + ";" + memb.Get("number") + ";"
-                    + memb.Get("address") + ";" + memb.Get("city") + ";"
-                    + memb.Get("state") + ";" + memb.Get("zip"));
+                outStream.WriteLine(memb.ToString());
             }
             outStream.WriteLine("*PROVIDERS:");
 
             foreach (var provider in providers) {
-                outStream.WriteLine(provider.Get("name") + ";" + provider.Get("number") + ";"
-                    + provider.Get("address") + ";" + provider.Get("city") + ";"
-                    + provider.Get("state") + ";" + provider.Get("zip"));
+                outStream.WriteLine(provider.ToString());
             }
             outStream.WriteLine("*SERVICES:");
 
             foreach (var serv in services) {
-                outStream.WriteLine(serv.Get("name") + ";" + serv.Get("number") + ";"
-                    + serv.Get("fee"));
+                outStream.WriteLine(serv.ToString());
             }
             outStream.WriteLine("*CONSULTATIONS:");
 
             foreach (var con in consultations) {
-                outStream.WriteLine(con.Get("current_date") + ";" + con.Get("service_date") + ";"
-                    + con.Get("provider_number") + ";" + con.Get("member_number") + ";"
-                    + con.Get("service_number") + ";" + con.Get("comments"));
+                outStream.WriteLine(con.ToString());
             }
 
             outStream.Flush();
