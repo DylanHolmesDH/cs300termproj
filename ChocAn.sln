@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Database", "Database\Database.csproj", "{4B7B5F0F-03A2-4781-A149-2B5ACC182C5D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChocAnDatabase", "Database\ChocAnDatabase.csproj", "{4B7B5F0F-03A2-4781-A149-2B5ACC182C5D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProviderTerminal", "ProviderTerminal\ProviderTerminal.csproj", "{103F9837-A367-4E94-BDE6-5F1705617969}"
 EndProject

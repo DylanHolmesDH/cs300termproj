@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProviderTerminal {
-    class Program {
+namespace ManagerTerminal {
+    class Terminal {
         static void Main(string[] args) {
         }
     }
