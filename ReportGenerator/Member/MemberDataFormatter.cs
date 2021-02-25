@@ -10,7 +10,12 @@ namespace ReportGenerator.Member
     {
         public ReportOutput FormatData(ReportData data)
         {
-            throw new NotImplementedException();
+            if (data == null)
+                throw new ApplicationException("Report data object cannot be null");
+
+            ReportOutput formattedData = new ReportOutput();
+
+            return formattedData;
         }
     }
 }

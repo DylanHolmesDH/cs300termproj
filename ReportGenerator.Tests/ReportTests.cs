@@ -14,7 +14,7 @@ namespace ReportGenerator.Tests
         private Mock<IDataFormatter> _dataFormatterMock;
         private Mock<IReportDistributor> _reportDistributorMock;
 
-        private Report _providerReport;
+        private Report _report;
 
         [TestInitialize]
         public void Setup()
@@ -24,7 +24,7 @@ namespace ReportGenerator.Tests
             _dataFormatterMock = new Mock<IDataFormatter>();
             _reportDistributorMock = new Mock<IReportDistributor>();
 
-            _providerReport = new Report(
+            _report = new Report(
                 _dataGetterMock.Object,
                 _dataValidatorMock.Object,
                 _dataFormatterMock.Object,
@@ -46,7 +46,7 @@ namespace ReportGenerator.Tests
 
             _reportDistributorMock.Setup(c => c.DistributeReport(reportOutput)).Returns((true, ""));
                 
-            var result = _providerReport.Generate(3);
+            var result = _report.Generate(3);
 
             Assert.AreEqual(true, result.created);
             Assert.AreEqual("", result.errorMessage);
@@ -58,6 +58,26 @@ namespace ReportGenerator.Tests
             _dataFormatterMock.Verify(c => c.FormatData(reportData), Times.Once);
 
             _reportDistributorMock.Verify(c => c.DistributeReport(reportOutput), Times.Once);
+        }
+
+        [TestMethod]
+        public void Generate_invalid()
+        {
+            var reportOutput = new ReportOutput();
+            var reportData = new ReportData();
+
+            _dataGetterMock.Setup(c => c.GetData(3)).Returns(reportData);
+
+            _dataValidatorMock.Setup(c => c.ValidateData(reportData)).Returns((false, ""));
+
+            var result = _report.Generate(3);
+
+            Assert.AreEqual(false, result.created);
+            Assert.AreEqual("", result.errorMessage);
+
+            _dataGetterMock.Verify(c => c.GetData(3), Times.Once);
+
+            _dataValidatorMock.Verify(c => c.ValidateData(reportData), Times.Once);
         }
     }
 }

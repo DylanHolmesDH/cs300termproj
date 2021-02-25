@@ -14,7 +14,7 @@ namespace ReportGenerator
                 throw new System.ArgumentNullException(nameof(reportOutput));
 
             if (reportOutput.OutputLines.Count <= 0)
-                return (false, "No output lines");
+                return (false, "No output lines in report");
 
             if (reportOutput.FileName.Length == 0)
                 return (false, "No filename for report");

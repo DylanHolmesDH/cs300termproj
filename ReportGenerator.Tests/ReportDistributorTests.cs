@@ -1,12 +1,14 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReportGenerator;
+using ReportGenerator.Interfaces;
+using System;
 
 namespace ReportGenerator.Tests
 {
     [TestClass]
     public class ReportDistributorTests
     {
-        private ReportDistributor _reportDistributor;
+        private IReportDistributor _reportDistributor;
 
         [TestInitialize]
         public void Setup()
@@ -15,11 +17,9 @@ namespace ReportGenerator.Tests
         }
 
         [TestMethod]
-        public void CreateFile_nullReportObject()
+        public void DistributeReport_nullObject()
         {
-            var result = _reportDistributor.DistributeReport(null);
-
-            Assert.AreEqual("", result);
+            var ex = Assert.ThrowsException<ArgumentNullException>(() => _reportDistributor.DistributeReport(null));
         }
 
         [TestMethod]
@@ -32,7 +32,8 @@ namespace ReportGenerator.Tests
 
             var result = _reportDistributor.DistributeReport(reportOutput);
 
-            Assert.AreEqual("", result);
+            Assert.AreEqual(false, result.created);
+            Assert.AreEqual("No output lines in report", result.errorMessage);
         }
 
         [TestMethod]
@@ -45,7 +46,8 @@ namespace ReportGenerator.Tests
 
             var result = _reportDistributor.DistributeReport(reportOutput);
 
-            Assert.AreEqual("", result);
+            Assert.AreEqual(false, result.created);
+            Assert.AreEqual("No filename for report", result.errorMessage);
         }
     }
 }

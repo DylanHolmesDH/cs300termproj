@@ -10,7 +10,16 @@ namespace ReportGenerator.Member
     {
         public (bool valid, string errorMessage) ValidateData(ReportData data)
         {
-            throw new NotImplementedException();
+            if (data == null)
+                return (false, "Report data object cannot be null");
+
+            if (data.MemberRecords.Count == 0)
+                return (false, "Member record cannot be empty");
+
+            if (data.ConsultationRecords.Count == 0)
+                return (false, "No consultation records so report cannot be printed");
+
+            return (true, string.Empty);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using ChocAnDatabase.records;
+﻿using ChocAnDatabase;
+using ChocAnDatabase.records;
 using ReportGenerator.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -8,9 +9,23 @@ namespace ReportGenerator.Member
 {
     public class MemberDataGetter : IDataGetter
     {
+        private Database _database;
+
+        public MemberDataGetter(Database database)
+        {
+            _database = database;
+        }
+
         public ReportData GetData(int id)
         {
-            throw new NotImplementedException();
+            var memberRecord = _database.FetchMember(id);
+
+            ReportData reportData = new ReportData();
+
+            //Get provider and service records
+            // Convert into ReportData
+
+            return reportData;
         }
     }
 }
