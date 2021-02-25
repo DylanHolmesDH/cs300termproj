@@ -1,4 +1,5 @@
 ﻿using ReportGenerator.Interfaces;
+using ReportGenerator.Models;
 using System;
 
 namespace ReportGenerator

@@ -1,5 +1,6 @@
 ﻿using ChocAnDatabase.records;
 using ReportGenerator.Interfaces;
+using ReportGenerator.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;

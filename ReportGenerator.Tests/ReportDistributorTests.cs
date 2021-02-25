@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReportGenerator;
 using ReportGenerator.Interfaces;
+using ReportGenerator.Models;
 using System;
 
 namespace ReportGenerator.Tests

@@ -1,11 +1,15 @@
-﻿using System;
+﻿using ReportGenerator;
+using System;
 
-namespace ReportGenerator
+namespace ManagerTerminal
 {
-    class Program
+    public class ReportServices
     {
-        static void Main(string[] args)
+        public void CreateReport()
         {
+            //TODO: This needs to be redone as it was originally built to be kicked off
+            //      with a console for testing
+            
             Console.Write("Enter 1 to generate provider report, 2 for member, 3 for summary: ");
             int choice = Console.Read();
 
@@ -13,6 +17,7 @@ namespace ReportGenerator
             {
                 int id = 3;
 
+                // This is how you call the report generator
                 Processor processor = new Processor();
                 (bool created, string errorMessage) result = processor.GetReportGenerator(choice, id);
 

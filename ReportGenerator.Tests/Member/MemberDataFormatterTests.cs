@@ -5,6 +5,7 @@ using ReportGenerator.Member;
 using System;
 using ChocAnDatabase.records;
 using System.Collections.Generic;
+using ReportGenerator.Models;
 
 namespace ReportGenerator.Tests.Member
 {
@@ -26,19 +27,17 @@ namespace ReportGenerator.Tests.Member
             var ex = Assert.ThrowsException<ApplicationException>(() => _memberDataFormatter.FormatData(null));
         }
 
-        //[TestMethod]
-        //public void FormatData_NoConsultationRecords()
-        //{
-        //    ReportData reportData = new ReportData
-        //    {
-        //        MemberRecords = new List<MemberRecord>(),
-        //        ProviderRecords = null,
-        //        ConsultationRecords = new List<ConsultationRecord>(),
-        //        ServiceRecords = null
-        //    };
+        [TestMethod]
+        public void FormatData_NoConsultationRecords()
+        {
+            ReportData reportData = new ReportData
+            {
+                MemberRecord = new MemberRecord(new Dictionary<string, object>()),
+                ProvidedServices = new List<ProvidedService>()
+            };
 
-        //    var ex = Assert.ThrowsException<ApplicationException>(() => _memberDataFormatter.FormatData(reportData));
-        //    Assert.AreEqual("No consultation records so report cannot be printed", ex.Message);
-        //}
+            var ex = Assert.ThrowsException<ApplicationException>(() => _memberDataFormatter.FormatData(reportData));
+            Assert.AreEqual("There must be consultation records to format data", ex.Message);
+        }
     }
 }

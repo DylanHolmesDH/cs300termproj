@@ -1,10 +1,10 @@
-﻿using ChocAnDatabase;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ReportGenerator.Member;
 using System;
 using ChocAnDatabase.records;
 using System.Collections.Generic;
+using ReportGenerator.Models;
 
 namespace ReportGenerator.Tests.Member
 {
@@ -20,7 +20,7 @@ namespace ReportGenerator.Tests.Member
         }
 
         [TestMethod]
-        public void ValidateData_NullArg()
+        public void ValidateData_NullReportData()
         {
             var result = _memberDataValidator.ValidateData(null);
 
@@ -29,14 +29,12 @@ namespace ReportGenerator.Tests.Member
         }
 
         [TestMethod]
-        public void ValidateData_EmptyMemberRecord()
+        public void ValidateData_NullMemberRecord()
         {
             ReportData reportData = new ReportData
             {
-                MemberRecords = new List<MemberRecord>(),
-                ProviderRecords = null,
-                ConsultationRecords = null,
-                ServiceRecords = null
+                MemberRecord = null,
+                ProvidedServices = null
             };
 
             var result = _memberDataValidator.ValidateData(reportData);
@@ -46,48 +44,139 @@ namespace ReportGenerator.Tests.Member
         }
 
         [TestMethod]
-        public void ValidateData_NoConsultationRecords()
+        public void ValidateData_NullProvidedServices()
         {
             ReportData reportData = new ReportData
             {
-                MemberRecords = new List<MemberRecord>
-                {
-                    new MemberRecord(new Dictionary<string, object>())
-                },
-                ProviderRecords = null,
-                ConsultationRecords = new List<ConsultationRecord>(),
-                ServiceRecords = null
+               MemberRecord = new MemberRecord(new Dictionary<string, object>()),
+               ProvidedServices = null
             };
 
             var result = _memberDataValidator.ValidateData(reportData);
 
             Assert.AreEqual(false, result.valid);
-            Assert.AreEqual("No consultation records so report cannot be printed", result.errorMessage);
+            Assert.AreEqual("Provided services cannot be null", result.errorMessage);
         }
 
         [TestMethod]
-        public void ValidateData_Valid()
+        public void ValidateData_NoProvidedServiceProperties()
         {
-            var consultationRecordData = new Dictionary<string, object>();
-            consultationRecordData.Add("current_date", new DateTime(2021, 1, 1));
-            consultationRecordData.Add("service_date", new DateTime(2021, 2, 1));
-            consultationRecordData.Add("member_number", 1);
-            consultationRecordData.Add("service_number", 2);
-            consultationRecordData.Add("provider_number", 3);
-            consultationRecordData.Add("comments", "some comment");
-
             ReportData reportData = new ReportData
             {
-                MemberRecords = new List<MemberRecord>
+                MemberRecord = new MemberRecord(new Dictionary<string, object>()),
+                ProvidedServices = new List<ProvidedService>
                 {
-                    new MemberRecord(new Dictionary<string, object>())
-                },
-                ProviderRecords = null,
-                ConsultationRecords = new List<ConsultationRecord>
+                    new ProvidedService()
+                }
+            };
+
+            var result = _memberDataValidator.ValidateData(reportData);
+
+            Assert.AreEqual(false, result.valid);
+            Assert.AreEqual("Provider name for service date 1/1/0001 12:00:00 AM cannot be null or empty", result.errorMessage);
+        }
+
+        [TestMethod]
+        public void ValidateData_NoProviderName()
+        {
+            ReportData reportData = new ReportData
+            {
+                MemberRecord = new MemberRecord(new Dictionary<string, object>()),
+                ProvidedServices = new List<ProvidedService>
                 {
-                    new ConsultationRecord(consultationRecordData)
-                },
-                ServiceRecords = null
+                    new ProvidedService
+                    {
+                        ServiceName = "AB"
+                    }
+                }
+            };
+
+            var result = _memberDataValidator.ValidateData(reportData);
+
+            Assert.AreEqual(false, result.valid);
+            Assert.AreEqual("Provider name for service date 1/1/0001 12:00:00 AM cannot be null or empty", result.errorMessage);
+        }
+
+        [TestMethod]
+        public void ValidateData_NoServiceName()
+        {
+            ReportData reportData = new ReportData
+            {
+                MemberRecord = new MemberRecord(new Dictionary<string, object>()),
+                ProvidedServices = new List<ProvidedService>
+                {
+                    new ProvidedService
+                    {
+                        ProviderName = "John Smith",
+                    }
+                }
+            };
+
+            var result = _memberDataValidator.ValidateData(reportData);
+
+            Assert.AreEqual(false, result.valid);
+            Assert.AreEqual("Service name for service date 1/1/0001 12:00:00 AM cannot be null or empty", result.errorMessage);
+        }
+
+        [TestMethod]
+        public void ValidateData_NoProvidedServices()
+        {
+            ReportData reportData = new ReportData
+            {
+                MemberRecord = new MemberRecord(new Dictionary<string, object>()),
+                ProvidedServices = new List<ProvidedService>()
+            };
+
+            var result = _memberDataValidator.ValidateData(reportData);
+
+            Assert.AreEqual(true, result.valid);
+            Assert.AreEqual(string.Empty, result.errorMessage);
+        }
+
+        [TestMethod]
+        public void ValidateData_1ProvidedService()
+        {
+            ReportData reportData = new ReportData
+            {
+                MemberRecord = new MemberRecord(new Dictionary<string, object>()),
+                ProvidedServices = new List<ProvidedService>
+                {
+                    new ProvidedService
+                    {
+                        ServiceDate = DateTime.Now,
+                        ServiceName = "AA",
+                        ProviderName = "John Smith"
+                    }
+                }
+            };
+
+            var result = _memberDataValidator.ValidateData(reportData);
+
+            Assert.AreEqual(true, result.valid);
+            Assert.AreEqual(string.Empty, result.errorMessage);
+        }
+
+        [TestMethod]
+        public void ValidateData_2ProvidedServices()
+        {
+            ReportData reportData = new ReportData
+            {
+                MemberRecord = new MemberRecord(new Dictionary<string, object>()),
+                ProvidedServices = new List<ProvidedService>
+                {
+                    new ProvidedService
+                    {
+                        ServiceDate = DateTime.Now,
+                        ServiceName = "AA",
+                        ProviderName = "John Smith"
+                    },
+                    new ProvidedService
+                    {
+                        ServiceDate = DateTime.Now,
+                        ServiceName = "AB",
+                        ProviderName = "John Smith"
+                    }
+                }
             };
 
             var result = _memberDataValidator.ValidateData(reportData);

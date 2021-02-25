@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ReportGenerator.Interfaces;
+using ReportGenerator.Models;
 using System;
 
 namespace ReportGenerator.Tests
