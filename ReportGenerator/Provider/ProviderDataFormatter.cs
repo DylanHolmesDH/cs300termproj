@@ -12,7 +12,7 @@ namespace ReportGenerator.Provider {
                 throw new ApplicationException("Report data cannot be null");
 
             if (data.ProvidedServices.Count == 0)
-                throw ApplicationException("There must be at least one service provided to ")
+                throw new ApplicationException("There must be at least one service provided to ");
 
             ReportOutput formattedData = new ReportOutput();
 
