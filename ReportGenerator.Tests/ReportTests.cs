@@ -5,11 +5,9 @@ using ReportGenerator.Interfaces;
 using ReportGenerator.Models;
 using System;
 
-namespace ReportGenerator.Tests
-{
+namespace ReportGenerator.Tests {
     [TestClass]
-    public class ReportTests
-    {
+    public class ReportTests {
         private Mock<IDataGetter> _dataGetterMock;
         private Mock<IDataValidator> _dataValidatorMock;
         private Mock<IDataFormatter> _dataFormatterMock;
@@ -18,8 +16,7 @@ namespace ReportGenerator.Tests
         private Report _report;
 
         [TestInitialize]
-        public void Setup()
-        {
+        public void Setup() {
             _dataGetterMock = new Mock<IDataGetter>();
             _dataValidatorMock = new Mock<IDataValidator>();
             _dataFormatterMock = new Mock<IDataFormatter>();
@@ -34,8 +31,7 @@ namespace ReportGenerator.Tests
         }
 
         [TestMethod]
-        public void Generate_valid()
-        {
+        public void Generate_valid() {
             var reportOutput = new ReportOutput();
             var reportData = new ReportData();
 
@@ -62,8 +58,7 @@ namespace ReportGenerator.Tests
         }
 
         [TestMethod]
-        public void Generate_invalid()
-        {
+        public void Generate_invalid() {
             var reportOutput = new ReportOutput();
             var reportData = new ReportData();
 
