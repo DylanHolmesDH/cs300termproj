@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F76C71AD-C497-40C9-AC6E-95DFD8FF25EE}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>ManagerTerminal</RootNamespace>
-    <AssemblyName>ManagerTerminal</AssemblyName>
+    <ProjectGuid>{370F0493-CD57-48C3-BD29-9BEB6F3F7294}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ReportGenerator</RootNamespace>
+    <AssemblyName>ReportGenerator</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -46,19 +44,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ReportServices.cs" />
-    <Compile Include="Terminal.cs" />
+    <Compile Include="Factory\Factory.cs" />
+    <Compile Include="Interfaces\IDataFormatter.cs" />
+    <Compile Include="Interfaces\IDataGetter.cs" />
+    <Compile Include="Interfaces\IDataValidator.cs" />
+    <Compile Include="Interfaces\IReportDistributor.cs" />
+    <Compile Include="Interfaces\IReport.cs" />
+    <Compile Include="Member\MemberDataFormatter.cs" />
+    <Compile Include="Member\MemberDataGetter.cs" />
+    <Compile Include="Member\MemberDataValidator.cs" />
+    <Compile Include="Models\ProvidedService.cs" />
+    <Compile Include="Processor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Provider\ProviderDataFormatter.cs" />
+    <Compile Include="Provider\ProviderDataGetter.cs" />
+    <Compile Include="Provider\ProviderDataValidator.cs" />
+    <Compile Include="Report.cs" />
+    <Compile Include="Models\ReportData.cs" />
+    <Compile Include="ReportDistributor.cs" />
+    <Compile Include="Models\ReportOutput.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ReportGenerator\ReportGenerator.csproj">
-      <Project>{370f0493-cd57-48c3-bd29-9beb6f3f7294}</Project>
-      <Name>ReportGenerator</Name>
+    <ProjectReference Include="..\Database\ChocAnDatabase.csproj">
+      <Project>{4b7b5f0f-03a2-4781-a149-2b5acc182c5d}</Project>
+      <Name>ChocAnDatabase</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
