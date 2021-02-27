@@ -2,10 +2,8 @@
 using ReportGenerator.Models;
 using System;
 
-namespace ReportGenerator
-{
-    public class Report : IReport
-    {
+namespace ReportGenerator {
+    public class Report : IReport {
         private readonly IDataGetter _dataGetter;
         private readonly IDataValidator _dataValidator;
         private readonly IDataFormatter _dataFormatter;
@@ -16,16 +14,14 @@ namespace ReportGenerator
             IDataValidator dataValidator,
             IDataFormatter dataFormatter,
             IReportDistributor reportDistributor
-        )
-        {
+        ) {
             _dataGetter = dataGetter;
             _dataValidator = dataValidator;
             _dataFormatter = dataFormatter;
             _reportDistributor = reportDistributor;
         }
 
-        public (bool created, string errorMessage) Generate(int id)
-        {
+        public (bool created, string errorMessage) Generate(int id) {
             var data = _dataGetter.GetData(id);
 
             (bool valid, string errorMessage) result = _dataValidator.ValidateData(data);

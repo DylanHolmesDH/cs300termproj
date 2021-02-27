@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace ReportGenerator.Models
-{
-    public class ReportOutput
-    {
-        public ReportOutput()
-        {
+namespace ReportGenerator.Models {
+    public class ReportOutput {
+        public ReportOutput() {
             FileName = string.Empty;
             OutputLines = new List<string>();
         }

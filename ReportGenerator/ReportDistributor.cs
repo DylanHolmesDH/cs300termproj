@@ -5,12 +5,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace ReportGenerator
-{
-    public class ReportDistributor : IReportDistributor
-    {
-        public (bool created, string errorMessage) DistributeReport(ReportOutput reportOutput)
-        {
+namespace ReportGenerator {
+    public class ReportDistributor : IReportDistributor {
+        public (bool created, string errorMessage) DistributeReport(ReportOutput reportOutput) {
             if (reportOutput is null)
                 throw new System.ArgumentNullException(nameof(reportOutput));
 
@@ -25,19 +22,15 @@ namespace ReportGenerator
 
             StreamWriter streamWriter = new StreamWriter(path);
 
-            streamWriter.WriteLine(reportOutput.FileName);
-            streamWriter.WriteLine("***************");
-
             // Write all lines to the file
-            foreach (var line in reportOutput.OutputLines)
-            {
-                streamWriter.WriteLine("\t" + line);
+            foreach (var line in reportOutput.OutputLines) {
+                streamWriter.WriteLine(line);
             }
 
             // Close the file
             streamWriter.Close();
 
-            return (true, "Report generated at " + path);
+            return (true, "");
         }
     }
 }

@@ -5,13 +5,18 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReportGenerator.Provider
-{
-    public class ProviderDataFormatter : IDataFormatter
-    {
-        public ReportOutput FormatData(ReportData data)
-        {
-            throw new NotImplementedException();
+namespace ReportGenerator.Provider {
+    public class ProviderDataFormatter : IDataFormatter {
+        public ReportOutput FormatData(ReportData data) {
+            if (data == null)
+                throw new ApplicationException("Report data cannot be null");
+
+            if (data.ProvidedServices.Count == 0)
+                throw new ApplicationException("There must be at least one service provided to ");
+
+            ReportOutput formattedData = new ReportOutput();
+
+            return formattedData;
         }
     }
 }

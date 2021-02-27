@@ -5,34 +5,41 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReportGenerator.Member
-{
-    public class MemberDataFormatter : IDataFormatter
-    {
-        public ReportOutput FormatData(ReportData data)
-        {
+namespace ReportGenerator.Member {
+    public class MemberDataFormatter : IDataFormatter {
+        public ReportOutput FormatData(ReportData data) {
             if (data == null)
                 throw new ApplicationException("Report data object cannot be null");
 
             if (data.ProvidedServices.Count == 0)
-                throw new ApplicationException("There must be consultation records to format data");
+                throw new ApplicationException("There must be services provided to the member to format data");
 
             ReportOutput formattedData = new ReportOutput();
 
-            var memberRecord = data.MemberRecord;
+            formattedData.FileName = data.MemberRecord.Name + ".txt";
 
-            formattedData.FileName = "Member" + memberRecord.Name + "Report.txt";
+            formattedData.OutputLines.Add(data.MemberRecord.Name);
+            formattedData.OutputLines.Add(data.MemberRecord.Address);
+            formattedData.OutputLines.Add(data.MemberRecord.City + " " + data.MemberRecord.State
+                + " " + data.MemberRecord.Zip);
 
-            formattedData.OutputLines.Add("Member name: " + memberRecord.Name + " Member number: " + 
-                memberRecord.Number);
+            formattedData.OutputLines.Add("\n");
+            formattedData.OutputLines.Add("\n");
+            formattedData.OutputLines.Add("\n");
 
-            formattedData.OutputLines.Add("Address, City, State, Zip: " + memberRecord.Address + " " + 
-                memberRecord.City + " " + memberRecord.State + " " + memberRecord.Zip);
+            formattedData.OutputLines.Add(data.MemberRecord.Number.ToString());
+            formattedData.OutputLines.Add("\n");
+
+            formattedData.OutputLines.Add("Service date   " + "Provider name                 "
+                + "Service name             ");
+            formattedData.OutputLines.Add("______________________________________________________________________");
 
             foreach (var providedService in data.ProvidedServices)
             {
-                formattedData.OutputLines.Add("\tService record: " + providedService.ServiceDate + 
-                    ", " + providedService.ProviderName + ", " + providedService.ServiceName);
+                string serviceDate = providedService.ServiceDate.Date.ToString("MM-dd-yyyy");
+
+                formattedData.OutputLines.Add(serviceDate.PadRight(15)
+                    + providedService.ProviderName.PadRight(30) + providedService.ServiceName.PadRight(25));
             }
 
             return formattedData;

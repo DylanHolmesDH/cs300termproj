@@ -6,22 +6,18 @@ using ChocAnDatabase.records;
 using System.Collections.Generic;
 using ReportGenerator.Models;
 
-namespace ReportGenerator.Tests.Member
-{
+namespace ReportGenerator.Tests.Member {
     [TestClass]
-    public class MemberDataValidatorTests
-    {
+    public class MemberDataValidatorTests {
         private MemberDataValidator _memberDataValidator;
 
         [TestInitialize]
-        public void Setup()
-        {
+        public void Setup() {
             _memberDataValidator = new MemberDataValidator();
         }
 
         [TestMethod]
-        public void ValidateData_NullReportData()
-        {
+        public void ValidateData_NullReportData() {
             var result = _memberDataValidator.ValidateData(null);
 
             Assert.AreEqual(false, result.valid);
@@ -29,8 +25,7 @@ namespace ReportGenerator.Tests.Member
         }
 
         [TestMethod]
-        public void ValidateData_NullMemberRecord()
-        {
+        public void ValidateData_NullMemberRecord() {
             ReportData reportData = new ReportData
             {
                 MemberRecord = null,
@@ -44,8 +39,7 @@ namespace ReportGenerator.Tests.Member
         }
 
         [TestMethod]
-        public void ValidateData_NullProvidedServices()
-        {
+        public void ValidateData_NullProvidedServices() {
             ReportData reportData = new ReportData
             {
                MemberRecord = new MemberRecord(new Dictionary<string, object>()),
@@ -59,8 +53,7 @@ namespace ReportGenerator.Tests.Member
         }
 
         [TestMethod]
-        public void ValidateData_NoProvidedServiceProperties()
-        {
+        public void ValidateData_NoProvidedServiceProperties() {
             ReportData reportData = new ReportData
             {
                 MemberRecord = new MemberRecord(new Dictionary<string, object>()),
@@ -77,8 +70,7 @@ namespace ReportGenerator.Tests.Member
         }
 
         [TestMethod]
-        public void ValidateData_NoProviderName()
-        {
+        public void ValidateData_NoProviderName() {
             ReportData reportData = new ReportData
             {
                 MemberRecord = new MemberRecord(new Dictionary<string, object>()),
@@ -98,8 +90,7 @@ namespace ReportGenerator.Tests.Member
         }
 
         [TestMethod]
-        public void ValidateData_NoServiceName()
-        {
+        public void ValidateData_NoServiceName() {
             ReportData reportData = new ReportData
             {
                 MemberRecord = new MemberRecord(new Dictionary<string, object>()),
@@ -119,8 +110,7 @@ namespace ReportGenerator.Tests.Member
         }
 
         [TestMethod]
-        public void ValidateData_NoProvidedServices()
-        {
+        public void ValidateData_NoProvidedServices() {
             ReportData reportData = new ReportData
             {
                 MemberRecord = new MemberRecord(new Dictionary<string, object>()),
@@ -134,8 +124,7 @@ namespace ReportGenerator.Tests.Member
         }
 
         [TestMethod]
-        public void ValidateData_1ProvidedService()
-        {
+        public void ValidateData_1ProvidedService() {
             ReportData reportData = new ReportData
             {
                 MemberRecord = new MemberRecord(new Dictionary<string, object>()),
@@ -157,8 +146,7 @@ namespace ReportGenerator.Tests.Member
         }
 
         [TestMethod]
-        public void ValidateData_2ProvidedServices()
-        {
+        public void ValidateData_2ProvidedServices() {
             ReportData reportData = new ReportData
             {
                 MemberRecord = new MemberRecord(new Dictionary<string, object>()),

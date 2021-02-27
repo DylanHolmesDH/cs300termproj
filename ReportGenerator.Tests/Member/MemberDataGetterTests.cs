@@ -6,11 +6,9 @@ using ReportGenerator.Interfaces;
 using ReportGenerator.Member;
 using System;
 
-namespace ReportGenerator.Tests.Member
-{
+namespace ReportGenerator.Tests.Member {
     [TestClass]
-    public class MemberDataGetterTests
-    {
+    public class MemberDataGetterTests {
         //private Mock<Database> _databaseMock;
         //private MemberDataGetter _memberDataGetter;
 
