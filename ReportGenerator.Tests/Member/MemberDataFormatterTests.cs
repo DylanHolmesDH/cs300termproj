@@ -7,8 +7,7 @@ using ChocAnDatabase.records;
 using System.Collections.Generic;
 using ReportGenerator.Models;
 
-namespace ReportGenerator.Tests.Member
-{
+namespace ReportGenerator.Tests.Member {
     [TestClass]
     public class MemberDataFormatterTests {
         private MemberDataFormatter _memberDataFormatter;
@@ -21,6 +20,7 @@ namespace ReportGenerator.Tests.Member
         [TestMethod]
         public void FormatData_NullArg() {
             var ex = Assert.ThrowsException<ApplicationException>(() => _memberDataFormatter.FormatData(null));
+            Assert.AreEqual("Report data cannot be null", ex.Message);
         }
 
         [TestMethod]
@@ -84,8 +84,7 @@ namespace ReportGenerator.Tests.Member
         [TestMethod]
         public void FormatData_valid2ServicesProvided() {
             ReportData reportData = new ReportData {
-                MemberRecord = new MemberRecord(new Dictionary<string, object>())
-                {
+                MemberRecord = new MemberRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",
                     Address = "1111",
                     City = "Blah",
