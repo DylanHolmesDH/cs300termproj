@@ -12,11 +12,12 @@ namespace ReportGenerator.Models {
         }
 
         public DateTime ServiceDate { get; set; }
-        public DateTime dateTimeReceived { get; set; }
+        public DateTime DateTimeReceived { get; set; }
         public string ProviderName { get; set; }
+        public int ServiceId { get; set; }
         public string MemberName { get; set; }
-        public string ServiceID { get; set; }
+        public int MemberId { get; set; }
         public string ServiceName { get; set; }
-        public string Fee { get; set; }
+        public double Fee { get; set; }
     }
 }

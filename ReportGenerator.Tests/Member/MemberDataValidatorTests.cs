@@ -26,8 +26,7 @@ namespace ReportGenerator.Tests.Member {
 
         [TestMethod]
         public void ValidateData_NullMemberRecord() {
-            ReportData reportData = new ReportData
-            {
+            ReportData reportData = new ReportData {
                 MemberRecord = null,
                 ProvidedServices = null
             };
@@ -40,8 +39,7 @@ namespace ReportGenerator.Tests.Member {
 
         [TestMethod]
         public void ValidateData_NullProvidedServices() {
-            ReportData reportData = new ReportData
-            {
+            ReportData reportData = new ReportData {
                MemberRecord = new MemberRecord(new Dictionary<string, object>()),
                ProvidedServices = null
             };
@@ -54,11 +52,9 @@ namespace ReportGenerator.Tests.Member {
 
         [TestMethod]
         public void ValidateData_NoProvidedServiceProperties() {
-            ReportData reportData = new ReportData
-            {
+            ReportData reportData = new ReportData {
                 MemberRecord = new MemberRecord(new Dictionary<string, object>()),
-                ProvidedServices = new List<ProvidedService>
-                {
+                ProvidedServices = new List<ProvidedService> {
                     new ProvidedService()
                 }
             };
@@ -71,13 +67,10 @@ namespace ReportGenerator.Tests.Member {
 
         [TestMethod]
         public void ValidateData_NoProviderName() {
-            ReportData reportData = new ReportData
-            {
+            ReportData reportData = new ReportData {
                 MemberRecord = new MemberRecord(new Dictionary<string, object>()),
-                ProvidedServices = new List<ProvidedService>
-                {
-                    new ProvidedService
-                    {
+                ProvidedServices = new List<ProvidedService> {
+                    new ProvidedService {
                         ServiceName = "AB"
                     }
                 }
@@ -91,13 +84,10 @@ namespace ReportGenerator.Tests.Member {
 
         [TestMethod]
         public void ValidateData_NoServiceName() {
-            ReportData reportData = new ReportData
-            {
+            ReportData reportData = new ReportData {
                 MemberRecord = new MemberRecord(new Dictionary<string, object>()),
-                ProvidedServices = new List<ProvidedService>
-                {
-                    new ProvidedService
-                    {
+                ProvidedServices = new List<ProvidedService> {
+                    new ProvidedService {
                         ProviderName = "John Smith",
                     }
                 }
@@ -111,8 +101,7 @@ namespace ReportGenerator.Tests.Member {
 
         [TestMethod]
         public void ValidateData_NoProvidedServices() {
-            ReportData reportData = new ReportData
-            {
+            ReportData reportData = new ReportData {
                 MemberRecord = new MemberRecord(new Dictionary<string, object>()),
                 ProvidedServices = new List<ProvidedService>()
             };
@@ -125,13 +114,10 @@ namespace ReportGenerator.Tests.Member {
 
         [TestMethod]
         public void ValidateData_1ProvidedService() {
-            ReportData reportData = new ReportData
-            {
+            ReportData reportData = new ReportData {
                 MemberRecord = new MemberRecord(new Dictionary<string, object>()),
-                ProvidedServices = new List<ProvidedService>
-                {
-                    new ProvidedService
-                    {
+                ProvidedServices = new List<ProvidedService> {
+                    new ProvidedService {
                         ServiceDate = DateTime.Now,
                         ServiceName = "AA",
                         ProviderName = "John Smith"
@@ -147,19 +133,15 @@ namespace ReportGenerator.Tests.Member {
 
         [TestMethod]
         public void ValidateData_2ProvidedServices() {
-            ReportData reportData = new ReportData
-            {
+            ReportData reportData = new ReportData {
                 MemberRecord = new MemberRecord(new Dictionary<string, object>()),
-                ProvidedServices = new List<ProvidedService>
-                {
-                    new ProvidedService
-                    {
+                ProvidedServices = new List<ProvidedService> {
+                    new ProvidedService {
                         ServiceDate = DateTime.Now,
                         ServiceName = "AA",
                         ProviderName = "John Smith"
                     },
-                    new ProvidedService
-                    {
+                    new ProvidedService {
                         ServiceDate = DateTime.Now,
                         ServiceName = "AB",
                         ProviderName = "John Smith"

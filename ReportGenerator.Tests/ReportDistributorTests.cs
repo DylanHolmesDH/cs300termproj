@@ -23,8 +23,7 @@ namespace ReportGenerator.Tests {
 
         [TestMethod]
         public void CreateFile_NoFileName() {
-            ReportOutput reportOutput = new ReportOutput
-            {
+            ReportOutput reportOutput = new ReportOutput {
                 OutputLines = { "John Smith", "Number", "City", "State" }
             };
 
@@ -37,8 +36,7 @@ namespace ReportGenerator.Tests {
         [TestMethod]
         public void CreateFile_EmptyReportObjectWithFileName()
         {
-            ReportOutput reportOutput = new ReportOutput
-            {
+            ReportOutput reportOutput = new ReportOutput {
                 FileName = "junk.txt"
             };
 
@@ -47,26 +45,5 @@ namespace ReportGenerator.Tests {
             Assert.AreEqual(false, result.created);
             Assert.AreEqual("No output lines in report", result.errorMessage);
         }
-
-        //[TestMethod]
-        //public void CreateFile_ReportObjectWithFileName()
-        //{
-        //    ReportOutput reportOutput = new ReportOutput
-        //    {
-        //        FileName = "junk.txt",
-        //        OutputLines = {
-        //            "Service date   " + "Provider name                 "+ "Service name             ",
-        //            "______________________________________________________________________",
-        //            "01-01-0001     John Smith                    AA                       "
-        //        }
-        //    };
-
-        //    _path = @"c:\users\ryzen\Desktop\" + reportOutput.FileName;
-
-        //    var result = _reportDistributor.DistributeReport(reportOutput);
-
-        //    Assert.AreEqual(true, result.created);
-        //    Assert.AreEqual("", result.errorMessage);
-        //}
     }
 }
