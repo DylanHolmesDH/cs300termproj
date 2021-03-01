@@ -21,6 +21,20 @@ namespace ReportGenerator {
             _reportDistributor = reportDistributor;
         }
 
+        public IDataGetter DataGetter
+        {
+            get { return _dataGetter; }
+        }
+        public IDataValidator DataValidator
+        {
+            get { return _dataValidator; }
+        }
+
+        public IDataFormatter DataFormatter
+        {
+            get { return _dataFormatter; }
+        }
+
         public (bool created, string errorMessage) Generate(int id) {
             var data = _dataGetter.GetData(id);
 
