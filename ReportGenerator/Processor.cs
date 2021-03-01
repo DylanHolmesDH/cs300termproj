@@ -1,10 +1,7 @@
-﻿namespace ReportGenerator {
-    public enum TypeOfReport {
-        MemberReport = 1,
-        ProviderReport,
-        SummaryReport
-    }
+﻿using ChocAnDatabase;
 
+namespace ReportGenerator
+{
     public class Processor {
         TypeOfReport typeOfReport;
         private readonly Factory.Factory _factory;
@@ -15,7 +12,10 @@
 
         public (bool created, string errorMessage) GetReportGenerator(int choice, int id) {
             typeOfReport = (TypeOfReport)choice;
-            var report = _factory.CreateReport(typeOfReport);
+
+            Database database = new Database();
+
+            var report = _factory.CreateReport(typeOfReport, database);
 
             return report.Generate(id);
         }

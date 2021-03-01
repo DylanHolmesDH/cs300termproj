@@ -63,6 +63,7 @@
     <Compile Include="Models\ReportData.cs" />
     <Compile Include="ReportDistributor.cs" />
     <Compile Include="Models\ReportOutput.cs" />
+    <Compile Include="TypeOfReport.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Database\ChocAnDatabase.csproj">
