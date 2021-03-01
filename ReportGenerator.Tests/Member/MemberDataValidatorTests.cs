@@ -34,7 +34,7 @@ namespace ReportGenerator.Tests.Member {
             var result = _memberDataValidator.ValidateData(reportData);
 
             Assert.AreEqual(false, result.valid);
-            Assert.AreEqual("Member record cannot be empty", result.errorMessage);
+            Assert.AreEqual("Member record cannot be null", result.errorMessage);
         }
 
         [TestMethod]

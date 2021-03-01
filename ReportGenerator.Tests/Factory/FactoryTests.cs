@@ -17,14 +17,8 @@ namespace ReportGenerator.Tests.Factory
         {
             _factory = new ReportGenerator.Factory.Factory();
 
-            try
-            {
-                _database = new Database();
-            }
-            catch (Exception)
-            {
-
-            }
+            //TODO: Fix database for unit testing because path in constructor
+            _database = null;
         }
 
         [TestMethod]

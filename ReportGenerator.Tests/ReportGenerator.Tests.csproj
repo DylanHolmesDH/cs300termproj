@@ -70,6 +70,7 @@
     <Compile Include="Member\MemberDataValidatorTests.cs" />
     <Compile Include="Member\MemberDataFormatterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Provider\ProviderDataValidatorTests.cs" />
     <Compile Include="ReportTests.cs" />
     <Compile Include="ReportDistributorTests.cs" />
     <Compile Include="Provider\ProviderDataFormatterTests.cs" />
