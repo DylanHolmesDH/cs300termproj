@@ -12,7 +12,7 @@ namespace ReportGenerator.Member {
                 return (false, "Report data object cannot be null");
 
             if (data.MemberRecord == null)
-                return (false, "Member record cannot be empty");
+                return (false, "Member record cannot be null");
 
             if (data.ProvidedServices == null)
                 return (false, "Provided services cannot be null");
