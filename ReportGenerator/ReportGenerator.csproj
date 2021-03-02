@@ -54,6 +54,7 @@
     <Compile Include="Member\MemberDataGetter.cs" />
     <Compile Include="Member\MemberDataValidator.cs" />
     <Compile Include="Models\ProvidedService.cs" />
+    <Compile Include="Models\SummaryDataInfo.cs" />
     <Compile Include="Processor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider\ProviderDataFormatter.cs" />
@@ -63,6 +64,8 @@
     <Compile Include="Models\ReportData.cs" />
     <Compile Include="ReportDistributor.cs" />
     <Compile Include="Models\ReportOutput.cs" />
+    <Compile Include="Summary\SummaryDataFormatter.cs" />
+    <Compile Include="Summary\SummaryDataValidator.cs" />
     <Compile Include="TypeOfReport.cs" />
   </ItemGroup>
   <ItemGroup>

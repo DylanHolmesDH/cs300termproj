@@ -8,9 +8,9 @@ using System.Text;
 
 namespace ReportGenerator.Provider {
     public class ProviderDataGetter : IDataGetter {
-        private Database _database;
+        private IDatabaseWrapper _database;
 
-        public ProviderDataGetter(Database database) {
+        public ProviderDataGetter(IDatabaseWrapper database) {
             _database = database;
         }
 

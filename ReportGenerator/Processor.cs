@@ -13,7 +13,7 @@ namespace ReportGenerator
         public (bool created, string errorMessage) GetReportGenerator(int choice, int id) {
             typeOfReport = (TypeOfReport)choice;
 
-            Database database = new Database();
+            DatabaseWrapper database = new DatabaseWrapper();
 
             var report = _factory.CreateReport(typeOfReport, database);
 
