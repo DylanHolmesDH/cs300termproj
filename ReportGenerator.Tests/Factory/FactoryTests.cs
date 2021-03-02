@@ -10,7 +10,7 @@ namespace ReportGenerator.Tests.Factory
     public class FactoryTests
     {
         private ReportGenerator.Factory.Factory _factory;
-        private Database _database;
+        private DatabaseWrapper _database;
 
         [TestInitialize]
         public void Setup()

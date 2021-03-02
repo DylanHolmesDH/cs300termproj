@@ -8,9 +8,9 @@ using System.Text;
 
 namespace ReportGenerator.Member {
     public class MemberDataGetter : IDataGetter {
-        private Database _database;
+        private IDatabaseWrapper _database;
 
-        public MemberDataGetter(Database database) {
+        public MemberDataGetter(IDatabaseWrapper database) {
             _database = database;
         }
 

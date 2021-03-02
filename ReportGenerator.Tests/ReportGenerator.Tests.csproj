@@ -74,6 +74,8 @@
     <Compile Include="ReportTests.cs" />
     <Compile Include="ReportDistributorTests.cs" />
     <Compile Include="Provider\ProviderDataFormatterTests.cs" />
+    <Compile Include="Summary\SummaryDataFormatterTests.cs" />
+    <Compile Include="Summary\SummaryDataValidatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
