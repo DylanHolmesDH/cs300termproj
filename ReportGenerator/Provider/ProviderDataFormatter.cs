@@ -19,9 +19,6 @@ namespace ReportGenerator.Provider {
             if (data == null)
                 throw new ApplicationException("Report data cannot be null");
 
-            if (data.ProvidedServices.Count == 0)
-                throw new ApplicationException("There must be at least one service provided");
-
             ReportOutput formattedData = new ReportOutput();
 
             formattedData.FileName = data.ProviderRecord.Name + ".txt";

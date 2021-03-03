@@ -29,11 +29,10 @@ namespace ReportGenerator.Member {
                 foreach (var consultationRecord in consultationRecords) {
                     var providedService = new ProvidedService();
 
-                    providedService.ServiceDate = consultationRecord.ServiceDate;
-
                     var providerRecord = _database.FetchProvider(consultationRecord.ProviderNumber);
                     var serviceRecord = _database.FetchServiceRecord(consultationRecord.ServiceNumber);
 
+                    providedService.ServiceDate = consultationRecord.ServiceDate;
                     providedService.ProviderName = providerRecord.Name;
                     providedService.ServiceName = serviceRecord.Name;
 

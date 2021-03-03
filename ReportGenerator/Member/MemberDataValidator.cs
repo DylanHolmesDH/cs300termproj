@@ -26,6 +26,9 @@ namespace ReportGenerator.Member {
             if (string.IsNullOrWhiteSpace(data.MemberRecord.Address))
                 return (false, "Member record must contain an address");
 
+            if (data.MemberRecord.Number == 0)
+                return (false, "Member ID cannot be 0");
+
             if (data.ProvidedServices == null)
                 return (false, "Provided services cannot be null");
 

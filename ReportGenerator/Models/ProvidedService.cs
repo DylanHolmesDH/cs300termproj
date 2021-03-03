@@ -8,11 +8,11 @@ namespace ReportGenerator.Models {
     public class ProvidedService {
         public ProvidedService() {
             ServiceName = string.Empty;
-            ServiceId = int.MinValue;
+            ServiceId = 0;
             ProviderName = string.Empty;
             MemberName = string.Empty;
-            MemberId = int.MinValue;
-            Fee = int.MinValue;
+            MemberId = 0;
+            Fee = 0;
         }
 
         public DateTime ServiceDate { get; set; }
