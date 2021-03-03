@@ -20,15 +20,5 @@ namespace ReportGenerator.Tests.Summary {
 
             Assert.AreEqual("Report data object cannot be null", ex.Message);
         }
-
-        [TestMethod]
-        public void ReportDataNullSummaryDataInfo()
-        {
-            ReportData reportData = new ReportData();
-
-            var ex = Assert.ThrowsException<ApplicationException>(() => _dataValidator.ValidateData(reportData));
-
-            Assert.AreEqual("Summary data info cannot be null", ex.Message);
-        }
     }
 }

@@ -14,13 +14,32 @@ namespace ReportGenerator.Member {
             _database = database;
         }
 
-        public ReportData GetData(int id) {
-            var memberRecord = _database.FetchMember(id);
-
+        public ReportData GetData(int memberId) {
             ReportData reportData = new ReportData();
 
-            //Get provider and service records
-            // Convert into ReportData
+            var memberRecord = _database.FetchMember(memberId);
+
+            reportData.MemberRecord = memberRecord;
+
+            // Get consultation records
+
+            var consultationRecords = _database.FetchConsultationRecordsForMember(memberId);
+
+            if (consultationRecords != null) {
+                foreach (var consultationRecord in consultationRecords) {
+                    var providedService = new ProvidedService();
+
+                    providedService.ServiceDate = consultationRecord.ServiceDate;
+
+                    var providerRecord = _database.FetchProvider(consultationRecord.ProviderNumber);
+                    var serviceRecord = _database.FetchServiceRecord(consultationRecord.ServiceNumber);
+
+                    providedService.ProviderName = providerRecord.Name;
+                    providedService.ServiceName = serviceRecord.Name;
+
+                    reportData.ProvidedServices.Add(providedService);
+                }
+            }
 
             return reportData;
         }

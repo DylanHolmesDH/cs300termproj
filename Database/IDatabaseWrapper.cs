@@ -10,5 +10,8 @@ namespace ChocAnDatabase
     public interface IDatabaseWrapper
     {
         MemberRecord FetchMember(int id);
+        IList<ConsultationRecord> FetchConsultationRecordsForMember(int memberId);
+        ProviderRecord FetchProvider(int id);
+        ServiceRecord FetchServiceRecord(int serviceNumber);
     }
 }

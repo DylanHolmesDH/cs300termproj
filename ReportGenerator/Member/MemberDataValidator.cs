@@ -14,8 +14,23 @@ namespace ReportGenerator.Member {
             if (data.MemberRecord == null)
                 return (false, "Member record cannot be null");
 
+            if (string.IsNullOrWhiteSpace(data.MemberRecord.Name))
+                return (false, "Member record must contain a name");
+
+            if (string.IsNullOrWhiteSpace(data.MemberRecord.City))
+                return (false, "Member record must contain a city");
+
+            if (string.IsNullOrWhiteSpace(data.MemberRecord.State))
+                return (false, "Member record must contain a state");
+
+            if (string.IsNullOrWhiteSpace(data.MemberRecord.Address))
+                return (false, "Member record must contain an address");
+
             if (data.ProvidedServices == null)
                 return (false, "Provided services cannot be null");
+
+            if (data.ProvidedServices.Count == 0)
+                return (false, "Provided services cannot be empty");
 
             foreach (var providedService in data.ProvidedServices) {
                 if (string.IsNullOrWhiteSpace(providedService.ProviderName))

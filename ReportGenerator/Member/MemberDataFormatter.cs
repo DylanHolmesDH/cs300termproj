@@ -11,9 +11,6 @@ namespace ReportGenerator.Member {
             if (data == null)
                 throw new ApplicationException("Report data cannot be null");
 
-            if (data.ProvidedServices.Count == 0)
-                throw new ApplicationException("There must be services provided to the member to format data");
-
             ReportOutput formattedData = new ReportOutput();
 
             formattedData.FileName = data.MemberRecord.Name + ".txt";
