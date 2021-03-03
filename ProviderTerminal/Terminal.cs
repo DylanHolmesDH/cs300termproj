@@ -59,23 +59,22 @@ namespace ProviderTerminal {
 
             return "...";
         }
+
         // Creates a ConsultationRecord for the active Member.
         public String CreateConsulationRecord() {
-            WriteMessage("...");
-            List<String> services = GetMultiInput();
-            String date = GetInput("");
-            Record record = new Record(new Dictionary<string, object>());
+            // dummy method body to represent how a consultation record might be created
+            var data = new Dictionary<string, object>());
 
-            record.Add("current_date", DateTime.Now);
-            record.Add("service_date", DateTime.Now);
+            data.Add("current_date", DateTime.Now);
+            data.Add("service_date", DateTime.Now);
 
-            record.Add("provider_number", 1);
-            record.Add("member_number", 333);
+            data.Add("provider_number", 1);
+            data.Add("member_number", 333);
 
-            record.Add("comments", "None");
-            record.Add("service_number", 1);
+            data.Add("comments", "None");
+            data.Add("service_number", 1);
 
-            db.InsertConsultation(record);
+            db.InsertConsultation(new ConsultationRecord(data));
             return "...";
         }
 
