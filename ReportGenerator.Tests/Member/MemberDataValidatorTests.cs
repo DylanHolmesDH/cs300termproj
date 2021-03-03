@@ -38,10 +38,104 @@ namespace ReportGenerator.Tests.Member {
         }
 
         [TestMethod]
+        public void ValidateData_NoMemberName() {
+            ReportData reportData = new ReportData {
+                MemberRecord = new MemberRecord(new Dictionary<string, object>()) {
+                    Name = " ",
+                    Address = "1111",
+                    City = "Blah",
+                    Number = 7,
+                    State = "OR",
+                    Zip = 1111
+                },
+                ProvidedServices = null
+            };
+
+            var result = _memberDataValidator.ValidateData(reportData);
+
+            Assert.AreEqual(false, result.valid);
+            Assert.AreEqual("Member record must contain a name", result.errorMessage);
+        }
+
+        [TestMethod]
+        public void ValidateData_NoMemberCity()
+        {
+            ReportData reportData = new ReportData {
+                MemberRecord = new MemberRecord(new Dictionary<string, object>()) {
+                    Name = "Alex Burbank",
+                    Address = "1111",
+                    City = " ",
+                    Number = 7,
+                    State = "OR",
+                    Zip = 1111
+                },
+                ProvidedServices = null
+            };
+
+            var result = _memberDataValidator.ValidateData(reportData);
+
+            Assert.AreEqual(false, result.valid);
+            Assert.AreEqual("Member record must contain a city", result.errorMessage);
+        }
+
+        [TestMethod]
+        public void ValidateData_NoMemberState()
+        {
+            ReportData reportData = new ReportData
+            {
+                MemberRecord = new MemberRecord(new Dictionary<string, object>())
+                {
+                    Name = "Alex Burbank",
+                    Address = "1111",
+                    City = "Blah",
+                    Number = 7,
+                    State = " ",
+                    Zip = 1111
+                },
+                ProvidedServices = null
+            };
+
+            var result = _memberDataValidator.ValidateData(reportData);
+
+            Assert.AreEqual(false, result.valid);
+            Assert.AreEqual("Member record must contain a state", result.errorMessage);
+        }
+
+        [TestMethod]
+        public void ValidateData_NoMemberAddress()
+        {
+            ReportData reportData = new ReportData
+            {
+                MemberRecord = new MemberRecord(new Dictionary<string, object>())
+                {
+                    Name = "Alex Burbank",
+                    Address = " ",
+                    City = "Blah",
+                    Number = 7,
+                    State = "OR",
+                    Zip = 1111
+                },
+                ProvidedServices = null
+            };
+
+            var result = _memberDataValidator.ValidateData(reportData);
+
+            Assert.AreEqual(false, result.valid);
+            Assert.AreEqual("Member record must contain an address", result.errorMessage);
+        }
+
+        [TestMethod]
         public void ValidateData_NullProvidedServices() {
             ReportData reportData = new ReportData {
-               MemberRecord = new MemberRecord(new Dictionary<string, object>()),
-               ProvidedServices = null
+                MemberRecord = new MemberRecord(new Dictionary<string, object>()) {
+                    Name = "Alex Burbank",
+                    Address = "1111",
+                    City = "Blah",
+                    Number = 7,
+                    State = "OR",
+                    Zip = 1111
+                },
+                ProvidedServices = null
             };
 
             var result = _memberDataValidator.ValidateData(reportData);
@@ -51,24 +145,36 @@ namespace ReportGenerator.Tests.Member {
         }
 
         [TestMethod]
-        public void ValidateData_NoProvidedServiceProperties() {
+        public void ValidateData_NoProvidedServices() {
             ReportData reportData = new ReportData {
-                MemberRecord = new MemberRecord(new Dictionary<string, object>()),
-                ProvidedServices = new List<ProvidedService> {
-                    new ProvidedService()
-                }
+                MemberRecord = new MemberRecord(new Dictionary<string, object>()) {
+                    Name = "Alex Burbank",
+                    Address = "1111",
+                    City = "Blah",
+                    Number = 7,
+                    State = "OR",
+                    Zip = 1111
+                },
+                ProvidedServices = new List<ProvidedService>()
             };
 
             var result = _memberDataValidator.ValidateData(reportData);
 
             Assert.AreEqual(false, result.valid);
-            Assert.AreEqual("Provider name for service date 1/1/0001 12:00:00 AM cannot be null or empty", result.errorMessage);
+            Assert.AreEqual("Provided services cannot be empty", result.errorMessage);
         }
 
         [TestMethod]
         public void ValidateData_NoProviderName() {
             ReportData reportData = new ReportData {
-                MemberRecord = new MemberRecord(new Dictionary<string, object>()),
+                MemberRecord = new MemberRecord(new Dictionary<string, object>()) {
+                    Name = "Alex Burbank",
+                    Address = "1111",
+                    City = "Blah",
+                    Number = 7,
+                    State = "OR",
+                    Zip = 1111
+                },
                 ProvidedServices = new List<ProvidedService> {
                     new ProvidedService {
                         ServiceName = "AB"
@@ -85,7 +191,14 @@ namespace ReportGenerator.Tests.Member {
         [TestMethod]
         public void ValidateData_NoServiceName() {
             ReportData reportData = new ReportData {
-                MemberRecord = new MemberRecord(new Dictionary<string, object>()),
+                MemberRecord = new MemberRecord(new Dictionary<string, object>()) {
+                    Name = "Alex Burbank",
+                    Address = "1111",
+                    City = "Blah",
+                    Number = 7,
+                    State = "OR",
+                    Zip = 1111
+                },
                 ProvidedServices = new List<ProvidedService> {
                     new ProvidedService {
                         ProviderName = "John Smith",
@@ -100,22 +213,16 @@ namespace ReportGenerator.Tests.Member {
         }
 
         [TestMethod]
-        public void ValidateData_NoProvidedServices() {
-            ReportData reportData = new ReportData {
-                MemberRecord = new MemberRecord(new Dictionary<string, object>()),
-                ProvidedServices = new List<ProvidedService>()
-            };
-
-            var result = _memberDataValidator.ValidateData(reportData);
-
-            Assert.AreEqual(true, result.valid);
-            Assert.AreEqual(string.Empty, result.errorMessage);
-        }
-
-        [TestMethod]
         public void ValidateData_1ProvidedService() {
             ReportData reportData = new ReportData {
-                MemberRecord = new MemberRecord(new Dictionary<string, object>()),
+                MemberRecord = new MemberRecord(new Dictionary<string, object>()) {
+                    Name = "Alex Burbank",
+                    Address = "1111",
+                    City = "Blah",
+                    Number = 7,
+                    State = "OR",
+                    Zip = 1111
+                },
                 ProvidedServices = new List<ProvidedService> {
                     new ProvidedService {
                         ServiceDate = DateTime.Now,
@@ -134,7 +241,14 @@ namespace ReportGenerator.Tests.Member {
         [TestMethod]
         public void ValidateData_2ProvidedServices() {
             ReportData reportData = new ReportData {
-                MemberRecord = new MemberRecord(new Dictionary<string, object>()),
+                MemberRecord = new MemberRecord(new Dictionary<string, object>()) {
+                    Name = "Alex Burbank",
+                    Address = "1111",
+                    City = "Blah",
+                    Number = 7,
+                    State = "OR",
+                    Zip = 1111
+                },
                 ProvidedServices = new List<ProvidedService> {
                     new ProvidedService {
                         ServiceDate = DateTime.Now,

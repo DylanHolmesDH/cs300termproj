@@ -6,7 +6,7 @@ using System;
 
 namespace ReportGenerator.Factory {
     public class Factory {
-        public IReport CreateReport(TypeOfReport typeOfReport, DatabaseWrapper database) {
+        public IReport CreateReport(TypeOfReport typeOfReport, IDatabaseWrapper database) {
             IReportDistributor reportDistributor = new ReportDistributor();
             
             switch (typeOfReport) {

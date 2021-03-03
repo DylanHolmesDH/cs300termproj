@@ -13,5 +13,20 @@ namespace ChocAnDatabase
         {
             throw new NotImplementedException();
         }
+
+        public IList<ConsultationRecord> FetchConsultationRecordsForMember(int memberId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ProviderRecord FetchProvider(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ServiceRecord FetchServiceRecord(int serviceNumber)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

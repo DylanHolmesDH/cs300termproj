@@ -24,17 +24,6 @@ namespace ReportGenerator.Tests.Member {
         }
 
         [TestMethod]
-        public void FormatData_NoServicesProvided() {
-            ReportData reportData = new ReportData {
-                MemberRecord = new MemberRecord(new Dictionary<string, object>()),
-                ProvidedServices = new List<ProvidedService>()
-            };
-
-            var ex = Assert.ThrowsException<ApplicationException>(() => _memberDataFormatter.FormatData(reportData));
-            Assert.AreEqual("There must be services provided to the member to format data", ex.Message);
-        }
-
-        [TestMethod]
         public void FormatData_valid1ServiceProvided() {
             ReportData reportData = new ReportData {
                 MemberRecord = new MemberRecord(new Dictionary<string, object>()) {
