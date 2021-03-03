@@ -125,6 +125,29 @@ namespace ReportGenerator.Tests.Member {
         }
 
         [TestMethod]
+        public void ValidateData_MemberNumber_0()
+        {
+            ReportData reportData = new ReportData
+            {
+                MemberRecord = new MemberRecord(new Dictionary<string, object>())
+                {
+                    Name = "Alex Burbank",
+                    Address = "111",
+                    City = "Blah",
+                    Number = 0,
+                    State = "OR",
+                    Zip = 1111
+                },
+                ProvidedServices = null
+            };
+
+            var result = _memberDataValidator.ValidateData(reportData);
+
+            Assert.AreEqual(false, result.valid);
+            Assert.AreEqual("Member ID cannot be 0", result.errorMessage);
+        }
+
+        [TestMethod]
         public void ValidateData_NullProvidedServices() {
             ReportData reportData = new ReportData {
                 MemberRecord = new MemberRecord(new Dictionary<string, object>()) {

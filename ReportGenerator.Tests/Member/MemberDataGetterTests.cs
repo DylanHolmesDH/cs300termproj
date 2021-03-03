@@ -113,7 +113,7 @@ namespace ReportGenerator.Tests.Member {
         }
 
         [TestMethod]
-        public void GetData_twoConsultationRecord()
+        public void GetData_twoConsultationRecords()
         {
             // Variable setups
             var memberRecord = new MemberRecord(new Dictionary<string, object>())

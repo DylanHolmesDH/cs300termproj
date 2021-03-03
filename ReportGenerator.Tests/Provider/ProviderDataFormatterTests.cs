@@ -22,21 +22,8 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void ReportDataNoProvidedServices() {
+        public void ReportData1ProvidedService() {
             ReportData reportData = new ReportData {
-                MemberRecord = new MemberRecord(new Dictionary<string, object>()),
-                ProvidedServices = new List<ProvidedService>()
-            };
-
-            var ex = Assert.ThrowsException<ApplicationException>(() => _providerDataFormatter.FormatData(reportData));
-            Assert.AreEqual("There must be at least one service provided", ex.Message);
-        }
-
-        [TestMethod]
-        public void ReportData1ProvidedService()
-        {
-            ReportData reportData = new ReportData
-            {
                 ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",
                     Address = "1111",
@@ -93,12 +80,9 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void ReportData2ProvidedService()
-        {
-            ReportData reportData = new ReportData
-            {
-                ProviderRecord = new ProviderRecord(new Dictionary<string, object>())
-                {
+        public void ReportData2ProvidedService() {
+            ReportData reportData = new ReportData {
+                ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",
                     Address = "1111",
                     City = "Blah",

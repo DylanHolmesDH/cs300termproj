@@ -38,9 +38,117 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
+        public void ValidateData_NoProviderName() {
+            ReportData reportData = new ReportData {
+                ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
+                    Name = " ",
+                    Address = "1111",
+                    City = "Blah",
+                    Number = 7,
+                    State = "OR",
+                    Zip = 1111
+                },
+                ProvidedServices = null
+            };
+
+            var result = _providerDataValidator.ValidateData(reportData);
+
+            Assert.AreEqual(false, result.valid);
+            Assert.AreEqual("Provider record must contain a name", result.errorMessage);
+        }
+
+        [TestMethod]
+        public void ValidateData_NoProviderCity() {
+            ReportData reportData = new ReportData {
+                ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
+                    Name = "Alex Burbank",
+                    Address = "1111",
+                    City = " ",
+                    Number = 7,
+                    State = "OR",
+                    Zip = 1111
+                },
+                ProvidedServices = null
+            };
+
+            var result = _providerDataValidator.ValidateData(reportData);
+
+            Assert.AreEqual(false, result.valid);
+            Assert.AreEqual("Provider record must contain a city", result.errorMessage);
+        }
+
+        [TestMethod]
+        public void ValidateData_NoProviderState() {
+            ReportData reportData = new ReportData {
+                ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
+                    Name = "Alex Burbank",
+                    Address = "1111",
+                    City = "Blah",
+                    Number = 7,
+                    State = " ",
+                    Zip = 1111
+                },
+                ProvidedServices = null
+            };
+
+            var result = _providerDataValidator.ValidateData(reportData);
+
+            Assert.AreEqual(false, result.valid);
+            Assert.AreEqual("Provider record must contain a state", result.errorMessage);
+        }
+
+        [TestMethod]
+        public void ValidateData_NoProviderAddress() {
+            ReportData reportData = new ReportData {
+                ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
+                    Name = "Alex Burbank",
+                    Address = " ",
+                    City = "Blah",
+                    Number = 7,
+                    State = "OR",
+                    Zip = 1111
+                },
+                ProvidedServices = null
+            };
+
+            var result = _providerDataValidator.ValidateData(reportData);
+
+            Assert.AreEqual(false, result.valid);
+            Assert.AreEqual("Provider record must contain an address", result.errorMessage);
+        }
+
+        [TestMethod]
+        public void ValidateData_ProviderNumber_0()
+        {
+            ReportData reportData = new ReportData {
+                ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
+                    Name = "Alex Burbank",
+                    Address = "111",
+                    City = "Blah",
+                    Number = 0,
+                    State = "OR",
+                    Zip = 1111
+                },
+                ProvidedServices = null
+            };
+
+            var result = _providerDataValidator.ValidateData(reportData);
+
+            Assert.AreEqual(false, result.valid);
+            Assert.AreEqual("Provider ID cannot be 0", result.errorMessage);
+        }
+
+        [TestMethod]
         public void ValidateData_NullProvidedServices() {
             ReportData reportData = new ReportData {
-               ProviderRecord = new ProviderRecord(new Dictionary<string, object>()),
+               ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
+                   Name = "Alex Burbank",
+                   Address = "1111",
+                   City = "Blah",
+                   Number = 7,
+                   State = "OR",
+                   Zip = 1111
+               },
                ProvidedServices = null
             };
 
@@ -51,42 +159,67 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void ValidateData_NoProvidedServiceProperties() {
+        public void ValidateData_NoProvidedServices() {
             ReportData reportData = new ReportData {
-                ProviderRecord = new ProviderRecord(new Dictionary<string, object>()),
-                ProvidedServices = new List<ProvidedService> {
-                    new ProvidedService()
-                }
+                ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
+                    Name = "Alex Burbank",
+                    Address = "1111",
+                    City = "Blah",
+                    Number = 7,
+                    State = "OR",
+                    Zip = 1111
+                },
+                ProvidedServices = new List<ProvidedService>()
             };
 
             var result = _providerDataValidator.ValidateData(reportData);
 
             Assert.AreEqual(false, result.valid);
-            Assert.AreEqual("Service ID for service date 1/1/0001 12:00:00 AM cannot be empty", result.errorMessage);
+            Assert.AreEqual("Provided services cannot be empty", result.errorMessage);
         }
 
         [TestMethod]
         public void ValidateData_NoServiceID() {
             ReportData reportData = new ReportData {
-                ProviderRecord = new ProviderRecord(new Dictionary<string, object>()),
+                ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
+                    Name = "Alex Burbank",
+                    Address = "1111",
+                    City = "Blah",
+                    Number = 7,
+                    State = "OR",
+                    Zip = 1111
+                },
                 ProvidedServices = new List<ProvidedService> {
-                    new ProvidedService()
+                    new ProvidedService() {
+                        ServiceId = 0,
+                        MemberName = "John Smith",
+                        MemberId = 8
+                    }
                 }
             };
 
             var result = _providerDataValidator.ValidateData(reportData);
 
             Assert.AreEqual(false, result.valid);
-            Assert.AreEqual("Service ID for service date 1/1/0001 12:00:00 AM cannot be empty", result.errorMessage);
+            Assert.AreEqual("Service ID for service date 1/1/0001 12:00:00 AM cannot be 0", result.errorMessage);
         }
 
         [TestMethod]
         public void ValidateData_NoMemberName() {
             ReportData reportData = new ReportData {
-                ProviderRecord = new ProviderRecord(new Dictionary<string, object>()),
+                ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
+                    Name = "Alex Burbank",
+                    Address = "1111",
+                    City = "Blah",
+                    Number = 7,
+                    State = "OR",
+                    Zip = 1111
+                },
                 ProvidedServices = new List<ProvidedService> {
                     new ProvidedService {
                         ServiceId = 7,
+                        MemberName = " ",
+                        MemberId = 8
                     }
                 }
             };
@@ -98,36 +231,21 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void ValidateData_NoMemberID()
-        {
-            ReportData reportData = new ReportData
-            {
-                ProviderRecord = new ProviderRecord(new Dictionary<string, object>()),
-                ProvidedServices = new List<ProvidedService> {
-                    new ProvidedService {
-                        ServiceId = 7,
-                        MemberName = "John Smith"
-                    }
-                }
-            };
-
-            var result = _providerDataValidator.ValidateData(reportData);
-
-            Assert.AreEqual(false, result.valid);
-            Assert.AreEqual("Member ID for John Smith cannot be empty", result.errorMessage);
-        }
-
-        [TestMethod]
-        public void ValidateData_NoFee()
-        {
-            ReportData reportData = new ReportData
-            {
-                ProviderRecord = new ProviderRecord(new Dictionary<string, object>()),
+        public void ValidateData_NoMemberID() {
+            ReportData reportData = new ReportData {
+                ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
+                    Name = "Alex Burbank",
+                    Address = "1111",
+                    City = "Blah",
+                    Number = 7,
+                    State = "OR",
+                    Zip = 1111
+                },
                 ProvidedServices = new List<ProvidedService> {
                     new ProvidedService {
                         ServiceId = 7,
                         MemberName = "John Smith",
-                        MemberId = 1
+                        MemberId = 0
                     }
                 }
             };
@@ -135,26 +253,20 @@ namespace ReportGenerator.Tests.Provider {
             var result = _providerDataValidator.ValidateData(reportData);
 
             Assert.AreEqual(false, result.valid);
-            Assert.AreEqual("Service fee for service date 1/1/0001 12:00:00 AM cannot be empty", result.errorMessage);
-        }
-
-        [TestMethod]
-        public void ValidateData_NoProvidedServices() {
-            ReportData reportData = new ReportData {
-                ProviderRecord = new ProviderRecord(new Dictionary<string, object>()),
-                ProvidedServices = new List<ProvidedService>()
-            };
-
-            var result = _providerDataValidator.ValidateData(reportData);
-
-            Assert.AreEqual(true, result.valid);
-            Assert.AreEqual(string.Empty, result.errorMessage);
+            Assert.AreEqual("Member ID for John Smith cannot be 0", result.errorMessage);
         }
 
         [TestMethod]
         public void ValidateData_1ProvidedService() {
             ReportData reportData = new ReportData {
-                ProviderRecord = new ProviderRecord(new Dictionary<string, object>()),
+                ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
+                    Name = "Alex Burbank",
+                    Address = "1111",
+                    City = "Blah",
+                    Number = 7,
+                    State = "OR",
+                    Zip = 1111
+                },
                 ProvidedServices = new List<ProvidedService> {
                     new ProvidedService {
                         ServiceId = 7,
@@ -174,7 +286,14 @@ namespace ReportGenerator.Tests.Provider {
         [TestMethod]
         public void ValidateData_2ProvidedServices() {
             ReportData reportData = new ReportData {
-                ProviderRecord = new ProviderRecord(new Dictionary<string, object>()),
+                ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
+                    Name = "Alex Burbank",
+                    Address = "1111",
+                    City = "Blah",
+                    Number = 7,
+                    State = "OR",
+                    Zip = 1111
+                },
                 ProvidedServices = new List<ProvidedService> {
                     new ProvidedService {
                         ServiceId = 7,
