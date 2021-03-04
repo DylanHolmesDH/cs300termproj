@@ -7,8 +7,8 @@ namespace ReportGenerator.Models
         public SummaryDataInfo()
         {
             ProviderName = string.Empty;
-            TotalFee = int.MinValue;
-            TotalNumberOfConsultations = int.MinValue;
+            TotalFee = 0;
+            TotalNumberOfConsultations = 0;
         }
 
         public string ProviderName { get; set; }

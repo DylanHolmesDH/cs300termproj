@@ -8,16 +8,22 @@ using System.Threading.Tasks;
 
 namespace ReportGenerator.Summary
 {
-    public class SummaryDataValidator : IDataValidator
-    {
-        public (bool valid, string errorMessage) ValidateData(ReportData reportData)
-        {
+    public class SummaryDataValidator : IDataValidator {
+        public (bool valid, string errorMessage) ValidateData(ReportData reportData) {
             if (reportData == null)
-                throw new ApplicationException("Report data object cannot be null");
+                return (false, "Report data object cannot be null");
 
             if (reportData.SummaryDataInfo == null)
-                throw new ApplicationException("Summary data info cannot be null");
+               return (false, "Summary report info cannot be null");
 
+            if (reportData.SummaryDataInfo.Count == 0)
+                return (false, "Summary report info cannot be empty");
+
+            foreach (var summaryRecord in reportData.SummaryDataInfo) {
+                if (string.IsNullOrWhiteSpace(summaryRecord.ProviderName))
+                    return (false, "Provider name for summary cannot be empty");
+            }
+  
             return (true, "");
         }
     }
