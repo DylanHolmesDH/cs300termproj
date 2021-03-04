@@ -5,7 +5,7 @@ namespace ReportGenerator.Models {
     public class ReportData {
         public ReportData() {
             MemberRecord = null;
-            ProvidedServices = null;
+            ProvidedServices = new List<ProvidedService>();
             ProvidedServices = new List<ProvidedService>();
             SummaryDataInfo = new List<SummaryDataInfo>();
         }
