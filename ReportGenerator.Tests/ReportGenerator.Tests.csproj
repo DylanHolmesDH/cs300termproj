@@ -72,6 +72,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Provider\ProviderDataValidatorTests.cs" />
     <Compile Include="Provider\ProviderDataGetterTests.cs" />
+    <Compile Include="ProcessorTests.cs" />
     <Compile Include="ReportTests.cs" />
     <Compile Include="ReportDistributorTests.cs" />
     <Compile Include="Provider\ProviderDataFormatterTests.cs" />

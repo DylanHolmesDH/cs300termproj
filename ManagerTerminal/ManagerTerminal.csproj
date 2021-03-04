@@ -55,6 +55,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Database\ChocAnDatabase.csproj">
+      <Project>{4b7b5f0f-03a2-4781-a149-2b5acc182c5d}</Project>
+      <Name>ChocAnDatabase</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ReportGenerator\ReportGenerator.csproj">
       <Project>{370f0493-cd57-48c3-bd29-9beb6f3f7294}</Project>
       <Name>ReportGenerator</Name>

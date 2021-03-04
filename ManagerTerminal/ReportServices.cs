@@ -1,4 +1,6 @@
-﻿using ReportGenerator;
+﻿using ChocAnDatabase;
+using ReportGenerator;
+using ReportGenerator.Factory;
 using System;
 
 namespace ManagerTerminal {
@@ -14,9 +16,13 @@ namespace ManagerTerminal {
             {
                 int id = 3;
 
+                var typeOfReport = (TypeOfReport)choice;
+                var database = new DatabaseWrapper();
+                var reportFactory = new ReportFactory();
+
                 // This is how you call the report generator
                 Processor processor = new Processor();
-                (bool created, String errorMessage) result = processor.GetReportGenerator(choice, id);
+                (bool created, String errorMessage) result = processor.GenerateReport(typeOfReport, database, reportFactory, id);
 
                 if (!result.created)
                     Console.WriteLine(result.errorMessage);

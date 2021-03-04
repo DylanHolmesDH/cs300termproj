@@ -9,13 +9,13 @@ namespace ReportGenerator.Tests.Factory
     [TestClass]
     public class FactoryTests
     {
-        private ReportGenerator.Factory.Factory _factory;
+        private ReportGenerator.Factory.ReportFactory _factory;
         private DatabaseWrapper _database;
 
         [TestInitialize]
         public void Setup()
         {
-            _factory = new ReportGenerator.Factory.Factory();
+            _factory = new ReportGenerator.Factory.ReportFactory();
 
             //TODO: Fix database for unit testing because path in constructor
             _database = null;

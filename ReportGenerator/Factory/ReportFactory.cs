@@ -5,11 +5,14 @@ using ReportGenerator.Provider;
 using System;
 
 namespace ReportGenerator.Factory {
-    public class Factory {
-        public IReport CreateReport(TypeOfReport typeOfReport, IDatabaseWrapper database) {
+    public class ReportFactory : IReportFactory
+    {
+        public IReport CreateReport(TypeOfReport typeOfReport, IDatabaseWrapper database)
+        {
             IReportDistributor reportDistributor = new ReportDistributor();
-            
-            switch (typeOfReport) {
+
+            switch (typeOfReport)
+            {
                 case TypeOfReport.MemberReport:
                     return new Report(
                         new MemberDataGetter(database),

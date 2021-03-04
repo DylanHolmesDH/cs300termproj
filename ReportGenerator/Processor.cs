@@ -1,21 +1,17 @@
 ﻿using ChocAnDatabase;
+using ReportGenerator.Factory;
 
 namespace ReportGenerator
 {
     public class Processor {
-        TypeOfReport typeOfReport;
-        private readonly Factory.Factory _factory;
+        public (bool created, string errorMessage) GenerateReport(TypeOfReport typeOfReport, IDatabaseWrapper databaseWrapper, IReportFactory factory, int id) {
+            if (databaseWrapper is null)
+                throw new System.ArgumentNullException(nameof(databaseWrapper));
 
-        public Processor() {
-            _factory = new Factory.Factory();
-        }
+            if (factory is null)
+                throw new System.ArgumentNullException(nameof(factory));
 
-        public (bool created, string errorMessage) GetReportGenerator(int choice, int id) {
-            typeOfReport = (TypeOfReport)choice;
-
-            var database = new DatabaseWrapper();
-
-            var report = _factory.CreateReport(typeOfReport, database);
+            var report = factory.CreateReport(typeOfReport, databaseWrapper);
 
             return report.Generate(id);
         }
