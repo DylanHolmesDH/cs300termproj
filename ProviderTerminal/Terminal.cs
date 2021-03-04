@@ -63,7 +63,7 @@ namespace ProviderTerminal {
         // Creates a ConsultationRecord for the active Member.
         public String CreateConsulationRecord() {
             // dummy method body to represent how a consultation record might be created
-            var data = new Dictionary<string, object>());
+            var data = new Dictionary<string, object>();
 
             data.Add("current_date", DateTime.Now);
             data.Add("service_date", DateTime.Now);
