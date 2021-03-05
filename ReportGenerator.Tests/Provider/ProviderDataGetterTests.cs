@@ -112,7 +112,14 @@ namespace ReportGenerator.Tests.Provider {
 
         [TestMethod]
         public void GetData_twoConsultationRecords() {
-            var providerRecord = new ProviderRecord(new Dictionary<string, object>());
+            var providerRecord = new ProviderRecord(new Dictionary<string, object>()) {
+                Name = "Alex Burbank",
+                Number = 1,
+                City = "Blah",
+                State = "OR",
+                Address = "1111",
+                Zip = 1234,
+            };
 
             var consultationRecord1 = new Dictionary<string, object>();
             consultationRecord1.Add("current_date", new DateTime(2021, 2, 1));
@@ -173,6 +180,11 @@ namespace ReportGenerator.Tests.Provider {
 
             Assert.IsInstanceOfType(result, typeof(ReportData));
             Assert.AreEqual(providerRecord, result.ProviderRecord);
+            Assert.AreEqual(providerRecord.Name, result.ProviderRecord.Name);
+            Assert.AreEqual(providerRecord.Number, result.ProviderRecord.Number);
+            Assert.AreEqual(providerRecord.City, result.ProviderRecord.City);
+            Assert.AreEqual(providerRecord.State, result.ProviderRecord.State);
+            Assert.AreEqual(providerRecord.Zip, result.ProviderRecord.Zip);
 
             Assert.AreEqual(2, result.ProvidedServices.Count);
 

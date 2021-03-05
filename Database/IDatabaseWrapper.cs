@@ -14,5 +14,6 @@ namespace ChocAnDatabase
         IList<ConsultationRecord> FetchConsultationRecordsForProvider(int providerId);
         ProviderRecord FetchProvider(int id);
         ServiceRecord FetchServiceRecord(int serviceNumber);
+        List<Record> FetchProviders();
     }
 }
