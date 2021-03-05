@@ -44,6 +44,13 @@ namespace ChocAnDatabase
             throw new NotImplementedException();
         }
 
+        public List<Record> FetchProviders()
+        {
+            EnsureDatabaseIsAvailable();
+
+            return _database.FetchProviders();
+        }
+
         private void EnsureDatabaseIsAvailable()
         {
             if (_database == null)

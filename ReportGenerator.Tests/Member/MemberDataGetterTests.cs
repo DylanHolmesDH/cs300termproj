@@ -58,8 +58,7 @@ namespace ReportGenerator.Tests.Member {
         }
 
         [TestMethod]
-        public void GetData_oneConsultationRecord_EmptyMemberRecord()
-        {
+        public void GetData_oneConsultationRecord_EmptyMemberRecord() {
             var memberRecord = new MemberRecord(new Dictionary<string, object>());
 
             var consultationRecord = new Dictionary<string, object>();
@@ -113,11 +112,9 @@ namespace ReportGenerator.Tests.Member {
         }
 
         [TestMethod]
-        public void GetData_twoConsultationRecords()
-        {
+        public void GetData_twoConsultationRecords() {
             // Variable setups
-            var memberRecord = new MemberRecord(new Dictionary<string, object>())
-            {
+            var memberRecord = new MemberRecord(new Dictionary<string, object>()) {
                 Name = "Alex Burbank",
                 Address = "1111",
                 City = "Blah",
@@ -189,6 +186,11 @@ namespace ReportGenerator.Tests.Member {
             // Asserts
             Assert.IsInstanceOfType(result, typeof(ReportData));
             Assert.AreEqual(memberRecord, result.MemberRecord);
+            Assert.AreEqual(memberRecord.Name, result.MemberRecord.Name);
+            Assert.AreEqual(memberRecord.Number, result.MemberRecord.Number);
+            Assert.AreEqual(memberRecord.City, result.MemberRecord.City);
+            Assert.AreEqual(memberRecord.State, result.MemberRecord.State);
+            Assert.AreEqual(memberRecord.Zip, result.MemberRecord.Zip);
 
             Assert.AreEqual(2, result.ProvidedServices.Count);
 

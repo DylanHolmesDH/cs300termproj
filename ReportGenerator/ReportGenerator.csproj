@@ -66,6 +66,7 @@
     <Compile Include="ReportDistributor.cs" />
     <Compile Include="Models\ReportOutput.cs" />
     <Compile Include="Summary\SummaryDataFormatter.cs" />
+    <Compile Include="Summary\SummaryDataGetter.cs" />
     <Compile Include="Summary\SummaryDataValidator.cs" />
     <Compile Include="TypeOfReport.cs" />
   </ItemGroup>
