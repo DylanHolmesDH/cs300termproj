@@ -17,13 +17,13 @@ namespace ReportGenerator.Summary {
         }
         public ReportData GetData(int id = 0) {
             List<Record> providerRecords = _databaseWrapper.FetchProviders();
-            double totalFeeForProvider = 0;
 
             ReportData reportData = new ReportData();
 
             if (providerRecords != null) {
                 foreach (var providerRecord in providerRecords) {
                     var providerNumber = (int)providerRecord.Get("number");
+                    double totalFeeForProvider = 0;
 
                     IList<ConsultationRecord> consultationRecords = _databaseWrapper.FetchConsultationRecordsForProvider(providerNumber);
 
