@@ -82,12 +82,12 @@ namespace ReportGenerator.Tests.Member {
                 ProvidedServices = new List<ProvidedService> {
                     new ProvidedService {
                         ProviderName = "John Smith",
-                        ServiceDate = new DateTime(1, 1, 1),
+                        ServiceDate = new DateTime(2001, 2, 28),
                         ServiceName = "AA"
                     },
                     new ProvidedService {
                         ProviderName = "John Smith",
-                        ServiceDate = new DateTime(1, 1, 1),
+                        ServiceDate = new DateTime(2001, 2, 26),
                         ServiceName = "BB"
                     }
                 }
@@ -114,10 +114,10 @@ namespace ReportGenerator.Tests.Member {
                 + "Service name             ", result.OutputLines[8]);
             Assert.AreEqual("______________________________________________________________________"
                 , result.OutputLines[9]);
-            Assert.AreEqual("01-01-0001     " + "John Smith                    "
-                + "AA                       ", result.OutputLines[10]);
-            Assert.AreEqual("01-01-0001     " + "John Smith                    "
-                + "BB                       ", result.OutputLines[11]);
+            Assert.AreEqual("02-26-2001     " + "John Smith                    "
+                + "BB                       ", result.OutputLines[10]);
+            Assert.AreEqual("02-28-2001     " + "John Smith                    "
+                + "AA                       ", result.OutputLines[11]);
 
             Assert.AreEqual(12, result.OutputLines.Count);
         }

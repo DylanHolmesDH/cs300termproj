@@ -15,7 +15,7 @@ namespace ReportGenerator {
                 return (false, "No filename for report");
 
             // Open up a file with the name from the reportOutput
-            string path = @"c:\users\ryzen\Desktop\" + reportOutput.FileName;
+            string path = @"../../Reports/" + reportOutput.FileName;
 
             StreamWriter streamWriter = new StreamWriter(path);
 
