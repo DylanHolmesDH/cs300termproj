@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using ReportGenerator.Member;
 using System;
 using ChocAnDatabase.records;
@@ -58,8 +57,7 @@ namespace ReportGenerator.Tests.Member {
         }
 
         [TestMethod]
-        public void ValidateData_NoMemberCity()
-        {
+        public void ValidateData_NoMemberCity() {
             ReportData reportData = new ReportData {
                 MemberRecord = new MemberRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",
@@ -79,12 +77,9 @@ namespace ReportGenerator.Tests.Member {
         }
 
         [TestMethod]
-        public void ValidateData_NoMemberState()
-        {
-            ReportData reportData = new ReportData
-            {
-                MemberRecord = new MemberRecord(new Dictionary<string, object>())
-                {
+        public void ValidateData_NoMemberState() {
+            ReportData reportData = new ReportData {
+                MemberRecord = new MemberRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",
                     Address = "1111",
                     City = "Blah",
@@ -102,12 +97,9 @@ namespace ReportGenerator.Tests.Member {
         }
 
         [TestMethod]
-        public void ValidateData_NoMemberAddress()
-        {
-            ReportData reportData = new ReportData
-            {
-                MemberRecord = new MemberRecord(new Dictionary<string, object>())
-                {
+        public void ValidateData_NoMemberAddress() {
+            ReportData reportData = new ReportData {
+                MemberRecord = new MemberRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",
                     Address = " ",
                     City = "Blah",
@@ -125,12 +117,9 @@ namespace ReportGenerator.Tests.Member {
         }
 
         [TestMethod]
-        public void ValidateData_MemberNumber_0()
-        {
-            ReportData reportData = new ReportData
-            {
-                MemberRecord = new MemberRecord(new Dictionary<string, object>())
-                {
+        public void ValidateData_MemberNumber_0() {
+            ReportData reportData = new ReportData {
+                MemberRecord = new MemberRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",
                     Address = "111",
                     City = "Blah",

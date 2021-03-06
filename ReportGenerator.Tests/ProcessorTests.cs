@@ -1,11 +1,8 @@
 ﻿using ChocAnDatabase;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using ReportGenerator;
 using ReportGenerator.Factory;
 using ReportGenerator.Interfaces;
-using ReportGenerator.Member;
-using ReportGenerator.Models;
 using System;
 
 namespace ReportGenerator.Tests {
@@ -33,18 +30,15 @@ namespace ReportGenerator.Tests {
         }
 
         [TestMethod]
-        public void DistributeReport_nullFactory()
-        {
+        public void DistributeReport_nullFactory() {
             var ex = Assert.ThrowsException<ArgumentNullException>(() => _processor.GenerateReport(TypeOfReport.MemberReport, _databaseWrapperMock.Object, null, 5));
             Assert.AreEqual("Value cannot be null.\r\nParameter name: factory", ex.Message);
 
             VerifyNoOtherCalls();
         }
 
-
         [TestMethod]
-        public void CreateFile_EmptyReportObjectWithFileName()
-        {
+        public void CreateFile_EmptyReportObjectWithFileName() {
             _factoryMock.Setup(c => c.CreateReport(TypeOfReport.MemberReport, _databaseWrapperMock.Object)).Returns(_reportMock.Object);
             _reportMock.Setup(c => c.Generate(5)).Returns((true, "Blah"));
 
@@ -59,8 +53,7 @@ namespace ReportGenerator.Tests {
             VerifyNoOtherCalls();
         }
 
-        private void VerifyNoOtherCalls()
-        {
+        private void VerifyNoOtherCalls() {
             _factoryMock.VerifyNoOtherCalls();
             _reportMock.VerifyNoOtherCalls();
             _databaseWrapperMock.VerifyNoOtherCalls();

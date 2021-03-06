@@ -1,9 +1,6 @@
 ﻿using ReportGenerator.Interfaces;
 using ReportGenerator.Models;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace ReportGenerator {
     public class ReportDistributor : IReportDistributor {

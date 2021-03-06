@@ -1,8 +1,4 @@
-﻿using ChocAnDatabase.records;
-using ReportGenerator.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using ReportGenerator.Models;
 
 namespace ReportGenerator.Interfaces {
     public interface IDataGetter {

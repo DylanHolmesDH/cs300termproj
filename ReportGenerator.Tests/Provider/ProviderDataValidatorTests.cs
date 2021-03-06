@@ -1,7 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using ReportGenerator.Provider;
-using System;
 using ChocAnDatabase.records;
 using System.Collections.Generic;
 using ReportGenerator.Models;
@@ -118,8 +116,7 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void ValidateData_ProviderNumber_0()
-        {
+        public void ValidateData_ProviderNumber_0() {
             ReportData reportData = new ReportData {
                 ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",

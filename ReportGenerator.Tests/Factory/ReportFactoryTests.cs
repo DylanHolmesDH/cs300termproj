@@ -2,19 +2,17 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReportGenerator.Member;
 using ReportGenerator.Provider;
+using ReportGenerator.Summary;
 using System;
 
-namespace ReportGenerator.Tests.Factory
-{
+namespace ReportGenerator.Tests.Factory {
     [TestClass]
-    public class FactoryTests
-    {
+    public class ReportFactoryTests {
         private ReportGenerator.Factory.ReportFactory _factory;
         private DatabaseWrapper _database;
 
         [TestInitialize]
-        public void Setup()
-        {
+        public void Setup() {
             _factory = new ReportGenerator.Factory.ReportFactory();
 
             //TODO: Fix database for unit testing because path in constructor
@@ -22,15 +20,13 @@ namespace ReportGenerator.Tests.Factory
         }
 
         [TestMethod]
-        public void CreateReport_Unknown()
-        {
+        public void CreateReport_Unknown() {
            var ex = Assert.ThrowsException<ApplicationException>(() => _factory.CreateReport(TypeOfReport.Unknown, _database));
             Assert.AreEqual("Not a member or provider report", ex.Message);
         }
 
         [TestMethod]
-        public void CreateReport_Member()
-        {
+        public void CreateReport_Member() {
             var result = _factory.CreateReport(TypeOfReport.MemberReport, _database);
 
             Assert.IsInstanceOfType(result, typeof(Report));
@@ -40,8 +36,7 @@ namespace ReportGenerator.Tests.Factory
         }
 
         [TestMethod]
-        public void CreateReport_Provider()
-        {
+        public void CreateReport_Provider() {
             var result = _factory.CreateReport(TypeOfReport.ProviderReport, _database);
 
             Assert.IsInstanceOfType(result, typeof(Report));
@@ -50,5 +45,14 @@ namespace ReportGenerator.Tests.Factory
             Assert.IsInstanceOfType(result.DataFormatter, typeof(ProviderDataFormatter));
         }
 
+        [TestMethod]
+        public void CreateReport_Summary() {
+            var result = _factory.CreateReport(TypeOfReport.SummaryReport, _database);
+
+            Assert.IsInstanceOfType(result, typeof(Report));
+            Assert.IsInstanceOfType(result.DataGetter, typeof(SummaryDataGetter));
+            Assert.IsInstanceOfType(result.DataValidator, typeof(SummaryDataValidator));
+            Assert.IsInstanceOfType(result.DataFormatter, typeof(SummaryDataFormatter));
+        }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ReportGenerator.Interfaces {
+﻿namespace ReportGenerator.Interfaces {
     public interface IReport {
         IDataGetter DataGetter { get; }
         IDataValidator DataValidator { get; }

@@ -1,58 +1,56 @@
 ﻿using ChocAnDatabase.records;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ChocAnDatabase
-{
-    public class DatabaseWrapper : IDatabaseWrapper
-    {
+namespace ChocAnDatabase {
+    public class DatabaseWrapper : IDatabaseWrapper {
         Database _database;
 
-        public MemberRecord FetchMember(int id)
-        {
+        public MemberRecord FetchMember(int id) {
             EnsureDatabaseIsAvailable();
 
             return _database.FetchMember(id);
         }
 
-        public IList<ConsultationRecord> FetchConsultationRecordsForMember(int memberId)
-        {
+        public IList<ConsultationRecord> FetchConsultationRecordsForMember(int memberId) {
             EnsureDatabaseIsAvailable();
 
             return _database.FetchConsultationsByMember(memberId);
         }
 
-        public ProviderRecord FetchProvider(int id)
-        {
+        public ProviderRecord FetchProvider(int id) {
             EnsureDatabaseIsAvailable();
 
             return _database.FetchProvider(id);
         }
 
-        public ServiceRecord FetchServiceRecord(int serviceNumber)
-        {
+        public ServiceRecord FetchServiceRecord(int serviceNumber) {
             EnsureDatabaseIsAvailable();
 
-            return _database.FetchService(serviceNumber);
+            return _database.FetchServiceTemp(serviceNumber); // Remove when fixed
+            //return _database.FetchService(serviceNumber);
         }
 
-        public IList<ConsultationRecord> FetchConsultationRecordsForProvider(int providerId)
-        {
+        public IList<ConsultationRecord> FetchConsultationRecordsForProvider(int providerId) {
             throw new NotImplementedException();
+            //EnsureDatabaseIsAvailable();
+
+            //return _database.FetchConsultationByProvider(providerId);
         }
 
-        public List<Record> FetchProviders()
-        {
+        public List<Record> FetchMembers() {
+            EnsureDatabaseIsAvailable();
+
+            return _database.FetchMembers();
+        }
+
+        public List<Record> FetchProviders() {
             EnsureDatabaseIsAvailable();
 
             return _database.FetchProviders();
         }
 
-        private void EnsureDatabaseIsAvailable()
-        {
+        private void EnsureDatabaseIsAvailable() {
             if (_database == null)
                 _database = new Database();
         }

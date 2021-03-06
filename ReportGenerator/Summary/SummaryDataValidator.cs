@@ -1,13 +1,7 @@
 ﻿using ReportGenerator.Interfaces;
 using ReportGenerator.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ReportGenerator.Summary
-{
+namespace ReportGenerator.Summary {
     public class SummaryDataValidator : IDataValidator {
         public (bool valid, string errorMessage) ValidateData(ReportData reportData) {
             if (reportData == null)

@@ -1,9 +1,5 @@
-﻿using ChocAnDatabase.records;
-using ReportGenerator.Interfaces;
+﻿using ReportGenerator.Interfaces;
 using ReportGenerator.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ReportGenerator.Member {
     public class MemberDataValidator : IDataValidator {

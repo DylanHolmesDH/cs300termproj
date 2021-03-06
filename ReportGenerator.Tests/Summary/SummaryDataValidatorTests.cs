@@ -1,7 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReportGenerator.Models;
 using ReportGenerator.Summary;
-using System;
 using System.Collections.Generic;
 
 namespace ReportGenerator.Tests.Summary {
