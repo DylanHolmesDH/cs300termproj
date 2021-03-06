@@ -35,6 +35,8 @@ namespace ReportGenerator.Member {
                 );
             formattedData.OutputLines.Add("_".PadRight(70, '_'));
 
+            data.ProvidedServices.Sort((x, y) => x.ServiceDate.CompareTo(y.ServiceDate));
+
             foreach (var providedService in data.ProvidedServices) {
                 string serviceDate = providedService.ServiceDate.Date.ToString("MM-dd-yyyy");
 

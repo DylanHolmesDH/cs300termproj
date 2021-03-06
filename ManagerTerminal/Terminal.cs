@@ -22,14 +22,15 @@ namespace ManagerTerminal {
                 string proceed = Console.ReadLine();
 
                 if (ProceedWithGeneratingReport(proceed)) {
-                    reportToGenerate = DisplayReportOptions();
-
-                    var records = GetMemberOrProviderRecord(reportToGenerate, database);
-                    var stringId = DisplayRecords(records);
-
-                    int id = ReturnIdFromStringId(stringId);
-
                     try {
+                        reportToGenerate = DisplayReportOptions();
+
+                        var records = GetMemberOrProviderRecord(reportToGenerate, database);
+                        var stringId = DisplayRecords(records);
+
+                    
+                        int id = ReturnIdFromStringId(stringId);
+
                         var result = reportServices.CreateReport(database, reportFactory, reportToGenerate, id);
 
                         DisplayWhetherReportGenerated(result);
@@ -37,6 +38,7 @@ namespace ManagerTerminal {
                     catch (Exception e) {
                         Console.WriteLine("Unsuccessful! See message below:");
                         Console.WriteLine("\t" + "\"" + e.Message + "\"");
+                        Console.WriteLine();
                     }
                 }
                 else {
@@ -57,22 +59,33 @@ namespace ManagerTerminal {
         }
 
         private static int DisplayReportOptions() {
-            Console.WriteLine("Your options are listed below: ");
-            Console.WriteLine("\t1) Generate a member report");
-            Console.WriteLine("\t2) Generate a provider report");
-            Console.WriteLine("\t3) Generate a summary report");
-            string reportToPrint = Console.ReadLine();
-            Console.WriteLine();
-
+            bool invalid = false;
             int reportOptionNumber = 0;
 
-            if (reportToPrint.StartsWith("M") || reportToPrint.StartsWith("m") || reportToPrint == "1")
-                reportOptionNumber = 1;
-            else if (reportToPrint.StartsWith("P") || reportToPrint.StartsWith("p") || reportToPrint == "2")
-                reportOptionNumber = 2;
-            else if (reportToPrint.StartsWith("S") || reportToPrint.StartsWith("s") || reportToPrint == "3")
-                reportOptionNumber = 3;
+            do {
+                Console.WriteLine("Your options are listed below: ");
+                Console.WriteLine("\t1) Generate a member report");
+                Console.WriteLine("\t2) Generate a provider report");
+                Console.WriteLine("\t3) Generate a summary report");
+                string reportToPrint = Console.ReadLine();
+                Console.WriteLine();
 
+                if (reportToPrint.StartsWith("M") || reportToPrint.StartsWith("m") || reportToPrint == "1") {
+                    reportOptionNumber = 1;
+                    invalid = false;
+                }
+                else if (reportToPrint.StartsWith("P") || reportToPrint.StartsWith("p") || reportToPrint == "2") {
+                    reportOptionNumber = 2;
+                    invalid = false;
+                }
+                else if (reportToPrint.StartsWith("S") || reportToPrint.StartsWith("s") || reportToPrint == "3") {
+                    reportOptionNumber = 3;
+                    invalid = false;
+                }
+                else
+                    invalid = true;
+            } while (invalid);
+            
             return reportOptionNumber;
         }
 
@@ -112,10 +125,10 @@ namespace ManagerTerminal {
 
         private static int ReturnIdFromStringId(string stringId) {
             if (stringId == null)
-                return 0;
+                throw new NullReferenceException();
 
             if (stringId.Length < 9 || stringId.Length > 9)
-                return 0;
+                throw new ApplicationException("The id needs to be of length 9!");
 
             int id = 0;
             int exponent = 9;
@@ -131,9 +144,10 @@ namespace ManagerTerminal {
         }
 
         private static void DisplayWhetherReportGenerated((bool created, string errorMessage) result) {
-            if (!result.created)
+            if (!result.created) {
                 if (!string.IsNullOrWhiteSpace(result.errorMessage))
-                Console.WriteLine(result.errorMessage);
+                    Console.WriteLine(result.errorMessage);
+            }  
             else
                 Console.WriteLine("Successful!");
 
@@ -141,7 +155,7 @@ namespace ManagerTerminal {
         }
 
         private static void DisplayPartingMessage() {
-            Console.WriteLine("Bye then...");
+            Console.WriteLine("Have a nice day...");
             Console.WriteLine();
         }
     }

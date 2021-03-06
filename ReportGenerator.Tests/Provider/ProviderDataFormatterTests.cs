@@ -93,16 +93,16 @@ namespace ReportGenerator.Tests.Provider {
                 ProvidedServices = new List<ProvidedService> {
                     new ProvidedService {
                         Fee = 999.99,
-                        DateTimeReceived = new DateTime(1, 1, 1, 13, 0, 0),
-                        ServiceDate = new DateTime(1, 1, 1),
+                        DateTimeReceived = new DateTime(2004, 1, 14, 13, 00, 00),
+                        ServiceDate = new DateTime(2003, 1, 17),
                         ServiceId = 1,
                         MemberId = 7,
                         MemberName = "John Smith"
                     },
                     new ProvidedService {
                         Fee = 999.99,
-                        DateTimeReceived = new DateTime(1, 1, 1, 13, 0, 0),
-                        ServiceDate = new DateTime(1, 1, 1),
+                        DateTimeReceived = new DateTime(2001, 1, 25, 13, 00, 00),
+                        ServiceDate = new DateTime(2001, 1, 28),
                         ServiceId = 1,
                         MemberId = 7,
                         MemberName = "John Smith"
@@ -136,8 +136,8 @@ namespace ReportGenerator.Tests.Provider {
             Assert.AreEqual("_".PadRight(106, '_'), result.OutputLines[9]);
 
             Assert.AreEqual(
-                "01-01-0001".PadRight(15)
-                + "01-01-0001 13:00:00".PadRight(24)
+                "01-28-2001".PadRight(15)
+                + "01-25-2001 13:00:00".PadRight(24)
                 + "John Smith".PadRight(30)
                 + "7".PadRight(14)
                 + "1".PadRight(11)
@@ -145,8 +145,8 @@ namespace ReportGenerator.Tests.Provider {
                 );
 
             Assert.AreEqual(
-                "01-01-0001".PadRight(15)
-                + "01-01-0001 13:00:00".PadRight(24)
+                "01-17-2003".PadRight(15)
+                + "01-14-2004 13:00:00".PadRight(24)
                 + "John Smith".PadRight(30)
                 + "7".PadRight(14)
                 + "1".PadRight(11)

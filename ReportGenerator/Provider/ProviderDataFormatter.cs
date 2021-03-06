@@ -45,6 +45,8 @@ namespace ReportGenerator.Provider {
                 + "Fee         "
                 );
 
+            data.ProvidedServices.Sort((x, y) => x.DateTimeReceived.CompareTo(y.DateTimeReceived));
+
             formattedData.OutputLines.Add("_".PadRight(106, '_'));
 
             foreach (var providedService in data.ProvidedServices) {
