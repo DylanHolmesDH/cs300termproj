@@ -1,6 +1,4 @@
-﻿using ChocAnDatabase;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReportGenerator.Member;
 using System;
 using ChocAnDatabase.records;

@@ -1,11 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace ReportGenerator.Models
-{
-    public class SummaryDataInfo
-    {
-        public SummaryDataInfo()
-        {
+﻿namespace ReportGenerator.Models {
+    public class SummaryDataInfo {
+        public SummaryDataInfo() {
             ProviderName = string.Empty;
             TotalFee = 0;
             TotalNumberOfConsultations = 0;

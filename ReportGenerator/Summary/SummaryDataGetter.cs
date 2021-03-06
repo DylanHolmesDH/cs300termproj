@@ -2,11 +2,7 @@
 using ChocAnDatabase.records;
 using ReportGenerator.Interfaces;
 using ReportGenerator.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReportGenerator.Summary {
     public class SummaryDataGetter : IDataGetter {

@@ -1,6 +1,5 @@
 ﻿using ReportGenerator.Interfaces;
 using ReportGenerator.Models;
-using System;
 
 namespace ReportGenerator {
     public class Report : IReport {
@@ -21,17 +20,14 @@ namespace ReportGenerator {
             _reportDistributor = reportDistributor;
         }
 
-        public IDataGetter DataGetter
-        {
+        public IDataGetter DataGetter {
             get { return _dataGetter; }
         }
-        public IDataValidator DataValidator
-        {
+        public IDataValidator DataValidator {
             get { return _dataValidator; }
         }
 
-        public IDataFormatter DataFormatter
-        {
+        public IDataFormatter DataFormatter {
             get { return _dataFormatter; }
         }
 

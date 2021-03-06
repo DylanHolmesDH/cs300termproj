@@ -65,7 +65,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Factory\FactoryTests.cs" />
+    <Compile Include="Factory\ReportFactoryTests.cs" />
     <Compile Include="Member\MemberDataGetterTests.cs" />
     <Compile Include="Member\MemberDataValidatorTests.cs" />
     <Compile Include="Member\MemberDataFormatterTests.cs" />

@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ReportGenerator;
 using ReportGenerator.Interfaces;
 using ReportGenerator.Models;
 using System;
@@ -8,12 +7,10 @@ namespace ReportGenerator.Tests {
     [TestClass]
     public class ReportDistributorTests {
         private IReportDistributor _reportDistributor;
-        private string _path;
 
         [TestInitialize]
         public void Setup() {
             _reportDistributor = new ReportDistributor();
-            _path = string.Empty;
         }
 
         [TestMethod]
@@ -34,8 +31,7 @@ namespace ReportGenerator.Tests {
         }
 
         [TestMethod]
-        public void CreateFile_EmptyReportObjectWithFileName()
-        {
+        public void CreateFile_EmptyReportObjectWithFileName() {
             ReportOutput reportOutput = new ReportOutput {
                 FileName = "junk.txt"
             };

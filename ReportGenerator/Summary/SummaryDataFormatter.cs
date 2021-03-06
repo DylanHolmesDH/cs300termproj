@@ -1,17 +1,13 @@
 ﻿using ReportGenerator.Interfaces;
 using ReportGenerator.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReportGenerator.Summary {
     public class SummaryDataFormatter : IDataFormatter {
         public ReportOutput FormatData(ReportData data) {
 
             if (data == null)
-                throw new ApplicationException("Report data object cannot be null");
+                throw new NullReferenceException("Report data object cannot be null");
 
             if (data.SummaryDataInfo.Count == 0)
                 throw new ApplicationException("There must be services provided to the member to format data");

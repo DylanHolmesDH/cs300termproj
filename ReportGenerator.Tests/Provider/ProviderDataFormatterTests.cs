@@ -153,6 +153,5 @@ namespace ReportGenerator.Tests.Provider {
                 + "$999.99".PadRight(12), result.OutputLines[11]
                 );
         }
-
     }
 }

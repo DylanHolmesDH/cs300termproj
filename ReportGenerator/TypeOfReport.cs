@@ -1,5 +1,4 @@
-﻿namespace ReportGenerator
-{
+﻿namespace ReportGenerator {
     public enum TypeOfReport {
         Unknown = 0,
         MemberReport = 1,

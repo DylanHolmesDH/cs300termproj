@@ -16,7 +16,7 @@ namespace ReportGenerator.Tests.Summary {
 
         [TestMethod]
         public void ReportDataNull() {
-            var ex = Assert.ThrowsException<ApplicationException>(() => _summaryDataFormatter.FormatData(null));
+            var ex = Assert.ThrowsException<NullReferenceException>(() => _summaryDataFormatter.FormatData(null));
 
             Assert.AreEqual("Report data object cannot be null", ex.Message);
         }
@@ -65,10 +65,8 @@ namespace ReportGenerator.Tests.Summary {
         }
 
         [TestMethod]
-        public void TwoProviderProvidingService()
-        {
-            ReportData reportData = new ReportData
-            {
+        public void TwoProviderProvidingService() {
+            ReportData reportData = new ReportData {
                 SummaryDataInfo = new List<SummaryDataInfo> {
                     new SummaryDataInfo {
                         ProviderName = "John Smith",

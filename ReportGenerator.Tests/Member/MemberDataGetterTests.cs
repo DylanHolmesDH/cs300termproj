@@ -2,7 +2,6 @@
 using ChocAnDatabase.records;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using ReportGenerator.Interfaces;
 using ReportGenerator.Member;
 using ReportGenerator.Models;
 using System;
@@ -15,16 +14,14 @@ namespace ReportGenerator.Tests.Member {
         private MemberDataGetter _memberDataGetter;
 
         [TestInitialize]
-        public void Setup()
-        {
+        public void Setup() {
             _databaseMock = new Mock<IDatabaseWrapper>();
 
             _memberDataGetter = new MemberDataGetter(_databaseMock.Object);
         }
 
         [TestMethod]
-        public void GetData_NullMemberRecord()
-        {
+        public void GetData_NullMemberRecord() {
             var consultationRecords = new List<ConsultationRecord>();
 
             _databaseMock.Setup(c => c.FetchMember(3)).Returns((MemberRecord)null);
@@ -40,8 +37,7 @@ namespace ReportGenerator.Tests.Member {
         }
 
         [TestMethod]
-        public void GetData_EmptyConsultationRecords()
-        {
+        public void GetData_EmptyConsultationRecords() {
             var consultationRecords = new List<ConsultationRecord>();
 
             _databaseMock.Setup(c => c.FetchMember(3)).Returns((MemberRecord) null);

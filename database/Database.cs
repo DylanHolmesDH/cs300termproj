@@ -50,6 +50,11 @@ namespace ChocAnDatabase {
             return (ServiceRecord) FetchRecordByNumber(id, providers);
         }
 
+        // TODO: Remove
+        public ServiceRecord FetchServiceTemp(int id) {
+            return (ServiceRecord) FetchRecordByNumber(id, services);
+        }
+
         public ProviderRecord FetchProvider(int id) {
             return (ProviderRecord) FetchRecordByNumber(id, providers);
         }

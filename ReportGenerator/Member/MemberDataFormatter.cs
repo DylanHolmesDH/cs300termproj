@@ -1,9 +1,6 @@
-﻿using ChocAnDatabase.records;
-using ReportGenerator.Interfaces;
+﻿using ReportGenerator.Interfaces;
 using ReportGenerator.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ReportGenerator.Member {
     public class MemberDataFormatter : IDataFormatter {
@@ -38,8 +35,7 @@ namespace ReportGenerator.Member {
                 );
             formattedData.OutputLines.Add("_".PadRight(70, '_'));
 
-            foreach (var providedService in data.ProvidedServices)
-            {
+            foreach (var providedService in data.ProvidedServices) {
                 string serviceDate = providedService.ServiceDate.Date.ToString("MM-dd-yyyy");
 
                 formattedData.OutputLines.Add(
