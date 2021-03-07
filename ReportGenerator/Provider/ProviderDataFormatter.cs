@@ -18,23 +18,24 @@ namespace ReportGenerator.Provider {
 
             ReportOutput formattedData = new ReportOutput();
 
-            formattedData.FileName = data.ProviderRecord.Name + ".txt";
+            string todaysDate = DateTime.Now.ToString("MM-dd-yyyy");
+            formattedData.FileName = data.ProviderRecord.Name.Replace(' ', '_') + " " + todaysDate + ".txt";
 
             formattedData.OutputLines.Add(data.ProviderRecord.Name);
             formattedData.OutputLines.Add(data.ProviderRecord.Address);
             formattedData.OutputLines.Add(
-                data.ProviderRecord.City + " " 
+                data.ProviderRecord.City + ", " 
                 + data.ProviderRecord.State + " " 
                 + data.ProviderRecord.Zip
                 );
 
-            formattedData.OutputLines.Add("\n");
-            formattedData.OutputLines.Add("\n");
-            formattedData.OutputLines.Add("\n");
+            formattedData.OutputLines.Add("");
+            formattedData.OutputLines.Add("");
 
-            formattedData.OutputLines.Add(data.ProviderRecord.Number.ToString());
+            formattedData.OutputLines.Add("ID: " + data.ProviderRecord.Number.ToString());
 
-            formattedData.OutputLines.Add("\n");
+            formattedData.OutputLines.Add("");
+            formattedData.OutputLines.Add("");
 
             formattedData.OutputLines.Add(
                 "Service date   " 
@@ -66,10 +67,11 @@ namespace ReportGenerator.Provider {
                 );
             }
 
-            formattedData.OutputLines.Add("\n");
+            formattedData.OutputLines.Add("");
+            formattedData.OutputLines.Add("");
 
-            formattedData.OutputLines.Add(_totalConsultations.ToString());
-            formattedData.OutputLines.Add(_totalFee.ToString("C"));
+            formattedData.OutputLines.Add("Total consultations: " + _totalConsultations.ToString());
+            formattedData.OutputLines.Add("Total fee: " + _totalFee.ToString("C"));
 
             return formattedData;
         }

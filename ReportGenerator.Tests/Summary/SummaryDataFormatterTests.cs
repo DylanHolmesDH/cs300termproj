@@ -22,18 +22,38 @@ namespace ReportGenerator.Tests.Summary {
         }
 
         [TestMethod]
-        public void NoSummaryInfo() {
+        public void FormatData_NoProvidersProvidingServices() {
             ReportData reportData = new ReportData {
                 SummaryDataInfo = new List<SummaryDataInfo>()
             };
 
-            var ex = Assert.ThrowsException<ApplicationException>(() => _summaryDataFormatter.FormatData(reportData));
+            var result = _summaryDataFormatter.FormatData(reportData);
+            Assert.AreEqual(6, result.OutputLines.Count);
 
-            Assert.AreEqual("There must be services provided to the member to format data", ex.Message);
+            Assert.AreEqual("Summary Report.txt", result.FileName);
+
+            Assert.AreEqual("", result.OutputLines[0]);
+
+            Assert.AreEqual(
+                "Provider name".PadRight(30)
+                + "Consultations".PadRight(15)
+                + "Fee".PadRight(15), result.OutputLines[1]
+                );
+
+            Assert.AreEqual("_".PadRight(46, '_'), result.OutputLines[2]);
+
+            Assert.AreEqual("_".PadRight(46, '_'), result.OutputLines[3]);
+            Assert.AreEqual("_".PadRight(46, '_'), result.OutputLines[4]);
+
+            Assert.AreEqual(
+                    "0".PadRight(30)
+                    + "0".PadRight(15)
+                    + "$0.00".PadRight(15), result.OutputLines[5]
+                     );
         }
 
         [TestMethod]
-        public void OnceProviderProvidingService() {
+        public void FormatData_1ProviderProvidingServices() {
             ReportData reportData = new ReportData {
                 SummaryDataInfo = new List<SummaryDataInfo> {
                     new SummaryDataInfo {
@@ -45,16 +65,18 @@ namespace ReportGenerator.Tests.Summary {
             };
 
             var result = _summaryDataFormatter.FormatData(reportData);
+            Assert.AreEqual(7, result.OutputLines.Count);
 
-            Assert.AreEqual("SummaryReport.txt", result.FileName);
+            Assert.AreEqual("Summary Report.txt", result.FileName);
 
-            Assert.AreEqual("\n", result.OutputLines[0]);
+            Assert.AreEqual("", result.OutputLines[0]);
 
             Assert.AreEqual(
                 "Provider name".PadRight(30)
                 + "Consultations".PadRight(15)
                 + "Fee".PadRight(15), result.OutputLines[1]
                 );
+
             Assert.AreEqual("_".PadRight(46, '_'), result.OutputLines[2]);
 
             Assert.AreEqual(
@@ -62,10 +84,19 @@ namespace ReportGenerator.Tests.Summary {
                 + "5".PadRight(15) 
                 + "$999.99".PadRight(15), result.OutputLines[3]
                 );
+
+            Assert.AreEqual("_".PadRight(46, '_'), result.OutputLines[4]);
+            Assert.AreEqual("_".PadRight(46, '_'), result.OutputLines[5]);
+
+            Assert.AreEqual(
+                    "1".PadRight(30)
+                    + "5".PadRight(15)
+                    + "$999.99".PadRight(15), result.OutputLines[6]
+                     );
         }
 
         [TestMethod]
-        public void TwoProviderProvidingService() {
+        public void FormatData_2ProvidersProvidingServices() {
             ReportData reportData = new ReportData {
                 SummaryDataInfo = new List<SummaryDataInfo> {
                     new SummaryDataInfo {
@@ -82,10 +113,11 @@ namespace ReportGenerator.Tests.Summary {
             };
 
             var result = _summaryDataFormatter.FormatData(reportData);
+            Assert.AreEqual(8, result.OutputLines.Count);
 
-            Assert.AreEqual("SummaryReport.txt", result.FileName);
+            Assert.AreEqual("Summary Report.txt", result.FileName);
 
-            Assert.AreEqual("\n", result.OutputLines[0]);
+            Assert.AreEqual("", result.OutputLines[0]);
 
             Assert.AreEqual(
                 "Provider name".PadRight(30)
@@ -104,6 +136,15 @@ namespace ReportGenerator.Tests.Summary {
                 + "8".PadRight(15)
                 + "$999.99".PadRight(15), result.OutputLines[4]
                 );
+
+            Assert.AreEqual("_".PadRight(46, '_'), result.OutputLines[5]);
+            Assert.AreEqual("_".PadRight(46, '_'), result.OutputLines[6]);
+
+            Assert.AreEqual(
+                "2".PadRight(30)
+                + "13".PadRight(15)
+                + "$1,999.98".PadRight(15), result.OutputLines[7]
+            );
         }
     }
 }

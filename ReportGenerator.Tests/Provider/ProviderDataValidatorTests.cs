@@ -23,19 +23,6 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void ValidateData_NullProviderRecord() {
-            ReportData reportData = new ReportData {
-                ProviderRecord = null,
-                ProvidedServices = null
-            };
-
-            var result = _providerDataValidator.ValidateData(reportData);
-
-            Assert.AreEqual(false, result.valid);
-            Assert.AreEqual("Provider record cannot be null", result.errorMessage);
-        }
-
-        [TestMethod]
         public void ValidateData_NoProviderName() {
             ReportData reportData = new ReportData {
                 ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
