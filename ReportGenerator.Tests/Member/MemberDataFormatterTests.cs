@@ -43,20 +43,20 @@ namespace ReportGenerator.Tests.Member {
 
             var result = _memberDataFormatter.FormatData(reportData);
 
-            Assert.AreEqual(reportData.MemberRecord.Name + ".txt", result.FileName);
+            Assert.AreEqual(reportData.MemberRecord.Name + " " + DateTime.Now.ToString("MM-dd-yyyy") + ".txt", result.FileName);
 
             Assert.AreEqual(reportData.MemberRecord.Name, result.OutputLines[0]);
             Assert.AreEqual(reportData.MemberRecord.Address, result.OutputLines[1]);
-            Assert.AreEqual(reportData.MemberRecord.City + " " + reportData.MemberRecord.State + " " +
+            Assert.AreEqual(reportData.MemberRecord.City + ", " + reportData.MemberRecord.State + " " +
                reportData.MemberRecord.Zip, result.OutputLines[2]);
 
-            Assert.AreEqual("\n", result.OutputLines[3]);
-            Assert.AreEqual("\n", result.OutputLines[4]);
-            Assert.AreEqual("\n", result.OutputLines[5]);
+            Assert.AreEqual("", result.OutputLines[3]);
+            Assert.AreEqual("", result.OutputLines[4]);
 
-            Assert.AreEqual("7", result.OutputLines[6]);
+            Assert.AreEqual("ID: 7", result.OutputLines[5]);
 
-            Assert.AreEqual("\n", result.OutputLines[7]);
+            Assert.AreEqual("", result.OutputLines[6]);
+            Assert.AreEqual("", result.OutputLines[7]);
 
             Assert.AreEqual("Service date   " + "Provider name                 "
                 + "Service name             ", result.OutputLines[8]);
@@ -95,20 +95,20 @@ namespace ReportGenerator.Tests.Member {
 
             var result = _memberDataFormatter.FormatData(reportData);
 
-            Assert.AreEqual(reportData.MemberRecord.Name + ".txt", result.FileName);
+            Assert.AreEqual(reportData.MemberRecord.Name + " " + DateTime.Now.ToString("MM-dd-yyyy") + ".txt", result.FileName);
 
             Assert.AreEqual(reportData.MemberRecord.Name, result.OutputLines[0]);
             Assert.AreEqual(reportData.MemberRecord.Address, result.OutputLines[1]);
-            Assert.AreEqual(reportData.MemberRecord.City + " " + reportData.MemberRecord.State + " " +
+            Assert.AreEqual(reportData.MemberRecord.City + ", " + reportData.MemberRecord.State + " " +
                reportData.MemberRecord.Zip, result.OutputLines[2]);
 
-            Assert.AreEqual("\n", result.OutputLines[3]);
-            Assert.AreEqual("\n", result.OutputLines[4]);
-            Assert.AreEqual("\n", result.OutputLines[5]);
+            Assert.AreEqual("", result.OutputLines[3]);
+            Assert.AreEqual("", result.OutputLines[4]);
 
-            Assert.AreEqual("7", result.OutputLines[6]);
+            Assert.AreEqual("ID: 7", result.OutputLines[5]);
 
-            Assert.AreEqual("\n", result.OutputLines[7]);
+            Assert.AreEqual("", result.OutputLines[6]);
+            Assert.AreEqual("", result.OutputLines[7]);
 
             Assert.AreEqual("Service date   " + "Provider name                 "
                 + "Service name             ", result.OutputLines[8]);

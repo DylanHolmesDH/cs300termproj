@@ -10,23 +10,25 @@ namespace ReportGenerator.Member {
 
             ReportOutput formattedData = new ReportOutput();
 
-            formattedData.FileName = data.MemberRecord.Name + ".txt";
+            string todaysDate = DateTime.Now.ToString("MM-dd-yyyy");
+
+            formattedData.FileName = data.MemberRecord.Name.Trim(' ') + " " + todaysDate + ".txt";
 
             formattedData.OutputLines.Add(data.MemberRecord.Name);
             formattedData.OutputLines.Add(data.MemberRecord.Address);
             formattedData.OutputLines.Add(
-                data.MemberRecord.City + " " 
+                data.MemberRecord.City + ", " 
                 + data.MemberRecord.State + " "
                 + data.MemberRecord.Zip
                 );
 
-            formattedData.OutputLines.Add("\n");
-            formattedData.OutputLines.Add("\n");
-            formattedData.OutputLines.Add("\n");
+            formattedData.OutputLines.Add("");
+            formattedData.OutputLines.Add("");
 
-            formattedData.OutputLines.Add(data.MemberRecord.Number.ToString());
+            formattedData.OutputLines.Add("ID: " + data.MemberRecord.Number.ToString());
 
-            formattedData.OutputLines.Add("\n");
+            formattedData.OutputLines.Add("");
+            formattedData.OutputLines.Add("");
 
             formattedData.OutputLines.Add(
                 "Service date   " 

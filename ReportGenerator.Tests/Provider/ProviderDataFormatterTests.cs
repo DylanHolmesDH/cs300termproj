@@ -46,17 +46,19 @@ namespace ReportGenerator.Tests.Provider {
 
             var result = _providerDataFormatter.FormatData(reportData);
 
+            Assert.AreEqual("AlexBurbank " + DateTime.Now.ToString("MM-dd-yyyy") + ".txt", result.FileName);
+
             Assert.AreEqual("Alex Burbank", result.OutputLines[0]);
             Assert.AreEqual("1111", result.OutputLines[1]);
-            Assert.AreEqual("Blah OR 1111", result.OutputLines[2]);
+            Assert.AreEqual("Blah, OR 1111", result.OutputLines[2]);
 
-            Assert.AreEqual("\n", result.OutputLines[3]);
-            Assert.AreEqual("\n", result.OutputLines[4]);
-            Assert.AreEqual("\n", result.OutputLines[5]);
+            Assert.AreEqual("", result.OutputLines[3]);
+            Assert.AreEqual("", result.OutputLines[4]);
 
-            Assert.AreEqual("7", result.OutputLines[6]);
+            Assert.AreEqual("ID: 7", result.OutputLines[5]);
 
-            Assert.AreEqual("\n", result.OutputLines[7]);
+            Assert.AreEqual("", result.OutputLines[6]);
+            Assert.AreEqual("", result.OutputLines[7]);
 
             Assert.AreEqual(
                 "Service date".PadRight(15)
@@ -77,6 +79,12 @@ namespace ReportGenerator.Tests.Provider {
                 + "1".PadRight(11)
                 + "$999.99".PadRight(12), result.OutputLines[10]
                 );
+
+            Assert.AreEqual("", result.OutputLines[11]);
+            Assert.AreEqual("", result.OutputLines[12]);
+
+            Assert.AreEqual("Total consultations: 1", result.OutputLines[13]);
+            Assert.AreEqual("Total fee: $999.99", result.OutputLines[14]);
         }
 
         [TestMethod]
@@ -114,15 +122,15 @@ namespace ReportGenerator.Tests.Provider {
 
             Assert.AreEqual("Alex Burbank", result.OutputLines[0]);
             Assert.AreEqual("1111", result.OutputLines[1]);
-            Assert.AreEqual("Blah OR 1111", result.OutputLines[2]);
+            Assert.AreEqual("Blah, OR 1111", result.OutputLines[2]);
 
-            Assert.AreEqual("\n", result.OutputLines[3]);
-            Assert.AreEqual("\n", result.OutputLines[4]);
-            Assert.AreEqual("\n", result.OutputLines[5]);
+            Assert.AreEqual("", result.OutputLines[3]);
+            Assert.AreEqual("", result.OutputLines[4]);
 
-            Assert.AreEqual("7", result.OutputLines[6]);
+            Assert.AreEqual("ID: 7", result.OutputLines[5]);
 
-            Assert.AreEqual("\n", result.OutputLines[7]);
+            Assert.AreEqual("", result.OutputLines[6]);
+            Assert.AreEqual("", result.OutputLines[7]);
 
             Assert.AreEqual(
                 "Service date".PadRight(15)
@@ -152,6 +160,12 @@ namespace ReportGenerator.Tests.Provider {
                 + "1".PadRight(11)
                 + "$999.99".PadRight(12), result.OutputLines[11]
                 );
+
+            Assert.AreEqual("", result.OutputLines[12]);
+            Assert.AreEqual("", result.OutputLines[13]);
+
+            Assert.AreEqual("Total consultations: 2", result.OutputLines[14]);
+            Assert.AreEqual("Total fee: $1,999.98", result.OutputLines[15]);
         }
     }
 }

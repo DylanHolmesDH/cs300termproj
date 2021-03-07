@@ -17,9 +17,9 @@ namespace ReportGenerator.Summary {
             int totalProviders = 0;
             int totalConsultations = 0;
 
-            formattedData.FileName = "SummaryReport.txt";
+            formattedData.FileName = "Summary Report.txt";
 
-            formattedData.OutputLines.Add("\n");
+            formattedData.OutputLines.Add("");
 
             formattedData.OutputLines.Add(
                 "Provider name                 "
@@ -41,12 +41,14 @@ namespace ReportGenerator.Summary {
                      );
             }
 
-            formattedData.OutputLines.Add("\n");
-            formattedData.OutputLines.Add("\n");
+            formattedData.OutputLines.Add("_".PadRight(46, '_'));
+            formattedData.OutputLines.Add("_".PadRight(46, '_'));
 
-            formattedData.OutputLines.Add("Total number of providers for week: " + totalConsultations.ToString());
-            formattedData.OutputLines.Add("Total number of consultations for week: " + totalConsultations.ToString());
-            formattedData.OutputLines.Add("Total Fee for week: " + totalFee.ToString("C"));
+            formattedData.OutputLines.Add(
+                    totalProviders.ToString().PadRight(30)
+                    + totalConsultations.ToString().PadRight(15)
+                    + totalFee.ToString("C").PadRight(15)
+                     );
 
             return formattedData;
         }
