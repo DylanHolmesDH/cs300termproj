@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EftData\EftDataFormatter.cs" />
     <Compile Include="Factory\IReportFactory.cs" />
     <Compile Include="Factory\ReportFactory.cs" />
     <Compile Include="Interfaces\IDataFormatter.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="Member\MemberDataFormatter.cs" />
     <Compile Include="Member\MemberDataGetter.cs" />
     <Compile Include="Member\MemberDataValidator.cs" />
+    <Compile Include="Models\EftDataInfo.cs" />
     <Compile Include="Models\ProvidedService.cs" />
     <Compile Include="Models\SummaryDataInfo.cs" />
     <Compile Include="Processor.cs" />

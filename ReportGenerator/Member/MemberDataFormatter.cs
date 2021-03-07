@@ -12,7 +12,7 @@ namespace ReportGenerator.Member {
 
             string todaysDate = DateTime.Now.ToString("MM-dd-yyyy");
 
-            formattedData.FileName = data.MemberRecord.Name.Trim(' ') + " " + todaysDate + ".txt";
+            formattedData.FileName = data.MemberRecord.Name.Replace(' ', '_') + " " + todaysDate + ".txt";
 
             formattedData.OutputLines.Add(data.MemberRecord.Name);
             formattedData.OutputLines.Add(data.MemberRecord.Address);

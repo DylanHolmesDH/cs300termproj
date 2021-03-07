@@ -24,19 +24,6 @@ namespace ReportGenerator.Tests.Member {
         }
 
         [TestMethod]
-        public void ValidateData_NullMemberRecord() {
-            ReportData reportData = new ReportData {
-                MemberRecord = null,
-                ProvidedServices = null
-            };
-
-            var result = _memberDataValidator.ValidateData(reportData);
-
-            Assert.AreEqual(false, result.valid);
-            Assert.AreEqual("Member record cannot be null", result.errorMessage);
-        }
-
-        [TestMethod]
         public void ValidateData_NoMemberName() {
             ReportData reportData = new ReportData {
                 MemberRecord = new MemberRecord(new Dictionary<string, object>()) {

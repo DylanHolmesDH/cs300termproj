@@ -19,8 +19,7 @@ namespace ReportGenerator.Provider {
             ReportOutput formattedData = new ReportOutput();
 
             string todaysDate = DateTime.Now.ToString("MM-dd-yyyy");
-
-            formattedData.FileName = data.ProviderRecord.Name + todaysDate + ".txt";
+            formattedData.FileName = data.ProviderRecord.Name.Replace(' ', '_') + " " + todaysDate + ".txt";
 
             formattedData.OutputLines.Add(data.ProviderRecord.Name);
             formattedData.OutputLines.Add(data.ProviderRecord.Address);

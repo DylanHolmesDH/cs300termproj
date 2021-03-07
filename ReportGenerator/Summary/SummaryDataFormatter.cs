@@ -9,9 +9,6 @@ namespace ReportGenerator.Summary {
             if (data == null)
                 throw new NullReferenceException("Report data object cannot be null");
 
-            if (data.SummaryDataInfo.Count == 0)
-                throw new ApplicationException("There must be services provided to the member to format data");
-
             ReportOutput formattedData = new ReportOutput();
             double totalFee = 0;
             int totalProviders = 0;

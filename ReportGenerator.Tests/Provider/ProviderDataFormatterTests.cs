@@ -22,7 +22,56 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void ReportData1ProvidedService() {
+        public void FormatData_NoServicesProvided() {
+            ReportData reportData = new ReportData {
+                ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
+                    Name = "Alex Burbank",
+                    Address = "1111",
+                    City = "Blah",
+                    Number = 7,
+                    State = "OR",
+                    Zip = 1111
+                },
+            };
+
+            var result = _providerDataFormatter.FormatData(reportData);
+            Assert.AreEqual(14, result.OutputLines.Count);
+
+            Assert.AreEqual("Alex_Burbank " + DateTime.Now.ToString("MM-dd-yyyy") + ".txt", result.FileName);
+
+            Assert.AreEqual("Alex Burbank", result.OutputLines[0]);
+            Assert.AreEqual("1111", result.OutputLines[1]);
+            Assert.AreEqual("Blah, OR 1111", result.OutputLines[2]);
+
+            Assert.AreEqual("", result.OutputLines[3]);
+            Assert.AreEqual("", result.OutputLines[4]);
+
+            Assert.AreEqual("ID: 7", result.OutputLines[5]);
+
+            Assert.AreEqual("", result.OutputLines[6]);
+            Assert.AreEqual("", result.OutputLines[7]);
+
+            Assert.AreEqual(
+                "Service date".PadRight(15)
+                + "Date record received".PadRight(24)
+                + "Member name".PadRight(30)
+                + "Member ID".PadRight(14)
+                + "Service ID".PadRight(11)
+                + "Fee".PadRight(12), result.OutputLines[8]
+                );
+
+            Assert.AreEqual("_".PadRight(106, '_'), result.OutputLines[9]);
+
+            Assert.AreEqual("", result.OutputLines[10]);
+            Assert.AreEqual("", result.OutputLines[11]);
+
+            Assert.AreEqual("Total consultations: 0", result.OutputLines[12]);
+            Assert.AreEqual("Total fee: $0.00", result.OutputLines[13]);
+        }
+
+
+        [TestMethod]
+        public void FormatData_1ServiceProvided() {
             ReportData reportData = new ReportData {
                 ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",
@@ -45,8 +94,9 @@ namespace ReportGenerator.Tests.Provider {
             };
 
             var result = _providerDataFormatter.FormatData(reportData);
+            Assert.AreEqual(15, result.OutputLines.Count);
 
-            Assert.AreEqual("AlexBurbank " + DateTime.Now.ToString("MM-dd-yyyy") + ".txt", result.FileName);
+            Assert.AreEqual("Alex_Burbank " + DateTime.Now.ToString("MM-dd-yyyy") + ".txt", result.FileName);
 
             Assert.AreEqual("Alex Burbank", result.OutputLines[0]);
             Assert.AreEqual("1111", result.OutputLines[1]);
@@ -88,7 +138,7 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void ReportData2ProvidedService() {
+        public void FormatData_2ServicesProvided() {
             ReportData reportData = new ReportData {
                 ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",
@@ -119,6 +169,9 @@ namespace ReportGenerator.Tests.Provider {
             };
 
             var result = _providerDataFormatter.FormatData(reportData);
+            Assert.AreEqual(16, result.OutputLines.Count);
+
+            Assert.AreEqual("Alex_Burbank " + DateTime.Now.ToString("MM-dd-yyyy") + ".txt", result.FileName);
 
             Assert.AreEqual("Alex Burbank", result.OutputLines[0]);
             Assert.AreEqual("1111", result.OutputLines[1]);

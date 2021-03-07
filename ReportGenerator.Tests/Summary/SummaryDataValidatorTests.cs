@@ -22,18 +22,6 @@ namespace ReportGenerator.Tests.Summary {
         }
 
         [TestMethod]
-        public void ReportDataSummaryDataInfoNull() {
-            ReportData reportData = new ReportData() {
-                SummaryDataInfo = null
-            };
-
-            var result = _dataValidator.ValidateData(reportData);
-
-            Assert.AreEqual(false, result.valid);
-            Assert.AreEqual("Summary report info cannot be null", result.errorMessage);
-        }
-
-        [TestMethod]
         public void ReportDataSummaryDataInfoEmpty() {
             ReportData reportData = new ReportData() {
                 SummaryDataInfo = new List<SummaryDataInfo>()
