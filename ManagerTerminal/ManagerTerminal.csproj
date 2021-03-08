@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CrudServices.cs" />
     <Compile Include="IReportServices.cs" />
     <Compile Include="IServicesFactory.cs" />
     <Compile Include="ReportServices.cs" />

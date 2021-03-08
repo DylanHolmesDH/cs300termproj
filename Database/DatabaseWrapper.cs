@@ -54,5 +54,20 @@ namespace ChocAnDatabase {
             if (_database == null)
                 _database = new Database();
         }
+
+        public void AddMember(Record record)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Save()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddProvider(Record record)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
