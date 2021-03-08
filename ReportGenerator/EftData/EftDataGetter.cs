@@ -4,13 +4,14 @@ using ReportGenerator.Interfaces;
 using ReportGenerator.Models;
 using System.Collections.Generic;
 
-namespace ReportGenerator.Summary {
-    public class SummaryDataGetter : IDataGetter {
+namespace ReportGenerator.EftData {
+    public class EftDataGetter : IDataGetter {
         private IDatabaseWrapper _databaseWrapper;
 
-        public SummaryDataGetter(IDatabaseWrapper databaseWrapper) {
+        public EftDataGetter(IDatabaseWrapper databaseWrapper) {
             _databaseWrapper = databaseWrapper;
         }
+
         public ReportData GetData(int id = 0) {
             List<Record> providerRecords = _databaseWrapper.FetchProviders();
 
@@ -31,13 +32,13 @@ namespace ReportGenerator.Summary {
                         }
 
                         if (totalFeeForProvider != 0) {
-                            SummaryDataInfo summaryDataInfo = new SummaryDataInfo {
+                            EftDataInfo eftDataInfo = new EftDataInfo {
                                 ProviderName = (string)providerRecord.Get("name"),
                                 TotalFee = totalFeeForProvider,
-                                TotalNumberOfConsultations = consultationRecords.Count
+                                ProviderNumber = providerNumber
                             };
 
-                            reportData.SummaryDataInfo.Add(summaryDataInfo);
+                            reportData.EftDataInfo.Add(eftDataInfo);
                         }
                     }
                 }

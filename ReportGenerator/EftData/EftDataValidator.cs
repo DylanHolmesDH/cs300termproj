@@ -1,7 +1,8 @@
-﻿using ReportGenerator.Models;
+﻿using ReportGenerator.Interfaces;
+using ReportGenerator.Models;
 
 namespace ReportGenerator.EftData {
-    public class EftDataValidator {
+    public class EftDataValidator : IDataValidator {
         public (bool valid, string errorMessage) ValidateData(ReportData data) {
             if (data == null)
                 return (false, "Report data object cannot be null");

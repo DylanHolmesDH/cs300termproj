@@ -1,8 +1,9 @@
-﻿using ReportGenerator.Models;
+﻿using ReportGenerator.Interfaces;
+using ReportGenerator.Models;
 using System;
 
 namespace ReportGenerator.EftData {
-    public class EftDataFormatter {
+    public class EftDataFormatter : IDataFormatter {
         public ReportOutput FormatData(ReportData data) {
             var formattedData = new ReportOutput();
 

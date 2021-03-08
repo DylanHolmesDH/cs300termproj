@@ -2,28 +2,28 @@
 using ChocAnDatabase.records;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ReportGenerator.EftData;
 using ReportGenerator.Models;
-using ReportGenerator.Summary;
 using System;
 using System.Collections.Generic;
 
-namespace ReportGenerator.Tests.Summary {
+namespace ReportGenerator.Tests.EftData {
     [TestClass]
-    public class SummaryDataGetterTests {
+    public class EftDataGetterTests {
         private Mock<IDatabaseWrapper> _databaseMock;
-        private SummaryDataGetter _summaryDataGetter;
+        private EftDataGetter _eftDataGetter;
 
         [TestInitialize]
         public void Setup() {
             _databaseMock = new Mock<IDatabaseWrapper>();
-            _summaryDataGetter = new SummaryDataGetter(_databaseMock.Object);
+            _eftDataGetter = new EftDataGetter(_databaseMock.Object);
         }
 
         [TestMethod]
         public void GetData_NullProviderRecord() {
             _databaseMock.Setup(c => c.FetchProviders()).Returns((List<Record>)null);
 
-            var result = _summaryDataGetter.GetData();
+            var result = _eftDataGetter.GetData();
 
             Assert.IsInstanceOfType(result, typeof(ReportData));
 
@@ -36,7 +36,7 @@ namespace ReportGenerator.Tests.Summary {
         public void GetData_NoProviderRecords() {
             _databaseMock.Setup(c => c.FetchProviders()).Returns(new List<Record>());
 
-            var result = _summaryDataGetter.GetData();
+            var result = _eftDataGetter.GetData();
 
             Assert.IsInstanceOfType(result, typeof(ReportData));
 
@@ -63,7 +63,7 @@ namespace ReportGenerator.Tests.Summary {
             _databaseMock.Setup(c => c.FetchProviders()).Returns(providerRecords);
             _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(7)).Returns((List<ConsultationRecord>)null);
 
-            var result = _summaryDataGetter.GetData();
+            var result = _eftDataGetter.GetData();
 
             Assert.IsInstanceOfType(result, typeof(ReportData));
 
@@ -91,10 +91,10 @@ namespace ReportGenerator.Tests.Summary {
             _databaseMock.Setup(c => c.FetchProviders()).Returns(providerRecords);
             _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(7)).Returns(new List<ConsultationRecord>());
 
-            var result = _summaryDataGetter.GetData();
+            var result = _eftDataGetter.GetData();
 
             Assert.IsInstanceOfType(result, typeof(ReportData));
-            Assert.AreEqual(0, result.SummaryDataInfo.Count);
+            Assert.AreEqual(0, result.EftDataInfo.Count);
 
             _databaseMock.Verify(c => c.FetchProviders(), Times.Once);
             _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(7), Times.Once);
@@ -128,7 +128,8 @@ namespace ReportGenerator.Tests.Summary {
                 new ConsultationRecord(consultationRecord)
             };
 
-            ServiceRecord serviceRecord = new ServiceRecord(new Dictionary<string, object>()) {
+            ServiceRecord serviceRecord = new ServiceRecord(new Dictionary<string, object>())
+            {
                 Fee = 0,
                 Name = "BC",
                 Number = 5
@@ -138,10 +139,10 @@ namespace ReportGenerator.Tests.Summary {
             _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(7)).Returns(consultationRecords);
             _databaseMock.Setup(c => c.FetchServiceRecord(5)).Returns(serviceRecord);
 
-            var result = _summaryDataGetter.GetData();
+            var result = _eftDataGetter.GetData();
 
             Assert.IsInstanceOfType(result, typeof(ReportData));
-            Assert.AreEqual(0, result.SummaryDataInfo.Count);
+            Assert.AreEqual(0, result.EftDataInfo.Count);
 
             _databaseMock.Verify(c => c.FetchProviders(), Times.Once);
             _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(7), Times.Once);
@@ -176,7 +177,8 @@ namespace ReportGenerator.Tests.Summary {
                 new ConsultationRecord(consultationRecord)
             };
 
-            ServiceRecord serviceRecord = new ServiceRecord(new Dictionary<string, object>()) {
+            ServiceRecord serviceRecord = new ServiceRecord(new Dictionary<string, object>())
+            {
                 Fee = 999.99,
                 Name = "BC",
                 Number = 5
@@ -186,16 +188,16 @@ namespace ReportGenerator.Tests.Summary {
             _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(7)).Returns(consultationRecords);
             _databaseMock.Setup(c => c.FetchServiceRecord(5)).Returns(serviceRecord);
 
-            var result = _summaryDataGetter.GetData();
+            var result = _eftDataGetter.GetData();
 
-            var summaryRecord = result.SummaryDataInfo[0];
+            var eftRecord = result.EftDataInfo[0];
 
             Assert.IsInstanceOfType(result, typeof(ReportData));
-            Assert.AreEqual(1, result.SummaryDataInfo.Count);
+            Assert.AreEqual(1, result.EftDataInfo.Count);
 
-            Assert.AreEqual("John Smith", summaryRecord.ProviderName);
-            Assert.AreEqual(1, summaryRecord.TotalNumberOfConsultations);
-            Assert.AreEqual(999.99, summaryRecord.TotalFee);
+            Assert.AreEqual("John Smith", eftRecord.ProviderName);
+            Assert.AreEqual(7, eftRecord.ProviderNumber);
+            Assert.AreEqual(999.99, eftRecord.TotalFee);
 
             _databaseMock.Verify(c => c.FetchProviders(), Times.Once);
             _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(7), Times.Once);
@@ -239,7 +241,8 @@ namespace ReportGenerator.Tests.Summary {
                 new ConsultationRecord(consultationRecord2ForProvider)
             };
 
-            ServiceRecord serviceRecord = new ServiceRecord(new Dictionary<string, object>()) {
+            ServiceRecord serviceRecord = new ServiceRecord(new Dictionary<string, object>())
+            {
                 Fee = 100,
                 Name = "BC",
                 Number = 5
@@ -249,16 +252,16 @@ namespace ReportGenerator.Tests.Summary {
             _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(7)).Returns(consultationRecordsForProvider1);
             _databaseMock.Setup(c => c.FetchServiceRecord(5)).Returns(serviceRecord);
 
-            var result = _summaryDataGetter.GetData();
+            var result = _eftDataGetter.GetData();
 
-            var summaryRecord1 = result.SummaryDataInfo[0];
+            var eftRecord1 = result.EftDataInfo[0];
 
             Assert.IsInstanceOfType(result, typeof(ReportData));
-            Assert.AreEqual(1, result.SummaryDataInfo.Count);
+            Assert.AreEqual(1, result.EftDataInfo.Count);
 
-            Assert.AreEqual("John Smith", summaryRecord1.ProviderName);
-            Assert.AreEqual(2, summaryRecord1.TotalNumberOfConsultations);
-            Assert.AreEqual(200.00, summaryRecord1.TotalFee);
+            Assert.AreEqual("John Smith", eftRecord1.ProviderName);
+            Assert.AreEqual(7, eftRecord1.ProviderNumber);
+            Assert.AreEqual(200.00, eftRecord1.TotalFee);
 
             _databaseMock.Verify(c => c.FetchProviders(), Times.Once);
             _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(7), Times.Once);
@@ -292,12 +295,11 @@ namespace ReportGenerator.Tests.Summary {
 
             _databaseMock.Setup(c => c.FetchProviders()).Returns(providerRecords);
             _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(7)).Returns(new List<ConsultationRecord>());
-            _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(12)).Returns(new List<ConsultationRecord>());
 
-            var result = _summaryDataGetter.GetData();
+            var result = _eftDataGetter.GetData();
 
             Assert.IsInstanceOfType(result, typeof(ReportData));
-            Assert.AreEqual(0, result.SummaryDataInfo.Count);
+            Assert.AreEqual(0, result.EftDataInfo.Count);
 
             _databaseMock.Verify(c => c.FetchProviders(), Times.Once);
             _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(7), Times.Once);
@@ -353,7 +355,8 @@ namespace ReportGenerator.Tests.Summary {
                 new ConsultationRecord(consultationRecordForProvider2),
             };
 
-            ServiceRecord serviceRecord = new ServiceRecord(new Dictionary<string, object>()) {
+            ServiceRecord serviceRecord = new ServiceRecord(new Dictionary<string, object>())
+            {
                 Fee = 100,
                 Name = "BC",
                 Number = 5
@@ -364,21 +367,21 @@ namespace ReportGenerator.Tests.Summary {
             _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(12)).Returns(consultationRecordsForProvider2);
             _databaseMock.Setup(c => c.FetchServiceRecord(5)).Returns(serviceRecord);
 
-            var result = _summaryDataGetter.GetData();
+            var result = _eftDataGetter.GetData();
 
-            var summaryRecord1 = result.SummaryDataInfo[0];
-            var summaryRecord2 = result.SummaryDataInfo[1];
+            var eftRecord1 = result.EftDataInfo[0];
+            var eftRecord2 = result.EftDataInfo[1];
 
             Assert.IsInstanceOfType(result, typeof(ReportData));
-            Assert.AreEqual(2, result.SummaryDataInfo.Count);
+            Assert.AreEqual(2, result.EftDataInfo.Count);
 
-            Assert.AreEqual("John Smith", summaryRecord1.ProviderName);
-            Assert.AreEqual(1, summaryRecord1.TotalNumberOfConsultations);
-            Assert.AreEqual(100.00, summaryRecord1.TotalFee);
+            Assert.AreEqual("John Smith", eftRecord1.ProviderName);
+            Assert.AreEqual(7, eftRecord1.ProviderNumber);
+            Assert.AreEqual(100.00, eftRecord1.TotalFee);
 
-            Assert.AreEqual("Alex Burbank", summaryRecord2.ProviderName);
-            Assert.AreEqual(1, summaryRecord2.TotalNumberOfConsultations);
-            Assert.AreEqual(100.00, summaryRecord2.TotalFee);
+            Assert.AreEqual("Alex Burbank", eftRecord2.ProviderName);
+            Assert.AreEqual(12, eftRecord2.ProviderNumber);
+            Assert.AreEqual(100.00, eftRecord2.TotalFee);
 
             _databaseMock.Verify(c => c.FetchProviders(), Times.Once);
             _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(7), Times.Once);
@@ -453,7 +456,8 @@ namespace ReportGenerator.Tests.Summary {
                 new ConsultationRecord(consultationRecord2ForProvider2)
             };
 
-            ServiceRecord serviceRecord = new ServiceRecord(new Dictionary<string, object>()) {
+            ServiceRecord serviceRecord = new ServiceRecord(new Dictionary<string, object>())
+            {
                 Fee = 100,
                 Name = "BC",
                 Number = 5
@@ -464,21 +468,21 @@ namespace ReportGenerator.Tests.Summary {
             _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(15)).Returns(consultationRecordsForProvider2);
             _databaseMock.Setup(c => c.FetchServiceRecord(5)).Returns(serviceRecord);
 
-            var result = _summaryDataGetter.GetData();
+            var result = _eftDataGetter.GetData();
 
-            var summaryRecord1 = result.SummaryDataInfo[0];
-            var summaryRecord2 = result.SummaryDataInfo[1];
+            var eftRecord1 = result.EftDataInfo[0];
+            var eftRecord2 = result.EftDataInfo[1];
 
             Assert.IsInstanceOfType(result, typeof(ReportData));
-            Assert.AreEqual(2, result.SummaryDataInfo.Count);
+            Assert.AreEqual(2, result.EftDataInfo.Count);
 
-            Assert.AreEqual("John Smith", summaryRecord1.ProviderName);
-            Assert.AreEqual(2, summaryRecord1.TotalNumberOfConsultations);
-            Assert.AreEqual(200.00, summaryRecord1.TotalFee);
+            Assert.AreEqual("John Smith", eftRecord1.ProviderName);
+            Assert.AreEqual(7, eftRecord1.ProviderNumber);
+            Assert.AreEqual(200.00, eftRecord1.TotalFee);
 
-            Assert.AreEqual("Alex Burbank", summaryRecord2.ProviderName);
-            Assert.AreEqual(2, summaryRecord2.TotalNumberOfConsultations);
-            Assert.AreEqual(200.00, summaryRecord2.TotalFee);
+            Assert.AreEqual("Alex Burbank", eftRecord2.ProviderName);
+            Assert.AreEqual(15, eftRecord2.ProviderNumber);
+            Assert.AreEqual(200.00, eftRecord2.TotalFee);
 
             _databaseMock.Verify(c => c.FetchProviders(), Times.Once);
             _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(7), Times.Once);

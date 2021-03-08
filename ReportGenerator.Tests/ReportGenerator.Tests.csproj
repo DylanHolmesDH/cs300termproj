@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="EftData\EftDataFormatterTests.cs" />
     <Compile Include="EftData\EftDataValidatorTests.cs" />
+    <Compile Include="EftData\EftDataGetterTests.cs" />
     <Compile Include="Factory\ReportFactoryTests.cs" />
     <Compile Include="Member\MemberDataGetterTests.cs" />
     <Compile Include="Member\MemberDataValidatorTests.cs" />
