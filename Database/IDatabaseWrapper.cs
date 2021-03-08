@@ -7,7 +7,10 @@ namespace ChocAnDatabase {
         IList<ConsultationRecord> FetchConsultationRecordsForMember(int memberId);
         IList<ConsultationRecord> FetchConsultationRecordsForProvider(int providerId);
         ProviderRecord FetchProvider(int id);
+        void AddMember(Record record);
+        void Save();
         ServiceRecord FetchServiceRecord(int serviceNumber);
+        void AddProvider(Record record);
         List<Record> FetchProviders();
         List<Record> FetchMembers();
     }
