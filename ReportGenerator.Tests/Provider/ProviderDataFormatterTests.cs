@@ -16,13 +16,13 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void ReportDataNull() {
+        public void FormatData_reportDataNull() {
             var ex = Assert.ThrowsException<ApplicationException>(() => _providerDataFormatter.FormatData(null));
             Assert.AreEqual("Report data cannot be null", ex.Message);
         }
 
         [TestMethod]
-        public void FormatData_NoServicesProvided() {
+        public void FormatData_reportDataNoServicesProvided() {
             ReportData reportData = new ReportData {
                 ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",
@@ -71,7 +71,7 @@ namespace ReportGenerator.Tests.Provider {
 
 
         [TestMethod]
-        public void FormatData_1ServiceProvided() {
+        public void FormatData_reportData1ServiceProvided() {
             ReportData reportData = new ReportData {
                 ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",
@@ -138,7 +138,7 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void FormatData_2ServicesProvided() {
+        public void FormatData_reportData2ServicesProvided() {
             ReportData reportData = new ReportData {
                 ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",

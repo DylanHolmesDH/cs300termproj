@@ -15,14 +15,14 @@ namespace ReportGenerator.Tests.Summary {
         }
 
         [TestMethod]
-        public void ReportDataNull() {
+        public void FormatData_reportDataNull() {
             var ex = Assert.ThrowsException<NullReferenceException>(() => _summaryDataFormatter.FormatData(null));
 
             Assert.AreEqual("Report data object cannot be null", ex.Message);
         }
 
         [TestMethod]
-        public void FormatData_NoProvidersProvidingServices() {
+        public void FormatData_reportDataNoProvidersProvidingServices() {
             ReportData reportData = new ReportData {
                 SummaryDataInfo = new List<SummaryDataInfo>()
             };
@@ -53,7 +53,7 @@ namespace ReportGenerator.Tests.Summary {
         }
 
         [TestMethod]
-        public void FormatData_1ProviderProvidingServices() {
+        public void FormatData_reportData1ProviderProvidingServices() {
             ReportData reportData = new ReportData {
                 SummaryDataInfo = new List<SummaryDataInfo> {
                     new SummaryDataInfo {
@@ -96,7 +96,7 @@ namespace ReportGenerator.Tests.Summary {
         }
 
         [TestMethod]
-        public void FormatData_2ProvidersProvidingServices() {
+        public void FormatData_reportData2ProvidersProvidingServices() {
             ReportData reportData = new ReportData {
                 SummaryDataInfo = new List<SummaryDataInfo> {
                     new SummaryDataInfo {

@@ -13,6 +13,10 @@ namespace ReportGenerator.Summary {
             foreach (var summaryRecord in data.SummaryDataInfo) {
                 if (string.IsNullOrWhiteSpace(summaryRecord.ProviderName))
                     return (false, "Provider name for summary cannot be empty");
+
+                if (summaryRecord.TotalFee == 0) {
+                    return (false, "Cannot print out provider with a fee of $0");
+                }
             }
   
             return (true, "");

@@ -21,7 +21,7 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void GetData_NullProviderRecord() {
+        public void GetData_nullProviderRecord() {
             var consultationRecords = new List<ConsultationRecord>();
 
             _databaseMock.Setup(c => c.FetchProvider(3)).Returns((ProviderRecord)null);
@@ -37,7 +37,7 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void GetData_EmptyConsultationRecords() {
+        public void GetData_emptyConsultationRecords() {
             var consultationRecords = new List<ConsultationRecord>();
 
             _databaseMock.Setup(c => c.FetchProvider(3)).Returns((ProviderRecord)null);
