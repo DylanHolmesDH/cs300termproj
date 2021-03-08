@@ -2,6 +2,7 @@
 using ChocAnDatabase.records;
 using ReportGenerator.Interfaces;
 using ReportGenerator.Models;
+using System;
 using System.Collections.Generic;
 
 namespace ReportGenerator.Summary {
@@ -30,13 +31,15 @@ namespace ReportGenerator.Summary {
                             totalFeeForProvider = totalFeeForProvider + serviceRecord.Fee;
                         }
 
-                        SummaryDataInfo summaryDataInfo = new SummaryDataInfo {
-                            ProviderName = (string)providerRecord.Get("name"),
-                            TotalFee = totalFeeForProvider,
-                            TotalNumberOfConsultations = consultationRecords.Count
-                        };
+                        if (totalFeeForProvider != 0) {
+                            SummaryDataInfo summaryDataInfo = new SummaryDataInfo {
+                                ProviderName = (string)providerRecord.Get("name"),
+                                TotalFee = totalFeeForProvider,
+                                TotalNumberOfConsultations = consultationRecords.Count
+                            };
 
-                        reportData.SummaryDataInfo.Add(summaryDataInfo);
+                            reportData.SummaryDataInfo.Add(summaryDataInfo);
+                        }
                     }
                 }
             }

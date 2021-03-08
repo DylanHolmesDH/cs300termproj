@@ -15,7 +15,7 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void ValidateData_NullReportData() {
+        public void ValidateData_reportDataNullReportData() {
             var result = _providerDataValidator.ValidateData(null);
 
             Assert.AreEqual(false, result.valid);
@@ -23,7 +23,7 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void ValidateData_NoProviderName() {
+        public void ValidateData_reportDataNoProviderName() {
             ReportData reportData = new ReportData {
                 ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
                     Name = " ",
@@ -43,7 +43,7 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void ValidateData_NoProviderCity() {
+        public void ValidateData_reportDataNoProviderCity() {
             ReportData reportData = new ReportData {
                 ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",
@@ -63,7 +63,7 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void ValidateData_NoProviderState() {
+        public void ValidateData_reportDataNoProviderState() {
             ReportData reportData = new ReportData {
                 ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",
@@ -83,7 +83,7 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void ValidateData_NoProviderAddress() {
+        public void ValidateData_reportDataNoProviderAddress() {
             ReportData reportData = new ReportData {
                 ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",
@@ -103,7 +103,7 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void ValidateData_ProviderNumber_0() {
+        public void ValidateData_reportDataProviderNumber_0() {
             ReportData reportData = new ReportData {
                 ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",
@@ -123,7 +123,7 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void ValidateData_NullProvidedServices() {
+        public void ValidateData_reportDataNullProvidedServices() {
             ReportData reportData = new ReportData {
                ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
                    Name = "Alex Burbank",
@@ -143,7 +143,7 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void ValidateData_NoProvidedServices() {
+        public void ValidateData_reportDataNoProvidedServices() {
             ReportData reportData = new ReportData {
                 ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",
@@ -163,7 +163,7 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void ValidateData_NoServiceID() {
+        public void ValidateData_reportDataNoServiceID() {
             ReportData reportData = new ReportData {
                 ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",
@@ -189,7 +189,7 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void ValidateData_NoMemberName() {
+        public void ValidateData_reportDataNoMemberName() {
             ReportData reportData = new ReportData {
                 ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",
@@ -215,7 +215,7 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void ValidateData_NoMemberID() {
+        public void ValidateData_reportDataNoMemberID() {
             ReportData reportData = new ReportData {
                 ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",
@@ -241,7 +241,7 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void ValidateData_1ProvidedService() {
+        public void ValidateData_reportData1ProvidedService() {
             ReportData reportData = new ReportData {
                 ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",
@@ -268,7 +268,7 @@ namespace ReportGenerator.Tests.Provider {
         }
 
         [TestMethod]
-        public void ValidateData_2ProvidedServices() {
+        public void ValidateData_reportData2ProvidedServices() {
             ReportData reportData = new ReportData {
                 ProviderRecord = new ProviderRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",

@@ -15,14 +15,14 @@ namespace ReportGenerator.Tests.EftData {
         }
 
         [TestMethod]
-        public void ReportDataNull() {
+        public void FormatData_ReportDataNull() {
             var ex = Assert.ThrowsException<NullReferenceException>(() => _eftDataFormatter.FormatData(null));
 
             Assert.AreEqual("Report data object cannot be null", ex.Message);
         }
 
         [TestMethod]
-        public void FormatData_NoEftData() {
+        public void FormatData_ReportDataNoEftData() {
             ReportData reportData = new ReportData {
                 EftDataInfo = new List<EftDataInfo>()
             };
@@ -41,7 +41,7 @@ namespace ReportGenerator.Tests.EftData {
         }
 
         [TestMethod]
-        public void FormatData_1RecordInEftData() {
+        public void FormatData_ReportData1RecordInEftData() {
             ReportData reportData = new ReportData {
                 EftDataInfo = new List<EftDataInfo> {
                     new EftDataInfo {
@@ -71,7 +71,7 @@ namespace ReportGenerator.Tests.EftData {
         }
 
         [TestMethod]
-        public void FormatData_2RecordsInEftData() {
+        public void FormatData_ReportData2RecordsInEftData() {
             ReportData reportData = new ReportData {
                 EftDataInfo = new List<EftDataInfo> {
                     new EftDataInfo {

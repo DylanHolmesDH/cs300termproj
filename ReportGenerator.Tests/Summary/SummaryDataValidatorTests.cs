@@ -14,7 +14,7 @@ namespace ReportGenerator.Tests.Summary {
         }
 
         [TestMethod]
-        public void ReportDataNull() {
+        public void ValidateData_reportDataNull() {
             var result = _dataValidator.ValidateData(null);
 
             Assert.AreEqual(false, result.valid);
@@ -22,7 +22,7 @@ namespace ReportGenerator.Tests.Summary {
         }
 
         [TestMethod]
-        public void ReportDataSummaryDataInfoEmpty() {
+        public void ValidateData_reportDataSummaryDataInfoEmpty() {
             ReportData reportData = new ReportData() {
                 SummaryDataInfo = new List<SummaryDataInfo>()
             };
@@ -34,12 +34,12 @@ namespace ReportGenerator.Tests.Summary {
         }
 
         [TestMethod]
-        public void ReportDataSummaryInfoProviderNameEmpty() {
+        public void ValidateData_reportDataSummaryInfoProviderNameEmpty() {
             ReportData reportData = new ReportData() {
                 SummaryDataInfo = new List<SummaryDataInfo> {
                     new SummaryDataInfo {
                         ProviderName = " ",
-                        TotalFee = 0,
+                        TotalFee = 20,
                         TotalNumberOfConsultations = 1
                     }
                 }
@@ -51,7 +51,7 @@ namespace ReportGenerator.Tests.Summary {
         }
 
         [TestMethod]
-        public void ReportDataSummaryInfo1SummaryRecord() {
+        public void Validate_reportDataSummary0TotalFee() {
             ReportData reportData = new ReportData() {
                 SummaryDataInfo = new List<SummaryDataInfo> {
                     new SummaryDataInfo {
@@ -64,21 +64,38 @@ namespace ReportGenerator.Tests.Summary {
 
             var result = _dataValidator.ValidateData(reportData);
 
-            Assert.AreEqual("", result.errorMessage);
+            Assert.AreEqual("Cannot print out provider with a fee of $0", result.errorMessage);
         }
 
         [TestMethod]
-        public void ReportDataSummaryInfo2SummaryRecords() {
+        public void ValidateData_reportDataSummaryInfo1SummaryRecord() {
             ReportData reportData = new ReportData() {
                 SummaryDataInfo = new List<SummaryDataInfo> {
                     new SummaryDataInfo {
                         ProviderName = "Alex Burbank",
-                        TotalFee = 0,
+                        TotalFee = 20,
+                        TotalNumberOfConsultations = 1
+                    }
+                }
+            };
+
+            var result = _dataValidator.ValidateData(reportData);
+
+            Assert.AreEqual("", result.errorMessage);
+        }
+
+        [TestMethod]
+        public void ValidateData_reportDataSummaryInfo2SummaryRecords() {
+            ReportData reportData = new ReportData() {
+                SummaryDataInfo = new List<SummaryDataInfo> {
+                    new SummaryDataInfo {
+                        ProviderName = "Alex Burbank",
+                        TotalFee = 20,
                         TotalNumberOfConsultations = 1
                     },
                     new SummaryDataInfo {
                         ProviderName = "John Smith",
-                        TotalFee = 0,
+                        TotalFee = 20,
                         TotalNumberOfConsultations = 1
                     }
                 }

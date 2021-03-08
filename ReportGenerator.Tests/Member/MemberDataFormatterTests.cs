@@ -16,13 +16,13 @@ namespace ReportGenerator.Tests.Member {
         }
 
         [TestMethod]
-        public void FormatData_NullArg() {
+        public void FormatData_reportDataNullArg() {
             var ex = Assert.ThrowsException<ApplicationException>(() => _memberDataFormatter.FormatData(null));
             Assert.AreEqual("Report data cannot be null", ex.Message);
         }
 
         [TestMethod]
-        public void FormatData_NoServicesProvided() {
+        public void FormatData_reportDataNoServicesProvided() {
             ReportData reportData = new ReportData {
                 MemberRecord = new MemberRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",
@@ -59,7 +59,7 @@ namespace ReportGenerator.Tests.Member {
         }
 
         [TestMethod]
-        public void FormatData_valid1ServiceProvided() {
+        public void FormatData_reportDataValid1ServiceProvided() {
             ReportData reportData = new ReportData {
                 MemberRecord = new MemberRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",
@@ -105,7 +105,7 @@ namespace ReportGenerator.Tests.Member {
         }
 
         [TestMethod]
-        public void FormatData_valid2ServicesProvided() {
+        public void FormatData_reportDataValid2ServicesProvided() {
             ReportData reportData = new ReportData {
                 MemberRecord = new MemberRecord(new Dictionary<string, object>()) {
                     Name = "Alex Burbank",

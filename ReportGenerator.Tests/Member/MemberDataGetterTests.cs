@@ -21,7 +21,7 @@ namespace ReportGenerator.Tests.Member {
         }
 
         [TestMethod]
-        public void GetData_NullMemberRecord() {
+        public void GetData_nullMemberRecord() {
             var consultationRecords = new List<ConsultationRecord>();
 
             _databaseMock.Setup(c => c.FetchMember(3)).Returns((MemberRecord)null);
@@ -37,7 +37,7 @@ namespace ReportGenerator.Tests.Member {
         }
 
         [TestMethod]
-        public void GetData_EmptyConsultationRecords() {
+        public void GetData_emptyConsultationRecords() {
             var consultationRecords = new List<ConsultationRecord>();
 
             _databaseMock.Setup(c => c.FetchMember(3)).Returns((MemberRecord) null);
