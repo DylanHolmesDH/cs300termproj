@@ -25,7 +25,7 @@ namespace ReportGenerator.Member {
             formattedData.OutputLines.Add("");
             formattedData.OutputLines.Add("");
 
-            formattedData.OutputLines.Add("ID: " + data.MemberRecord.Number.ToString());
+            formattedData.OutputLines.Add("ID: " + data.MemberRecord.Number.ToString().PadLeft(9, '0'));
 
             formattedData.OutputLines.Add("");
             formattedData.OutputLines.Add("");

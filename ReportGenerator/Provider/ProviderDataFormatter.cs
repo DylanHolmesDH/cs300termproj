@@ -32,7 +32,7 @@ namespace ReportGenerator.Provider {
             formattedData.OutputLines.Add("");
             formattedData.OutputLines.Add("");
 
-            formattedData.OutputLines.Add("ID: " + data.ProviderRecord.Number.ToString());
+            formattedData.OutputLines.Add("ID: " + data.ProviderRecord.Number.ToString().PadLeft(9, '0'));
 
             formattedData.OutputLines.Add("");
             formattedData.OutputLines.Add("");

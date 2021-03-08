@@ -28,7 +28,6 @@ namespace ManagerTerminal {
                         var records = GetMemberOrProviderRecord(reportToGenerate, database);
                         var stringId = DisplayRecords(records);
 
-                    
                         int id = ReturnIdFromStringId(stringId);
 
                         var result = reportServices.CreateReport(database, reportFactory, reportToGenerate, id);
@@ -114,7 +113,7 @@ namespace ManagerTerminal {
                 id = (int)record.Get("number");
                 name = (string) record.Get("name");
 
-                Console.WriteLine(id + "\t\t" + name);
+                Console.WriteLine(id.ToString().PadLeft(9, '0') + "\t\t" + name);
             }
 
             Console.Write("Enter the 9 digit id of the person that you want to generate a report for (Ex: 999999999): ");
@@ -126,6 +125,9 @@ namespace ManagerTerminal {
         private static int ReturnIdFromStringId(string stringId) {
             if (stringId == null)
                 throw new NullReferenceException();
+
+            if (stringId.Length < 9)
+                stringId = stringId.PadLeft(9, '0');
 
             if (stringId.Length < 9 || stringId.Length > 9)
                 throw new ApplicationException("The id needs to be of length 9!");
@@ -145,8 +147,10 @@ namespace ManagerTerminal {
 
         private static void DisplayWhetherReportGenerated((bool created, string errorMessage) result) {
             if (!result.created) {
-                if (!string.IsNullOrWhiteSpace(result.errorMessage))
-                    Console.WriteLine(result.errorMessage);
+                if (!string.IsNullOrWhiteSpace(result.errorMessage)) {
+                    Console.WriteLine("Unsuccessful! See message below:");
+                    Console.WriteLine("\t" + "\"" + result.errorMessage + "\"");
+                }
             }  
             else
                 Console.WriteLine("Successful!");

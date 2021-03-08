@@ -47,7 +47,7 @@ namespace ReportGenerator.Tests.Member {
             Assert.AreEqual("", result.OutputLines[3]);
             Assert.AreEqual("", result.OutputLines[4]);
 
-            Assert.AreEqual("ID: 7", result.OutputLines[5]);
+            Assert.AreEqual("ID: 000000007", result.OutputLines[5]);
 
             Assert.AreEqual("", result.OutputLines[6]);
             Assert.AreEqual("", result.OutputLines[7]);
@@ -91,7 +91,7 @@ namespace ReportGenerator.Tests.Member {
             Assert.AreEqual("", result.OutputLines[3]);
             Assert.AreEqual("", result.OutputLines[4]);
 
-            Assert.AreEqual("ID: 7", result.OutputLines[5]);
+            Assert.AreEqual("ID: 000000007", result.OutputLines[5]);
 
             Assert.AreEqual("", result.OutputLines[6]);
             Assert.AreEqual("", result.OutputLines[7]);
@@ -142,7 +142,7 @@ namespace ReportGenerator.Tests.Member {
             Assert.AreEqual("", result.OutputLines[3]);
             Assert.AreEqual("", result.OutputLines[4]);
 
-            Assert.AreEqual("ID: 7", result.OutputLines[5]);
+            Assert.AreEqual("ID: 000000007", result.OutputLines[5]);
 
             Assert.AreEqual("", result.OutputLines[6]);
             Assert.AreEqual("", result.OutputLines[7]);
