@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace ChocAnDatabase.records {
     public class ConsultationRecord : Record {
-        private DateTime currentDate, serviceDate;
+        private DateTime recordDate, serviceDate;
         private int memberNumber, serviceNumber, providerNumber;
         private String comments;
 
         public ConsultationRecord(Dictionary<string, object> keyValues) : base(keyValues) {
-            this.currentDate = (DateTime) Get("current_date");
+            this.recordDate = (DateTime) Get("record_date");
             this.serviceDate = (DateTime) Get("service_date");
 
             this.memberNumber = GetInteger("member_number");
@@ -18,7 +18,7 @@ namespace ChocAnDatabase.records {
             this.comments = GetString("comments");
         }
 
-        public DateTime CurrentDate { get => currentDate; set => currentDate = value; }
+        public DateTime RecordDate { get => recordDate; set => recordDate = value; }
         public DateTime ServiceDate { get => serviceDate; set => serviceDate = value; }
         public int MemberNumber { get => memberNumber; set => memberNumber = value; }
         public int ServiceNumber { get => serviceNumber; set => serviceNumber = value; }
@@ -27,7 +27,7 @@ namespace ChocAnDatabase.records {
 
 
         public override string ToString() {
-            return currentDate + ";" + serviceDate + ";" + providerNumber + ";" + memberNumber + ";" + serviceNumber + ";" + comments;
+            return recordDate + ";" + serviceDate + ";" + providerNumber + ";" + memberNumber + ";" + serviceNumber + ";" + comments;
         }
 
         public static ConsultationRecord FromString(String line) {

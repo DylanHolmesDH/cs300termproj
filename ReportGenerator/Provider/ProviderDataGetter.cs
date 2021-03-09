@@ -29,7 +29,7 @@ namespace ReportGenerator.Provider {
                     var serviceRecord = _database.FetchServiceRecord(consultationRecord.ServiceNumber);
 
                     providedService.ServiceDate = consultationRecord.ServiceDate;
-                    providedService.DateTimeReceived = consultationRecord.CurrentDate;
+                    providedService.DateTimeReceived = consultationRecord.RecordDate;
                     providedService.MemberName = memberRecord.Name;
                     providedService.MemberId = memberRecord.Number;
                     providedService.ServiceId = serviceRecord.Number;

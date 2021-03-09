@@ -47,11 +47,6 @@ namespace ChocAnDatabase {
         }
 
         public ServiceRecord FetchService(int id) {
-            return (ServiceRecord) FetchRecordByNumber(id, providers);
-        }
-
-        // TODO: Remove
-        public ServiceRecord FetchServiceTemp(int id) {
             return (ServiceRecord) FetchRecordByNumber(id, services);
         }
 
@@ -63,7 +58,7 @@ namespace ChocAnDatabase {
             foreach (var record in consultations) {
                 ConsultationRecord rec = (ConsultationRecord)record;
                 if (
-                    rec.CurrentDate == recDate 
+                    rec.RecordDate == recDate 
                     && rec.ServiceDate == serviceDate
                     && rec.MemberNumber == memberID
                     && rec.ServiceNumber == serviceID 
@@ -75,13 +70,39 @@ namespace ChocAnDatabase {
             return null;
         }
 
-        public List<ConsultationRecord> FetchConsultationsByMember(int memberID) {
+        /// <summary>
+        /// Fetches Consulation Records by the specified Provider ID, filtered by an amount of days back.
+        /// </summary>
+        /// <param name="providerID">The ProviderID to filter Records by.</param>
+        /// <param name="daysBack">The amount of days back to fetch Records, I.E. 7 days back</param>
+        /// <returns>A list of Consulation Records belonging to the specified providerID and filtered by daysBack.</returns>
+        public List<ConsultationRecord> FetchConsultationsByProvider(int providerID, int daysBack) {
             var records = new List<ConsultationRecord>();
+            DateTime filter = DateTime.Now.AddDays(-daysBack);
 
             foreach (var rec in consultations) {
                 ConsultationRecord record = (ConsultationRecord)rec;
 
-                if (record.MemberNumber == memberID) {
+                if (record.ProviderNumber == providerID && DateTime.Compare(record.RecordDate, filter) >= 0) {
+                    records.Add(record);
+                }
+            }
+
+            return records;
+        }
+        /// <summary>
+        /// Fetches Consulation Records by the specified memberID, filtered by an amount of days back.
+        /// </summary>
+        /// <param name="memberID">The MemberID to filter Records by.</param>
+        /// <param name="daysBack">The amount of days back to fetch Records, I.E. 7 days back</param>
+        /// <returns>A list of Consulation Records belonging to the specified memberID and filtered by daysBack.</returns> 
+        public List<ConsultationRecord> FetchConsultationsByMember(int memberID, int daysBack) {
+            var records = new List<ConsultationRecord>();
+            DateTime filter = DateTime.Now.AddDays(-daysBack);
+            foreach (var rec in consultations) {
+                ConsultationRecord record = (ConsultationRecord)rec;
+
+                if (record.MemberNumber == memberID && DateTime.Compare(record.RecordDate, filter) >= 0) {
                     records.Add(record);
                 }
             }
