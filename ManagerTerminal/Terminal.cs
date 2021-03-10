@@ -1,5 +1,6 @@
 ﻿using ChocAnDatabase;
 using ChocAnDatabase.records;
+using ReportGenerator;
 using ReportGenerator.Factory;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,15 @@ namespace ManagerTerminal {
             bool end = false;
 
             var serviceFactory = new ServicesFactory();
-            var reportServices = serviceFactory.CreateReportServices();
-            var database = serviceFactory.CreateDatabaseWrapper();
             var reportFactory = new ReportFactory();
-            var crudServices = new CrudServices();
-            var id = 0;
+
+            var reportServices = serviceFactory.CreateReportServices();
+            var crudServices = serviceFactory.CreateCrudServices();
+            var database = serviceFactory.CreateDatabaseWrapper();
+            int id = 0;
+            TypeOfReport typeOfReport = 0;
+            TypeOfCrudAction typeOfCrudAction = 0;
+            int nextIdAvailable = 300000000;
 
             Console.Write("Hello! ");
 
@@ -29,18 +34,25 @@ namespace ManagerTerminal {
                     }
 
                     if (optionNumber == 1 || optionNumber == 2 || optionNumber == 3) {
-                        var result = reportServices.CreateReport(database, reportFactory, optionNumber, id);
+                        typeOfReport = reportServices.DetermineTypeOfReport(optionNumber);
 
-                        DisplayWhetherReportGenerated(result);
+                        var result = reportServices.CreateReport(database, reportFactory, typeOfReport, id);
+
+                        DisplayWhetherValid(result);
                     }
                     else if (optionNumber == 4 || optionNumber == 5 || optionNumber == 6
                         || optionNumber == 7 || optionNumber == 8 || optionNumber == 9) {
-                        Console.WriteLine("Enter in a record (FirstName LastName Address City State Zip): ");
+                        Console.WriteLine("Enter in a record formatted as Name,Address!");
+                        Console.WriteLine("Note that the address needs to be in the format of Address City State Zip!:");
                         string stringRecord = Console.ReadLine();
 
-                        var record = ConvertStringRecordToRecord(stringRecord);
+                        typeOfCrudAction = crudServices.DetermineTypeOfCrudAction(optionNumber);
 
-                        crudServices.AddUpdateRemove(database, optionNumber, record);
+                        var result = crudServices.DoCrudAction(database, typeOfCrudAction, stringRecord, serviceFactory, nextIdAvailable);
+
+                        DisplayWhetherValid(result);
+
+                        nextIdAvailable++;
                     }
                     else {
                         DisplayPartingMessage();
@@ -53,32 +65,6 @@ namespace ManagerTerminal {
                     Console.WriteLine();
                 }
             } while (!end);
-        }
-
-        private static Record ConvertStringRecordToRecord(string stringRecord) {
-            if (stringRecord == null)
-                throw new ApplicationException("Record cannot be null");
-
-            if (stringRecord.Length == 0)
-                throw new ApplicationException("Record cannot be empty");
-
-            string[] recordArray = stringRecord.Split(' ');
-
-            if (recordArray.Length != 6)
-                throw new ApplicationException("Record must have the format: FirstName LastName Address City State Zip");
-
-            Dictionary<string, object> recordDictionary = new Dictionary<string, object>();
-
-            recordDictionary.Add("name", recordArray[0] + " " + recordArray[1]);
-            recordDictionary.Add("number", recordArray[2]);
-            recordDictionary.Add("address", recordArray[3]);
-            recordDictionary.Add("city", recordArray[4]);
-            recordDictionary.Add("state", recordArray[5]);
-            recordDictionary.Add("zip", recordArray[6]);
-
-            Record record = new Record(recordDictionary);
-
-            return record;
         }
 
         private static bool ProceedWithGeneratingReport(string proceed) {
@@ -240,8 +226,8 @@ namespace ManagerTerminal {
             return id;
         }
 
-        private static void DisplayWhetherReportGenerated((bool created, string errorMessage) result) {
-            if (!result.created) {
+        private static void DisplayWhetherValid((bool successful, string errorMessage) result) {
+            if (!result.successful) {
                 if (!string.IsNullOrWhiteSpace(result.errorMessage)) {
                     Console.WriteLine("Unsuccessful! See message below:");
                     Console.WriteLine("\t" + "\"" + result.errorMessage + "\"");

@@ -53,18 +53,31 @@ namespace ChocAnDatabase {
                 _database = new Database();
         }
 
-        public void AddMember(Record record)
-        {
+        public void AddMember(MemberRecord record) {
+            EnsureDatabaseIsAvailable();
+
+            _database.InsertMember(record);
+        }
+
+        public void Save() {
+            EnsureDatabaseIsAvailable();
+
+            _database.Save();
+        }
+
+        public void AddProvider(ProviderRecord record) {
+            EnsureDatabaseIsAvailable();
+
+            _database.InsertProvider(record);
+        }
+
+        public MemberRecord FetchMemberByName(string name) {
+            EnsureDatabaseIsAvailable();
+
             throw new NotImplementedException();
         }
 
-        public void Save()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddProvider(Record record)
-        {
+        public object FetchProviderByName(string name) {
             throw new NotImplementedException();
         }
     }

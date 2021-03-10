@@ -13,5 +13,7 @@ namespace ChocAnDatabase {
         void AddProvider(Record record);
         List<Record> FetchProviders();
         List<Record> FetchMembers();
+        MemberRecord FetchMemberByName(string name);
+        object FetchProviderByName(string name);
     }
 }
