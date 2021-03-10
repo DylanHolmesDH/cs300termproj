@@ -28,7 +28,7 @@ namespace ManagerTerminal.Tests {
 
             _reportFactoryMock.Setup(c => c.CreateProcessor()).Returns(_processorMock.Object);
             _processorMock.Setup(c => c.GenerateReport((TypeOfReport)1, _databaseWrapperMock.Object, _reportFactoryMock.Object, 1, _daysBack)).Returns(valid);
-            var result = _reportServices.CreateReport(_databaseWrapperMock.Object, _reportFactoryMock.Object, 1, 1);
+            var result = _reportServices.CreateReport(_databaseWrapperMock.Object, _reportFactoryMock.Object, (TypeOfReport)1, 1);
 
             Assert.AreEqual(true, result.created);
             Assert.AreEqual("", result.errorMessage);
