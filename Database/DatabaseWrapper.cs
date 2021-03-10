@@ -77,7 +77,7 @@ namespace ChocAnDatabase {
             throw new NotImplementedException();
         }
 
-        public object FetchProviderByName(string name) {
+        public ProviderRecord FetchProviderByName(string name) {
             throw new NotImplementedException();
         }
     }
