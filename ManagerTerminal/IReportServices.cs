@@ -3,6 +3,6 @@ using ReportGenerator.Factory;
 
 namespace ManagerTerminal {
     public interface IReportServices {
-        (bool created, string errorMessage) CreateReport(IDatabaseWrapper databaseWrapper, IReportFactory reportFactory, int choice, int id);
+        (bool created, string errorMessage) CreateReport(IDatabaseWrapper databaseWrapper, IReportFactory reportFactory, int choice, int id, int daysBack = 7);
     }
 }

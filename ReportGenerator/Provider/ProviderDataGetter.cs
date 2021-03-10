@@ -10,7 +10,7 @@ namespace ReportGenerator.Provider {
             _database = database;
         }
 
-        public ReportData GetData(int providerId) {
+        public ReportData GetData(int providerId, int daysBack = 7) {
             ReportData reportData = new ReportData();
 
             var providerRecord = _database.FetchProvider(providerId);
@@ -19,7 +19,7 @@ namespace ReportGenerator.Provider {
 
             // Get consultation records
 
-            var consultationRecords = _database.FetchConsultationRecordsForProvider(providerId);
+            var consultationRecords = _database.FetchConsultationRecordsForProvider(providerId, daysBack);
 
             if (consultationRecords != null) {
                 foreach (var consultationRecord in consultationRecords) {

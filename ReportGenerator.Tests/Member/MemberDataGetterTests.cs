@@ -12,11 +12,11 @@ namespace ReportGenerator.Tests.Member {
     public class MemberDataGetterTests {
         private Mock<IDatabaseWrapper> _databaseMock;
         private MemberDataGetter _memberDataGetter;
+        private int _daysBack = 7;
 
         [TestInitialize]
         public void Setup() {
             _databaseMock = new Mock<IDatabaseWrapper>();
-
             _memberDataGetter = new MemberDataGetter(_databaseMock.Object);
         }
 
@@ -25,7 +25,7 @@ namespace ReportGenerator.Tests.Member {
             var consultationRecords = new List<ConsultationRecord>();
 
             _databaseMock.Setup(c => c.FetchMember(3)).Returns((MemberRecord)null);
-            _databaseMock.Setup(c => c.FetchConsultationRecordsForMember(3)).Returns(consultationRecords);
+            _databaseMock.Setup(c => c.FetchConsultationRecordsForMember(3, _daysBack)).Returns(consultationRecords);
 
             var result = _memberDataGetter.GetData(3);
 
@@ -33,7 +33,7 @@ namespace ReportGenerator.Tests.Member {
             Assert.IsNull(result.MemberRecord);
 
             _databaseMock.Verify(c => c.FetchMember(3), Times.Once);
-            _databaseMock.Verify(c => c.FetchConsultationRecordsForMember(3), Times.Once);
+            _databaseMock.Verify(c => c.FetchConsultationRecordsForMember(3, _daysBack), Times.Once);
         }
 
         [TestMethod]
@@ -41,7 +41,7 @@ namespace ReportGenerator.Tests.Member {
             var consultationRecords = new List<ConsultationRecord>();
 
             _databaseMock.Setup(c => c.FetchMember(3)).Returns((MemberRecord) null);
-            _databaseMock.Setup(c => c.FetchConsultationRecordsForMember(3)).Returns(consultationRecords);
+            _databaseMock.Setup(c => c.FetchConsultationRecordsForMember(3, _daysBack)).Returns(consultationRecords);
 
             var result = _memberDataGetter.GetData(3);
 
@@ -49,7 +49,7 @@ namespace ReportGenerator.Tests.Member {
             Assert.IsNull(result.MemberRecord);
 
             _databaseMock.Verify(c => c.FetchMember(3), Times.Once);
-            _databaseMock.Verify(c => c.FetchConsultationRecordsForMember(3), Times.Once);
+            _databaseMock.Verify(c => c.FetchConsultationRecordsForMember(3, _daysBack), Times.Once);
             _databaseMock.VerifyNoOtherCalls();
         }
 
@@ -58,7 +58,7 @@ namespace ReportGenerator.Tests.Member {
             var memberRecord = new MemberRecord(new Dictionary<string, object>());
 
             var consultationRecord = new Dictionary<string, object>();
-            consultationRecord.Add("current_date", new DateTime(2021, 2, 1));
+            consultationRecord.Add("record_date", new DateTime(2021, 2, 1));
             consultationRecord.Add("service_date", new DateTime(2021, 1, 1));
             consultationRecord.Add("member_number", 4);
             consultationRecord.Add("service_number", 5);
@@ -82,7 +82,7 @@ namespace ReportGenerator.Tests.Member {
             serviceRecord.Add("fee", 100.00);
 
             _databaseMock.Setup(c => c.FetchMember(3)).Returns(memberRecord);
-            _databaseMock.Setup(c => c.FetchConsultationRecordsForMember(3)).Returns(consultationRecords);
+            _databaseMock.Setup(c => c.FetchConsultationRecordsForMember(3, _daysBack)).Returns(consultationRecords);
             _databaseMock.Setup(c => c.FetchProvider(6)).Returns(new ProviderRecord(providerRecord));
             _databaseMock.Setup(c => c.FetchServiceRecord(5)).Returns(new ServiceRecord(serviceRecord));
 
@@ -100,7 +100,7 @@ namespace ReportGenerator.Tests.Member {
             Assert.AreEqual("AA", providedService.ServiceName);
 
             _databaseMock.Verify(c => c.FetchMember(3), Times.Once);
-            _databaseMock.Verify(c => c.FetchConsultationRecordsForMember(3), Times.Once);
+            _databaseMock.Verify(c => c.FetchConsultationRecordsForMember(3, _daysBack), Times.Once);
             _databaseMock.Verify(c => c.FetchProvider(6), Times.Once);
             _databaseMock.Verify(c => c.FetchServiceRecord(5), Times.Once);
 
@@ -120,14 +120,14 @@ namespace ReportGenerator.Tests.Member {
             };
 
             var consultationRecord1 = new Dictionary<string, object>();
-            consultationRecord1.Add("current_date", new DateTime(2021, 2, 1));
+            consultationRecord1.Add("record_date", new DateTime(2021, 2, 1));
             consultationRecord1.Add("service_date", new DateTime(2021, 1, 1));
             consultationRecord1.Add("member_number", 4);
             consultationRecord1.Add("service_number", 5);
             consultationRecord1.Add("provider_number", 6);
 
             var consultationRecord2 = new Dictionary<string, object>();
-            consultationRecord2.Add("current_date", new DateTime(2021, 2, 1));
+            consultationRecord2.Add("record_date", new DateTime(2021, 2, 1));
             consultationRecord2.Add("service_date", new DateTime(2021, 1, 1));
             consultationRecord2.Add("member_number", 4);
             consultationRecord2.Add("service_number", 8);
@@ -168,7 +168,7 @@ namespace ReportGenerator.Tests.Member {
             // Mock setups
             _databaseMock.Setup(c => c.FetchMember(3)).Returns(memberRecord);
 
-            _databaseMock.Setup(c => c.FetchConsultationRecordsForMember(3)).Returns(consultationRecords);
+            _databaseMock.Setup(c => c.FetchConsultationRecordsForMember(3, _daysBack)).Returns(consultationRecords);
            
             _databaseMock.Setup(c => c.FetchProvider(6)).Returns(new ProviderRecord(providerRecord1));
             _databaseMock.Setup(c => c.FetchProvider(2)).Returns(new ProviderRecord(providerRecord2));
@@ -205,7 +205,7 @@ namespace ReportGenerator.Tests.Member {
             // Mock verification
             _databaseMock.Verify(c => c.FetchMember(3), Times.Once);
 
-            _databaseMock.Verify(c => c.FetchConsultationRecordsForMember(3), Times.Once);
+            _databaseMock.Verify(c => c.FetchConsultationRecordsForMember(3, _daysBack), Times.Once);
 
             _databaseMock.Verify(c => c.FetchProvider(6), Times.Once);
             _databaseMock.Verify(c => c.FetchProvider(2), Times.Once);

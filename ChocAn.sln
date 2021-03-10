@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportGenerator", "ReportGe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportGenerator.Tests", "ReportGenerator.Tests\ReportGenerator.Tests.csproj", "{99C4EECF-572F-44F6-BCFA-C145AEC22276}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagerTerminal.Tests", "ManagerTerminal.Tests\ManagerTerminal.Tests.csproj", "{640950A3-DC69-4B80-B12A-6CE3E5CB0931}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{99C4EECF-572F-44F6-BCFA-C145AEC22276}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99C4EECF-572F-44F6-BCFA-C145AEC22276}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99C4EECF-572F-44F6-BCFA-C145AEC22276}.Release|Any CPU.Build.0 = Release|Any CPU
+		{640950A3-DC69-4B80-B12A-6CE3E5CB0931}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{640950A3-DC69-4B80-B12A-6CE3E5CB0931}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{640950A3-DC69-4B80-B12A-6CE3E5CB0931}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{640950A3-DC69-4B80-B12A-6CE3E5CB0931}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

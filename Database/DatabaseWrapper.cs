@@ -12,10 +12,10 @@ namespace ChocAnDatabase {
             return _database.FetchMember(id);
         }
 
-        public IList<ConsultationRecord> FetchConsultationRecordsForMember(int memberId) {
+        public IList<ConsultationRecord> FetchConsultationRecordsForMember(int memberId, int daysBack) {
             EnsureDatabaseIsAvailable();
 
-            return _database.FetchConsultationsByMember(memberId);
+            return _database.FetchConsultationsByMember(memberId, daysBack);
         }
 
         public ProviderRecord FetchProvider(int id) {
@@ -27,15 +27,13 @@ namespace ChocAnDatabase {
         public ServiceRecord FetchServiceRecord(int serviceNumber) {
             EnsureDatabaseIsAvailable();
 
-            return _database.FetchServiceTemp(serviceNumber); // Remove when fixed
-            //return _database.FetchService(serviceNumber);
+            return _database.FetchService(serviceNumber);
         }
 
-        public IList<ConsultationRecord> FetchConsultationRecordsForProvider(int providerId) {
-            throw new NotImplementedException();
-            //EnsureDatabaseIsAvailable();
+        public IList<ConsultationRecord> FetchConsultationRecordsForProvider(int providerId, int daysBack) {
+            EnsureDatabaseIsAvailable();
 
-            //return _database.FetchConsultationByProvider(providerId);
+            return _database.FetchConsultationsByProvider(providerId, daysBack);
         }
 
         public List<Record> FetchMembers() {

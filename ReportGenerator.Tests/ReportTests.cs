@@ -10,6 +10,7 @@ namespace ReportGenerator.Tests {
         private Mock<IDataValidator> _dataValidatorMock;
         private Mock<IDataFormatter> _dataFormatterMock;
         private Mock<IReportDistributor> _reportDistributorMock;
+        private int daysBack = 7;
 
         private Report _report;
 
@@ -33,7 +34,7 @@ namespace ReportGenerator.Tests {
             var reportOutput = new ReportOutput();
             var reportData = new ReportData();
 
-            _dataGetterMock.Setup(c => c.GetData(3)).Returns(reportData);
+            _dataGetterMock.Setup(c => c.GetData(3, daysBack)).Returns(reportData);
 
             _dataValidatorMock.Setup(c => c.ValidateData(reportData)).Returns((true, ""));
 
@@ -46,7 +47,7 @@ namespace ReportGenerator.Tests {
             Assert.AreEqual(true, result.created);
             Assert.AreEqual("", result.errorMessage);
 
-            _dataGetterMock.Verify(c => c.GetData(3), Times.Once);
+            _dataGetterMock.Verify(c => c.GetData(3, daysBack), Times.Once);
 
             _dataValidatorMock.Verify(c => c.ValidateData(reportData), Times.Once);
 
@@ -60,7 +61,7 @@ namespace ReportGenerator.Tests {
             var reportOutput = new ReportOutput();
             var reportData = new ReportData();
 
-            _dataGetterMock.Setup(c => c.GetData(3)).Returns(reportData);
+            _dataGetterMock.Setup(c => c.GetData(3, daysBack)).Returns(reportData);
 
             _dataValidatorMock.Setup(c => c.ValidateData(reportData)).Returns((false, ""));
 
@@ -69,7 +70,7 @@ namespace ReportGenerator.Tests {
             Assert.AreEqual(false, result.created);
             Assert.AreEqual("", result.errorMessage);
 
-            _dataGetterMock.Verify(c => c.GetData(3), Times.Once);
+            _dataGetterMock.Verify(c => c.GetData(3, daysBack), Times.Once);
 
             _dataValidatorMock.Verify(c => c.ValidateData(reportData), Times.Once);
         }

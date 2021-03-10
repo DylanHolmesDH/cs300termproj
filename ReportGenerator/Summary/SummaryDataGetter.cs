@@ -11,7 +11,7 @@ namespace ReportGenerator.Summary {
         public SummaryDataGetter(IDatabaseWrapper databaseWrapper) {
             _databaseWrapper = databaseWrapper;
         }
-        public ReportData GetData(int id = 0) {
+        public ReportData GetData(int id = 0, int daysBack = 7) {
             List<Record> providerRecords = _databaseWrapper.FetchProviders();
 
             ReportData reportData = new ReportData();
@@ -21,7 +21,7 @@ namespace ReportGenerator.Summary {
                     var providerNumber = (int)providerRecord.Get("number");
                     double totalFeeForProvider = 0;
 
-                    IList<ConsultationRecord> consultationRecords = _databaseWrapper.FetchConsultationRecordsForProvider(providerNumber);
+                    IList<ConsultationRecord> consultationRecords = _databaseWrapper.FetchConsultationRecordsForProvider(providerNumber, daysBack);
 
                     if (consultationRecords != null) {
                         foreach (var consultationRecord in consultationRecords) {

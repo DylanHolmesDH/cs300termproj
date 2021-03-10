@@ -54,7 +54,7 @@
     <Compile Include="Interfaces\IDataValidator.cs" />
     <Compile Include="Interfaces\IReportDistributor.cs" />
     <Compile Include="Interfaces\IReport.cs" />
-    <Compile Include="IProcessor.cs" />
+    <Compile Include="Interfaces\IProcessor.cs" />
     <Compile Include="Member\MemberDataFormatter.cs" />
     <Compile Include="Member\MemberDataGetter.cs" />
     <Compile Include="Member\MemberDataValidator.cs" />

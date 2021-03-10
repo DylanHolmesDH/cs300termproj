@@ -12,6 +12,7 @@ namespace ReportGenerator.Tests.EftData {
     public class EftDataGetterTests {
         private Mock<IDatabaseWrapper> _databaseMock;
         private EftDataGetter _eftDataGetter;
+        private int _daysBack = 7;
 
         [TestInitialize]
         public void Setup() {
@@ -61,14 +62,14 @@ namespace ReportGenerator.Tests.EftData {
             };
 
             _databaseMock.Setup(c => c.FetchProviders()).Returns(providerRecords);
-            _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(7)).Returns((List<ConsultationRecord>)null);
+            _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(7, _daysBack)).Returns((List<ConsultationRecord>)null);
 
             var result = _eftDataGetter.GetData();
 
             Assert.IsInstanceOfType(result, typeof(ReportData));
 
             _databaseMock.Verify(c => c.FetchProviders(), Times.Once);
-            _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(7), Times.Once);
+            _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(7, _daysBack), Times.Once);
 
             _databaseMock.VerifyNoOtherCalls();
         }
@@ -89,7 +90,7 @@ namespace ReportGenerator.Tests.EftData {
             };
 
             _databaseMock.Setup(c => c.FetchProviders()).Returns(providerRecords);
-            _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(7)).Returns(new List<ConsultationRecord>());
+            _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(7, _daysBack)).Returns(new List<ConsultationRecord>());
 
             var result = _eftDataGetter.GetData();
 
@@ -97,7 +98,7 @@ namespace ReportGenerator.Tests.EftData {
             Assert.AreEqual(0, result.EftDataInfo.Count);
 
             _databaseMock.Verify(c => c.FetchProviders(), Times.Once);
-            _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(7), Times.Once);
+            _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(7, _daysBack), Times.Once);
 
             _databaseMock.VerifyNoOtherCalls();
         }
@@ -118,7 +119,7 @@ namespace ReportGenerator.Tests.EftData {
 
             Dictionary<string, object> consultationRecord = new Dictionary<string, object>();
 
-            consultationRecord.Add("current_date", new DateTime(2021, 1, 2));
+            consultationRecord.Add("record_date", new DateTime(2021, 1, 2));
             consultationRecord.Add("service_date", new DateTime(2020, 1, 1));
             consultationRecord.Add("member_number", 6);
             consultationRecord.Add("service_number", 5);
@@ -136,7 +137,7 @@ namespace ReportGenerator.Tests.EftData {
             };
 
             _databaseMock.Setup(c => c.FetchProviders()).Returns(providerRecords);
-            _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(7)).Returns(consultationRecords);
+            _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(7, _daysBack)).Returns(consultationRecords);
             _databaseMock.Setup(c => c.FetchServiceRecord(5)).Returns(serviceRecord);
 
             var result = _eftDataGetter.GetData();
@@ -145,7 +146,7 @@ namespace ReportGenerator.Tests.EftData {
             Assert.AreEqual(0, result.EftDataInfo.Count);
 
             _databaseMock.Verify(c => c.FetchProviders(), Times.Once);
-            _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(7), Times.Once);
+            _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(7, _daysBack), Times.Once);
             _databaseMock.Verify(c => c.FetchServiceRecord(5), Times.Once);
 
             _databaseMock.VerifyNoOtherCalls();
@@ -167,7 +168,7 @@ namespace ReportGenerator.Tests.EftData {
 
             Dictionary<string, object> consultationRecord = new Dictionary<string, object>();
 
-            consultationRecord.Add("current_date", new DateTime(2021, 1, 2));
+            consultationRecord.Add("record_date", new DateTime(2021, 1, 2));
             consultationRecord.Add("service_date", new DateTime(2020, 1, 1));
             consultationRecord.Add("member_number", 6);
             consultationRecord.Add("service_number", 5);
@@ -177,15 +178,14 @@ namespace ReportGenerator.Tests.EftData {
                 new ConsultationRecord(consultationRecord)
             };
 
-            ServiceRecord serviceRecord = new ServiceRecord(new Dictionary<string, object>())
-            {
+            ServiceRecord serviceRecord = new ServiceRecord(new Dictionary<string, object>()) {
                 Fee = 999.99,
                 Name = "BC",
                 Number = 5
             };
 
             _databaseMock.Setup(c => c.FetchProviders()).Returns(providerRecords);
-            _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(7)).Returns(consultationRecords);
+            _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(7, _daysBack)).Returns(consultationRecords);
             _databaseMock.Setup(c => c.FetchServiceRecord(5)).Returns(serviceRecord);
 
             var result = _eftDataGetter.GetData();
@@ -200,7 +200,7 @@ namespace ReportGenerator.Tests.EftData {
             Assert.AreEqual(999.99, eftRecord.TotalFee);
 
             _databaseMock.Verify(c => c.FetchProviders(), Times.Once);
-            _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(7), Times.Once);
+            _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(7, _daysBack), Times.Once);
             _databaseMock.Verify(c => c.FetchServiceRecord(5), Times.Once);
 
             _databaseMock.VerifyNoOtherCalls();
@@ -222,7 +222,7 @@ namespace ReportGenerator.Tests.EftData {
 
             Dictionary<string, object> consultationRecord1ForProvider = new Dictionary<string, object>();
 
-            consultationRecord1ForProvider.Add("current_date", new DateTime(2021, 1, 2));
+            consultationRecord1ForProvider.Add("record_date", new DateTime(2021, 1, 2));
             consultationRecord1ForProvider.Add("service_date", new DateTime(2020, 1, 1));
             consultationRecord1ForProvider.Add("member_number", 6);
             consultationRecord1ForProvider.Add("service_number", 5);
@@ -230,7 +230,7 @@ namespace ReportGenerator.Tests.EftData {
 
             Dictionary<string, object> consultationRecord2ForProvider = new Dictionary<string, object>();
 
-            consultationRecord2ForProvider.Add("current_date", new DateTime(2021, 1, 2));
+            consultationRecord2ForProvider.Add("record_date", new DateTime(2021, 1, 2));
             consultationRecord2ForProvider.Add("service_date", new DateTime(2020, 1, 1));
             consultationRecord2ForProvider.Add("member_number", 10);
             consultationRecord2ForProvider.Add("service_number", 5);
@@ -241,15 +241,14 @@ namespace ReportGenerator.Tests.EftData {
                 new ConsultationRecord(consultationRecord2ForProvider)
             };
 
-            ServiceRecord serviceRecord = new ServiceRecord(new Dictionary<string, object>())
-            {
+            ServiceRecord serviceRecord = new ServiceRecord(new Dictionary<string, object>()) {
                 Fee = 100,
                 Name = "BC",
                 Number = 5
             };
 
             _databaseMock.Setup(c => c.FetchProviders()).Returns(providerRecords);
-            _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(7)).Returns(consultationRecordsForProvider1);
+            _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(7, _daysBack)).Returns(consultationRecordsForProvider1);
             _databaseMock.Setup(c => c.FetchServiceRecord(5)).Returns(serviceRecord);
 
             var result = _eftDataGetter.GetData();
@@ -264,7 +263,7 @@ namespace ReportGenerator.Tests.EftData {
             Assert.AreEqual(200.00, eftRecord1.TotalFee);
 
             _databaseMock.Verify(c => c.FetchProviders(), Times.Once);
-            _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(7), Times.Once);
+            _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(7, _daysBack), Times.Once);
             _databaseMock.Verify(c => c.FetchServiceRecord(5), Times.Exactly(2));
 
             _databaseMock.VerifyNoOtherCalls();
@@ -294,7 +293,7 @@ namespace ReportGenerator.Tests.EftData {
             };
 
             _databaseMock.Setup(c => c.FetchProviders()).Returns(providerRecords);
-            _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(7)).Returns(new List<ConsultationRecord>());
+            _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(7, _daysBack)).Returns(new List<ConsultationRecord>());
 
             var result = _eftDataGetter.GetData();
 
@@ -302,8 +301,8 @@ namespace ReportGenerator.Tests.EftData {
             Assert.AreEqual(0, result.EftDataInfo.Count);
 
             _databaseMock.Verify(c => c.FetchProviders(), Times.Once);
-            _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(7), Times.Once);
-            _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(12), Times.Once);
+            _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(7, _daysBack), Times.Once);
+            _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(12, _daysBack), Times.Once);
 
             _databaseMock.VerifyNoOtherCalls();
         }
@@ -333,7 +332,7 @@ namespace ReportGenerator.Tests.EftData {
 
             Dictionary<string, object> consultationRecordForProvider1 = new Dictionary<string, object>();
 
-            consultationRecordForProvider1.Add("current_date", new DateTime(2021, 1, 2));
+            consultationRecordForProvider1.Add("record_date", new DateTime(2021, 1, 2));
             consultationRecordForProvider1.Add("service_date", new DateTime(2020, 1, 1));
             consultationRecordForProvider1.Add("member_number", 6);
             consultationRecordForProvider1.Add("service_number", 5);
@@ -345,7 +344,7 @@ namespace ReportGenerator.Tests.EftData {
 
             Dictionary<string, object> consultationRecordForProvider2 = new Dictionary<string, object>();
 
-            consultationRecordForProvider2.Add("current_date", new DateTime(2021, 1, 2));
+            consultationRecordForProvider2.Add("record_date", new DateTime(2021, 1, 2));
             consultationRecordForProvider2.Add("service_date", new DateTime(2020, 1, 1));
             consultationRecordForProvider2.Add("member_number", 6);
             consultationRecordForProvider2.Add("service_number", 5);
@@ -355,16 +354,15 @@ namespace ReportGenerator.Tests.EftData {
                 new ConsultationRecord(consultationRecordForProvider2),
             };
 
-            ServiceRecord serviceRecord = new ServiceRecord(new Dictionary<string, object>())
-            {
+            ServiceRecord serviceRecord = new ServiceRecord(new Dictionary<string, object>()) {
                 Fee = 100,
                 Name = "BC",
                 Number = 5
             };
 
             _databaseMock.Setup(c => c.FetchProviders()).Returns(providerRecords);
-            _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(7)).Returns(consultationRecordsForProvider1);
-            _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(12)).Returns(consultationRecordsForProvider2);
+            _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(7, _daysBack)).Returns(consultationRecordsForProvider1);
+            _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(12, _daysBack)).Returns(consultationRecordsForProvider2);
             _databaseMock.Setup(c => c.FetchServiceRecord(5)).Returns(serviceRecord);
 
             var result = _eftDataGetter.GetData();
@@ -384,8 +382,8 @@ namespace ReportGenerator.Tests.EftData {
             Assert.AreEqual(100.00, eftRecord2.TotalFee);
 
             _databaseMock.Verify(c => c.FetchProviders(), Times.Once);
-            _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(7), Times.Once);
-            _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(12), Times.Once);
+            _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(7, _daysBack), Times.Once);
+            _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(12, _daysBack), Times.Once);
             _databaseMock.Verify(c => c.FetchServiceRecord(5), Times.Exactly(2));
 
             _databaseMock.VerifyNoOtherCalls();
@@ -416,7 +414,7 @@ namespace ReportGenerator.Tests.EftData {
 
             Dictionary<string, object> consultationRecord1ForProvider1 = new Dictionary<string, object>();
 
-            consultationRecord1ForProvider1.Add("current_date", new DateTime(2021, 1, 2));
+            consultationRecord1ForProvider1.Add("record_date", new DateTime(2021, 1, 2));
             consultationRecord1ForProvider1.Add("service_date", new DateTime(2020, 1, 1));
             consultationRecord1ForProvider1.Add("member_number", 6);
             consultationRecord1ForProvider1.Add("service_number", 5);
@@ -424,7 +422,7 @@ namespace ReportGenerator.Tests.EftData {
 
             Dictionary<string, object> consultationRecord2ForProvider1 = new Dictionary<string, object>();
 
-            consultationRecord2ForProvider1.Add("current_date", new DateTime(2021, 1, 2));
+            consultationRecord2ForProvider1.Add("record_date", new DateTime(2021, 1, 2));
             consultationRecord2ForProvider1.Add("service_date", new DateTime(2020, 1, 1));
             consultationRecord2ForProvider1.Add("member_number", 10);
             consultationRecord2ForProvider1.Add("service_number", 5);
@@ -437,7 +435,7 @@ namespace ReportGenerator.Tests.EftData {
 
             Dictionary<string, object> consultationRecord1ForProvider2 = new Dictionary<string, object>();
 
-            consultationRecord1ForProvider2.Add("current_date", new DateTime(2021, 1, 2));
+            consultationRecord1ForProvider2.Add("record_date", new DateTime(2021, 1, 2));
             consultationRecord1ForProvider2.Add("service_date", new DateTime(2020, 1, 1));
             consultationRecord1ForProvider2.Add("member_number", 6);
             consultationRecord1ForProvider2.Add("service_number", 5);
@@ -445,7 +443,7 @@ namespace ReportGenerator.Tests.EftData {
 
             Dictionary<string, object> consultationRecord2ForProvider2 = new Dictionary<string, object>();
 
-            consultationRecord2ForProvider2.Add("current_date", new DateTime(2021, 1, 2));
+            consultationRecord2ForProvider2.Add("record_date", new DateTime(2021, 1, 2));
             consultationRecord2ForProvider2.Add("service_date", new DateTime(2020, 1, 1));
             consultationRecord2ForProvider2.Add("member_number", 10);
             consultationRecord2ForProvider2.Add("service_number", 5);
@@ -456,16 +454,15 @@ namespace ReportGenerator.Tests.EftData {
                 new ConsultationRecord(consultationRecord2ForProvider2)
             };
 
-            ServiceRecord serviceRecord = new ServiceRecord(new Dictionary<string, object>())
-            {
+            ServiceRecord serviceRecord = new ServiceRecord(new Dictionary<string, object>()) {
                 Fee = 100,
                 Name = "BC",
                 Number = 5
             };
 
             _databaseMock.Setup(c => c.FetchProviders()).Returns(providerRecords);
-            _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(7)).Returns(consultationRecordsForProvider1);
-            _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(15)).Returns(consultationRecordsForProvider2);
+            _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(7, _daysBack)).Returns(consultationRecordsForProvider1);
+            _databaseMock.Setup(c => c.FetchConsultationRecordsForProvider(15, _daysBack)).Returns(consultationRecordsForProvider2);
             _databaseMock.Setup(c => c.FetchServiceRecord(5)).Returns(serviceRecord);
 
             var result = _eftDataGetter.GetData();
@@ -485,8 +482,8 @@ namespace ReportGenerator.Tests.EftData {
             Assert.AreEqual(200.00, eftRecord2.TotalFee);
 
             _databaseMock.Verify(c => c.FetchProviders(), Times.Once);
-            _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(7), Times.Once);
-            _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(15), Times.Once);
+            _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(7, _daysBack), Times.Once);
+            _databaseMock.Verify(c => c.FetchConsultationRecordsForProvider(15, _daysBack), Times.Once);
             _databaseMock.Verify(c => c.FetchServiceRecord(5), Times.Exactly(4));
 
             _databaseMock.VerifyNoOtherCalls();

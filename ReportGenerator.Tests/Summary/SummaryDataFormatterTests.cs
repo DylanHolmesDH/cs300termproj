@@ -40,10 +40,10 @@ namespace ReportGenerator.Tests.Summary {
                 + "Fee".PadRight(15), result.OutputLines[1]
                 );
 
-            Assert.AreEqual("_".PadRight(46, '_'), result.OutputLines[2]);
+            Assert.AreEqual("_".PadRight(57, '_'), result.OutputLines[2]);
 
-            Assert.AreEqual("_".PadRight(46, '_'), result.OutputLines[3]);
-            Assert.AreEqual("_".PadRight(46, '_'), result.OutputLines[4]);
+            Assert.AreEqual("_".PadRight(57, '_'), result.OutputLines[3]);
+            Assert.AreEqual("_".PadRight(57, '_'), result.OutputLines[4]);
 
             Assert.AreEqual(
                     "0".PadRight(30)
@@ -77,7 +77,7 @@ namespace ReportGenerator.Tests.Summary {
                 + "Fee".PadRight(15), result.OutputLines[1]
                 );
 
-            Assert.AreEqual("_".PadRight(46, '_'), result.OutputLines[2]);
+            Assert.AreEqual("_".PadRight(57, '_'), result.OutputLines[2]);
 
             Assert.AreEqual(
                 "John Smith".PadRight(30) 
@@ -85,8 +85,8 @@ namespace ReportGenerator.Tests.Summary {
                 + "$999.99".PadRight(15), result.OutputLines[3]
                 );
 
-            Assert.AreEqual("_".PadRight(46, '_'), result.OutputLines[4]);
-            Assert.AreEqual("_".PadRight(46, '_'), result.OutputLines[5]);
+            Assert.AreEqual("_".PadRight(57, '_'), result.OutputLines[4]);
+            Assert.AreEqual("_".PadRight(57, '_'), result.OutputLines[5]);
 
             Assert.AreEqual(
                     "1".PadRight(30)
@@ -124,7 +124,7 @@ namespace ReportGenerator.Tests.Summary {
                 + "Consultations".PadRight(15)
                 + "Fee".PadRight(15), result.OutputLines[1]
                 );
-            Assert.AreEqual("_".PadRight(46, '_'), result.OutputLines[2]);
+            Assert.AreEqual("_".PadRight(57, '_'), result.OutputLines[2]);
 
             Assert.AreEqual(
                 "John Smith".PadRight(30)
@@ -137,8 +137,8 @@ namespace ReportGenerator.Tests.Summary {
                 + "$999.99".PadRight(15), result.OutputLines[4]
                 );
 
-            Assert.AreEqual("_".PadRight(46, '_'), result.OutputLines[5]);
-            Assert.AreEqual("_".PadRight(46, '_'), result.OutputLines[6]);
+            Assert.AreEqual("_".PadRight(57, '_'), result.OutputLines[5]);
+            Assert.AreEqual("_".PadRight(57, '_'), result.OutputLines[6]);
 
             Assert.AreEqual(
                 "2".PadRight(30)

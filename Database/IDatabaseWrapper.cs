@@ -4,8 +4,8 @@ using System.Collections.Generic;
 namespace ChocAnDatabase {
     public interface IDatabaseWrapper {
         MemberRecord FetchMember(int id);
-        IList<ConsultationRecord> FetchConsultationRecordsForMember(int memberId);
-        IList<ConsultationRecord> FetchConsultationRecordsForProvider(int providerId);
+        IList<ConsultationRecord> FetchConsultationRecordsForMember(int memberId, int daysBack);
+        IList<ConsultationRecord> FetchConsultationRecordsForProvider(int providerId, int daysBack);
         ProviderRecord FetchProvider(int id);
         void AddMember(Record record);
         void Save();

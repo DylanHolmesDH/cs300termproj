@@ -10,7 +10,7 @@ namespace ReportGenerator.Member {
             _database = database;
         }
 
-        public ReportData GetData(int memberId) {
+        public ReportData GetData(int memberId, int daysBack = 7) {
             ReportData reportData = new ReportData();
 
             var memberRecord = _database.FetchMember(memberId);
@@ -19,7 +19,7 @@ namespace ReportGenerator.Member {
 
             // Get consultation records
 
-            var consultationRecords = _database.FetchConsultationRecordsForMember(memberId);
+            var consultationRecords = _database.FetchConsultationRecordsForMember(memberId, daysBack);
 
             if (consultationRecords != null) {
                 foreach (var consultationRecord in consultationRecords) {

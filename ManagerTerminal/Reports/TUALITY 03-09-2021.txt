@@ -1,0 +1,15 @@
+TUALITY
+SOME ADDRESS
+Hillsboro, OR 97123
+
+
+ID: 200000001
+
+
+Service date   Date record received    Member name                   Member ID     Service ID     Fee         
+__________________________________________________________________________________________________________
+03-03-2021     03-02-2021 20:54:22     DYLAN                         333           300001         $50.00      
+
+
+Total consultations: 1
+Total fee: $50.00

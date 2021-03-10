@@ -2,6 +2,6 @@
 
 namespace ReportGenerator.Interfaces {
     public interface IDataGetter {
-        ReportData GetData(int id);
+        ReportData GetData(int id, int daysBack);
     }
 }

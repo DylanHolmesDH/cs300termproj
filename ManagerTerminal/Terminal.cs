@@ -55,8 +55,7 @@ namespace ManagerTerminal {
             } while (!end);
         }
 
-        private static Record ConvertStringRecordToRecord(string stringRecord)
-        {
+        private static Record ConvertStringRecordToRecord(string stringRecord) {
             if (stringRecord == null)
                 throw new ApplicationException("Record cannot be null");
 
@@ -170,6 +169,8 @@ namespace ManagerTerminal {
                     case "0":
                     case "Quit":
                     case "quit":
+                    case "Exit":
+                    case "exit":
                         invalid = false;
                         optionNumber = 0;
                         break;

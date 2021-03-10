@@ -5,7 +5,6 @@ using System;
 namespace ReportGenerator.Summary {
     public class SummaryDataFormatter : IDataFormatter {
         public ReportOutput FormatData(ReportData data) {
-
             if (data == null)
                 throw new NullReferenceException("Report data object cannot be null");
 
@@ -23,7 +22,7 @@ namespace ReportGenerator.Summary {
                 + "Consultations  "
                 + "Fee            " 
                 );
-            formattedData.OutputLines.Add("_".PadRight(46, '_'));
+            formattedData.OutputLines.Add("_".PadRight(57, '_'));
 
             foreach (var providerConsultations in data.SummaryDataInfo)
             {
@@ -38,8 +37,8 @@ namespace ReportGenerator.Summary {
                      );
             }
 
-            formattedData.OutputLines.Add("_".PadRight(46, '_'));
-            formattedData.OutputLines.Add("_".PadRight(46, '_'));
+            formattedData.OutputLines.Add("_".PadRight(57, '_'));
+            formattedData.OutputLines.Add("_".PadRight(57, '_'));
 
             formattedData.OutputLines.Add(
                     totalProviders.ToString().PadRight(30)

@@ -8,10 +8,11 @@ using System;
 namespace ReportGenerator.Tests {
     [TestClass]
     public class ProcessorTests {
-        private Processor _processor;
+        private IProcessor _processor;
         private Mock<IReportFactory> _factoryMock;
         private Mock<IDatabaseWrapper> _databaseWrapperMock;
         private Mock<IReport> _reportMock;
+        private int _daysBack = 7;
 
         [TestInitialize]
         public void Setup() {
@@ -23,7 +24,7 @@ namespace ReportGenerator.Tests {
 
         [TestMethod]
         public void DistributeReport_nullDatabaseWrapper() {
-            var ex = Assert.ThrowsException<ArgumentNullException>(() => _processor.GenerateReport(TypeOfReport.MemberReport, null, _factoryMock.Object, 5));
+            var ex = Assert.ThrowsException<ArgumentNullException>(() => _processor.GenerateReport(TypeOfReport.MemberReport, null, _factoryMock.Object, 5, _daysBack));
             Assert.AreEqual("Value cannot be null.\r\nParameter name: databaseWrapper", ex.Message);
 
             VerifyNoOtherCalls();
@@ -31,7 +32,7 @@ namespace ReportGenerator.Tests {
 
         [TestMethod]
         public void DistributeReport_nullFactory() {
-            var ex = Assert.ThrowsException<ArgumentNullException>(() => _processor.GenerateReport(TypeOfReport.MemberReport, _databaseWrapperMock.Object, null, 5));
+            var ex = Assert.ThrowsException<ArgumentNullException>(() => _processor.GenerateReport(TypeOfReport.MemberReport, _databaseWrapperMock.Object, null, 5, _daysBack));
             Assert.AreEqual("Value cannot be null.\r\nParameter name: factory", ex.Message);
 
             VerifyNoOtherCalls();
@@ -40,15 +41,15 @@ namespace ReportGenerator.Tests {
         [TestMethod]
         public void CreateFile_EmptyReportObjectWithFileName() {
             _factoryMock.Setup(c => c.CreateReport(TypeOfReport.MemberReport, _databaseWrapperMock.Object)).Returns(_reportMock.Object);
-            _reportMock.Setup(c => c.Generate(5)).Returns((true, "Blah"));
+            _reportMock.Setup(c => c.Generate(5, _daysBack)).Returns((true, "Blah"));
 
-            var result = _processor.GenerateReport(TypeOfReport.MemberReport, _databaseWrapperMock.Object, _factoryMock.Object, 5);
+            var result = _processor.GenerateReport(TypeOfReport.MemberReport, _databaseWrapperMock.Object, _factoryMock.Object, 5, _daysBack);
 
             Assert.AreEqual(true, result.created);
             Assert.AreEqual("Blah", result.errorMessage);
 
             _factoryMock.Verify(c => c.CreateReport(TypeOfReport.MemberReport, _databaseWrapperMock.Object), Times.Once);
-            _reportMock.Verify(c => c.Generate(5), Times.Once);
+            _reportMock.Verify(c => c.Generate(5, _daysBack), Times.Once);
 
             VerifyNoOtherCalls();
         }

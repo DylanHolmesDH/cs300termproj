@@ -34,7 +34,7 @@ namespace ChocAnDatabase.records {
             String[] data = line.Trim().Split(';');
             Dictionary<String, Object> dataMap = new Dictionary<string, object>();
 
-            dataMap.Add("current_date", DateTime.Parse(data[0]));
+            dataMap.Add("record_date", DateTime.Parse(data[0]));
             dataMap.Add("service_date", DateTime.Parse(data[1]));
             dataMap.Add("provider_number", int.Parse(data[2]));
             dataMap.Add("member_number", int.Parse(data[3]));

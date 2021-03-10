@@ -42,7 +42,7 @@ namespace ReportGenerator.Provider {
                 + "Date record received    " 
                 + "Member name                   " 
                 + "Member ID     "
-                + "Service ID " 
+                + "Service ID     " 
                 + "Fee         "
                 );
 
@@ -62,7 +62,7 @@ namespace ReportGenerator.Provider {
                 + dateReceived.PadRight(24)
                 + providedService.MemberName.PadRight(30)
                 + providedService.MemberId.ToString().PadRight(14)
-                + providedService.ServiceId.ToString().PadRight(11)
+                + providedService.ServiceId.ToString().PadRight(15)
                 + providedService.Fee.ToString("C").PadRight(12)
                 );
             }

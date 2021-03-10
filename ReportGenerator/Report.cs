@@ -31,8 +31,8 @@ namespace ReportGenerator {
             get { return _dataFormatter; }
         }
 
-        public (bool created, string errorMessage) Generate(int id) {
-            var data = _dataGetter.GetData(id);
+        public (bool created, string errorMessage) Generate(int id, int daysBack = 7) {
+            var data = _dataGetter.GetData(id, daysBack);
 
             (bool valid, string errorMessage) result = _dataValidator.ValidateData(data);
 

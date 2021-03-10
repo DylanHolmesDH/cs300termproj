@@ -56,7 +56,7 @@ namespace ReportGenerator.Tests.Provider {
                 + "Date record received".PadRight(24)
                 + "Member name".PadRight(30)
                 + "Member ID".PadRight(14)
-                + "Service ID".PadRight(11)
+                + "Service ID".PadRight(15)
                 + "Fee".PadRight(12), result.OutputLines[8]
                 );
 
@@ -115,7 +115,7 @@ namespace ReportGenerator.Tests.Provider {
                 + "Date record received".PadRight(24)
                 + "Member name".PadRight(30)
                 + "Member ID".PadRight(14)
-                + "Service ID".PadRight(11)
+                + "Service ID".PadRight(15)
                 + "Fee".PadRight(12), result.OutputLines[8]
                 );
 
@@ -126,7 +126,7 @@ namespace ReportGenerator.Tests.Provider {
                 + "01-01-0001 13:00:00".PadRight(24)
                 + "John Smith".PadRight(30)
                 + "7".PadRight(14)
-                + "1".PadRight(11)
+                + "1".PadRight(15)
                 + "$999.99".PadRight(12), result.OutputLines[10]
                 );
 
@@ -190,7 +190,7 @@ namespace ReportGenerator.Tests.Provider {
                 + "Date record received".PadRight(24)
                 + "Member name".PadRight(30)
                 + "Member ID".PadRight(14)
-                + "Service ID".PadRight(11)
+                + "Service ID".PadRight(15)
                 + "Fee".PadRight(12), result.OutputLines[8]
                 );
 
@@ -201,7 +201,7 @@ namespace ReportGenerator.Tests.Provider {
                 + "01-25-2001 13:00:00".PadRight(24)
                 + "John Smith".PadRight(30)
                 + "7".PadRight(14)
-                + "1".PadRight(11)
+                + "1".PadRight(15)
                 + "$999.99".PadRight(12), result.OutputLines[10]
                 );
 
@@ -210,7 +210,7 @@ namespace ReportGenerator.Tests.Provider {
                 + "01-14-2004 13:00:00".PadRight(24)
                 + "John Smith".PadRight(30)
                 + "7".PadRight(14)
-                + "1".PadRight(11)
+                + "1".PadRight(15)
                 + "$999.99".PadRight(12), result.OutputLines[11]
                 );
 

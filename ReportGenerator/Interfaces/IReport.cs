@@ -4,6 +4,6 @@
         IDataValidator DataValidator { get; }
         IDataFormatter DataFormatter { get; }
 
-        (bool created, string errorMessage) Generate(int id);
+        (bool created, string errorMessage) Generate(int id, int daysBack);
     }
 }
