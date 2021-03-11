@@ -17,6 +17,12 @@ namespace ChocAnDatabase.records {
             return (int)keyValues[key];
         }
 
+        public Boolean GetBoolean(String key) {
+            if (!keyValues.ContainsKey(key)) {
+                return false;
+            }
+            return (Boolean)keyValues[key];
+        }
         public Object Get(String key) {
             if (!keyValues.ContainsKey(key)) {
                 return null;
