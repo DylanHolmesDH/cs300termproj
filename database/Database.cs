@@ -12,7 +12,7 @@ namespace ChocAnDatabase {
         private String rootPath;
 
         public Database() {
-            rootPath = "./data/";
+            rootPath = "./";
 
             Load();
         }
@@ -127,9 +127,7 @@ namespace ChocAnDatabase {
         }
 
         private void Load() {
-
             StreamReader inStream = new StreamReader(File.Open(rootPath + "database.db", FileMode.OpenOrCreate, FileAccess.Read));
-
             
             String activeType = "";
             while (!inStream.EndOfStream) {
@@ -146,7 +144,7 @@ namespace ChocAnDatabase {
                         members.Add(MemberRecord.FromString(line));
                         break;
                     case "PROVIDERS":
-                           providers.Add(ProviderRecord.FromString(line));
+                        providers.Add(ProviderRecord.FromString(line));
                         break;
                     case "SERVICES":
                         services.Add(ServiceRecord.FromString(line));
@@ -161,25 +159,25 @@ namespace ChocAnDatabase {
             inStream.Close();
         }
 
-
         public void Save() {
             StreamWriter outStream = new StreamWriter(File.Open(rootPath + "database.db", FileMode.Truncate, FileAccess.Write));
+            
             outStream.WriteLine("*MEMBERS:");
             foreach (var memb in members) {
                 outStream.WriteLine(memb.ToString());
             }
-            outStream.WriteLine("*PROVIDERS:");
 
+            outStream.WriteLine("*PROVIDERS:");
             foreach (var provider in providers) {
                 outStream.WriteLine(provider.ToString());
             }
+            
             outStream.WriteLine("*SERVICES:");
-
             foreach (var serv in services) {
                 outStream.WriteLine(serv.ToString());
             }
+            
             outStream.WriteLine("*CONSULTATIONS:");
-
             foreach (var con in consultations) {
                 outStream.WriteLine(con.ToString());
             }

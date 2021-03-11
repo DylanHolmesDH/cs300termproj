@@ -9,12 +9,103 @@ namespace ProviderTerminal {
 
         private int providerId, activeMember;
         private List<int> members;
-        //private Database db;
         private bool breakRequested;
         private Database db;
 
+
+        static void Main(string[] args) {
+            Terminal term = new Terminal();
+            term.Start();
+        }
+
+        void Start() {
+            Login();
+            while (true) {
+                PrintOptions();
+                int input = GetInputOption();
+                switch (input) {
+                    case 1:
+                        VerifyMember();
+                        return;
+                    case 2:
+                        BillMember();
+                        return;
+                }
+            }
+        }
+
+        void Login() {
+            // WIP
+            providerId = 1;
+		}
+
+        void PrintOptions() {
+            // WIP
+		}
+
+        int GetInputOption() {
+            // WIP
+            return 1;
+		}
+
+        bool VerifyMember() {
+            int memberId = GetInputInt("Please enter the member id: ");
+            // WIP
+            bool memberIsValid = true;
+            if (memberIsValid) {
+                Console.WriteLine("Member '" + memberId + "' is valid.");
+            } else {
+                Console.WriteLine("Member '" + memberId + "' is not valid.");
+            }
+            return memberIsValid;
+        }
+        
+        void BillMember() {
+            if (!VerifyMember()) {
+                return;
+            }
+            // Get date from user
+            // 
+            // WIP
+		}
+
+        int GetServiceIDFromUser() {
+            // WIP
+            // Will be an interactive communication with the user to select a service
+            return 598470;
+        }
+
+
+
+
+
+
+
+        string GetInput(string message) {
+            Console.WriteLine(message);
+            return Console.ReadLine();
+
+        }
+
+        int GetInputInt(string message) {
+            Console.WriteLine(message);
+            //return (int)Console.ReadLine();
+            return 1;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
         // Start of the Provider Terminal
-        public void Start() {
+        public void Startt() {
             // Initialize variables & connections
             //  db = new Database(...);
 
@@ -112,10 +203,5 @@ namespace ProviderTerminal {
 
 
 
-        static void Main(string[] args) {
-            Terminal p = new Terminal();
-
-            p.Start();
-        }
     }
 }
