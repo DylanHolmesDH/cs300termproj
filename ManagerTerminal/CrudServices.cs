@@ -100,7 +100,7 @@ namespace ManagerTerminal {
                     database.Save();
                     break;
                 case TypeOfCrudAction.RemoveMember:
-                    allFieldsFilled = validator.RemoveFieldsValid(userInterfaceRecord.Number);
+                    allFieldsFilled = validator.RemovalIdValid(userInterfaceRecord.Number);
 
                     if (!allFieldsFilled.successful)
                         return (false, allFieldsFilled.errorMessage);
@@ -114,7 +114,7 @@ namespace ManagerTerminal {
                     database.Save();
                     break;
                 case TypeOfCrudAction.RemoveProvider:
-                    allFieldsFilled = validator.RemoveFieldsValid(userInterfaceRecord.Number);
+                    allFieldsFilled = validator.RemovalIdValid(userInterfaceRecord.Number);
 
                     if (!allFieldsFilled.successful)
                         return (false, allFieldsFilled.errorMessage);

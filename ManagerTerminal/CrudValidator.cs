@@ -93,7 +93,7 @@ namespace ManagerTerminal {
             return (true, "");
         }
 
-        public (bool successful, string errorMessage) RemoveFieldsValid(int id) {
+        public (bool successful, string errorMessage) RemovalIdValid(int id) {
             if (id <= 0)
                 return (false, "Needs to have a valid number");
 
