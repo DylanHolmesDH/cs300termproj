@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using ChocAnDatabase;
 using ChocAnDatabase.records;
 
 namespace ProviderTerminal {
     class Terminal {
-
         private int providerId, activeMember;
         private List<int> members;
         private bool breakRequested;
         private Database db;
-
 
         static void Main(string[] args) {
             Terminal term = new Terminal();
@@ -19,6 +16,7 @@ namespace ProviderTerminal {
         }
 
         void Start() {
+            db = new Database();
             Login();
             while (true) {
                 PrintOptions();
@@ -32,6 +30,7 @@ namespace ProviderTerminal {
                         return;
                 }
             }
+            db.Save();
         }
 
         void Login() {
@@ -50,8 +49,7 @@ namespace ProviderTerminal {
 
         bool VerifyMember() {
             int memberId = GetInputInt("Please enter the member id: ");
-            // WIP
-            bool memberIsValid = true;
+            bool memberIsValid = db.FetchMember(memberId) != null;
             if (memberIsValid) {
                 Console.WriteLine("Member '" + memberId + "' is valid.");
             } else {
@@ -64,8 +62,6 @@ namespace ProviderTerminal {
             if (!VerifyMember()) {
                 return;
             }
-            // Get date from user
-            // 
             // WIP
 		}
 
