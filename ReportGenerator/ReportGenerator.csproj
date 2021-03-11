@@ -47,7 +47,7 @@
     <Compile Include="EftData\EftDataFormatter.cs" />
     <Compile Include="EftData\EftDataGetter.cs" />
     <Compile Include="EftData\EftDataValidator.cs" />
-    <Compile Include="Factory\IReportFactory.cs" />
+    <Compile Include="Interfaces\IReportFactory.cs" />
     <Compile Include="Factory\ReportFactory.cs" />
     <Compile Include="Interfaces\IDataFormatter.cs" />
     <Compile Include="Interfaces\IDataGetter.cs" />

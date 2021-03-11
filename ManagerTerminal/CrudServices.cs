@@ -36,7 +36,7 @@ namespace ManagerTerminal {
                 case TypeOfCrudAction.Unknown:
                     return (false, "Unknown");
                 case TypeOfCrudAction.AddMember:
-                    memberRecord = converter.ConvertRecordToMemberRecord(userInterfaceRecord, nextIdAvailable);
+                    memberRecord = converter.ConvertRecordToMemberRecord(userInterfaceRecord);
                    
                     allFieldsFilled = validator.AreAllFieldsFilledIn(memberRecord, false);
 
@@ -52,7 +52,7 @@ namespace ManagerTerminal {
                     database.Save();
                     break;
                 case TypeOfCrudAction.AddProvider:
-                    providerRecord = converter.ConvertRecordToProviderRecord(userInterfaceRecord, nextIdAvailable);
+                    providerRecord = converter.ConvertRecordToProviderRecord(userInterfaceRecord);
 
                     allFieldsFilled = validator.AreAllFieldsFilledIn(providerRecord, false);
 
@@ -68,7 +68,7 @@ namespace ManagerTerminal {
                     database.Save();
                     break;
                 case TypeOfCrudAction.UpdateMember:
-                    memberRecord = converter.ConvertRecordToMemberRecord(userInterfaceRecord, nextIdAvailable);
+                    memberRecord = converter.ConvertRecordToMemberRecord(userInterfaceRecord);
 
                     allFieldsFilled = validator.AreAllFieldsFilledIn(memberRecord, true);
 
@@ -84,7 +84,7 @@ namespace ManagerTerminal {
                     database.Save();
                     break;
                 case TypeOfCrudAction.UpdateProvider:
-                    providerRecord = converter.ConvertRecordToProviderRecord(userInterfaceRecord, nextIdAvailable);
+                    providerRecord = converter.ConvertRecordToProviderRecord(userInterfaceRecord);
 
                     allFieldsFilled = validator.AreAllFieldsFilledIn(providerRecord, true);
 

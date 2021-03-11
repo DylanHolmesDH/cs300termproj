@@ -68,6 +68,8 @@
     <Compile Include="ReportServicesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServicesFactoryTests.cs" />
+    <Compile Include="ConverterTests.cs" />
+    <Compile Include="CrudValidatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -9,8 +9,8 @@ using System;
 namespace ReportGenerator.Tests.Factory {
     [TestClass]
     public class ReportFactoryTests {
-        private ReportGenerator.Factory.ReportFactory _factory;
-        private DatabaseWrapper _database;
+        private ReportGenerator.Factory.IReportFactory _factory;
+        private IDatabaseWrapper _database;
 
         [TestInitialize]
         public void Setup() {

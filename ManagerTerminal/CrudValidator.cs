@@ -10,45 +10,51 @@ namespace ManagerTerminal {
         }
 
         public (bool successful, string errorMessage) AreAllFieldsFilledIn(MemberRecord memberRecord, bool checkForId) {
+            if (memberRecord == null)
+                return (false, "Member record is null");
+
             if (checkForId && memberRecord.Number <= 0)
                 return (false, "Needs to have a valid number");
 
-            if (!string.IsNullOrWhiteSpace(memberRecord.Name))
+            if (string.IsNullOrWhiteSpace(memberRecord.Name))
                 return (false, "Needs to have a name");
 
-            if (!string.IsNullOrWhiteSpace(memberRecord.Address))
+            if (string.IsNullOrWhiteSpace(memberRecord.Address))
                 return (false, "Needs to have an address");
 
-            if (!string.IsNullOrWhiteSpace(memberRecord.City))
+            if (string.IsNullOrWhiteSpace(memberRecord.City))
                 return (false, "Needs to have a city");
 
-            if (!string.IsNullOrWhiteSpace(memberRecord.State))
+            if (string.IsNullOrWhiteSpace(memberRecord.State))
                 return (false, "Needs to have a state");
 
-            if (memberRecord.Zip == 0)
-                return (false, "Needs to have a zip code");
+            if (memberRecord.Zip < 10000 || memberRecord.Zip > 99999)
+                return (false, "Needs to have a 5 digit zip code");
 
             return (true, "");
         }
 
         public (bool successful, string errorMessage) AreAllFieldsFilledIn(ProviderRecord providerRecord, bool checkForId) {
+            if (providerRecord == null)
+                return (false, "Provider record is null");
+            
             if (checkForId && providerRecord.Number <= 0)
                 return (false, "Needs to have a valid number");
 
-            if (!string.IsNullOrWhiteSpace(providerRecord.Name))
+            if (string.IsNullOrWhiteSpace(providerRecord.Name))
                 return (false, "Needs to have a name");
 
-            if (!string.IsNullOrWhiteSpace(providerRecord.Address))
+            if (string.IsNullOrWhiteSpace(providerRecord.Address))
                 return (false, "Needs to have an address");
 
-            if (!string.IsNullOrWhiteSpace(providerRecord.City))
+            if (string.IsNullOrWhiteSpace(providerRecord.City))
                 return (false, "Needs to have a city");
 
-            if (!string.IsNullOrWhiteSpace(providerRecord.State))
+            if (string.IsNullOrWhiteSpace(providerRecord.State))
                 return (false, "Needs to have a state");
 
-            if (providerRecord.Zip == 0)
-                return (false, "Needs to have a zip code");
+            if (providerRecord.Zip < 10000 || providerRecord.Zip > 99999)
+                return (false, "Needs to have a 5 digit zip code");
 
             return (true, "");
         }
