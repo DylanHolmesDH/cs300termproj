@@ -76,8 +76,7 @@ namespace ProviderTerminal {
                 Console.WriteLine("LOGIN");
                 Console.WriteLine("---------------------------------------------------");
                 Console.WriteLine("Please enter your ID number. To exit this program, type 'quit' instead.\n\n");
-                Console.WriteLine("ID Number: ");
-                input = Console.ReadLine();
+                input = GetInput("ID Number: ");
                 provider_num = Convert.ToInt32(input);
 
                 if (input == "quit" || input == "'quit'")
@@ -252,11 +251,6 @@ namespace ProviderTerminal {
         // Writes a message to the terminal.
         public void WriteMessage(String message) {
             Console.WriteLine("[Terminal] " + message);
-        }
-
-        // Get a Single Line of Input
-        public String GetInput(String message) {
-            return Console.ReadLine();
         }
 
         // Gets a Multi-Line of Input terminated when an empty line is entered.
