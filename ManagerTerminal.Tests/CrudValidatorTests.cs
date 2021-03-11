@@ -139,5 +139,187 @@ namespace ManagerTerminal.Tests {
             Assert.AreEqual(expectedResult, result.successful);
             Assert.AreEqual(expectedMessage, result.errorMessage);
         }
+
+        #region DoesMemberExistInDatabase
+
+        [TestMethod]
+        public void DoesMemberExistInDatabase_SupposedToAndExists() {
+            MemberRecord memberRecord = new MemberRecord(new Dictionary<string, object>()) {
+                Name = "Alex Burbank",
+                Number = 1,
+                City = "OC",
+                State = "OR",
+                Zip = 1,
+            };
+
+            _databaseWrapperMock.Setup(c => c.FetchMember(7)).Returns(memberRecord);
+
+            var result = _crudValidator.DoesMemberExistInDatabase(true, 7);
+
+            Assert.AreEqual(true, result.exists);
+            Assert.AreEqual("", result.errorMessage);
+
+            _databaseWrapperMock.Verify(c => c.FetchMember(7), Times.Once);
+
+            _databaseWrapperMock.VerifyNoOtherCalls();
+        }
+
+        [TestMethod]
+        public void DoesMemberExistInDatabase_SupposedToAndDoesNotExists()
+        {
+            _databaseWrapperMock.Setup(c => c.FetchMember(7)).Returns((MemberRecord) null);
+
+            var result = _crudValidator.DoesMemberExistInDatabase(true, 7);
+
+            Assert.AreEqual(false, result.exists);
+            Assert.AreEqual("Member record does not exist", result.errorMessage);
+
+            _databaseWrapperMock.Verify(c => c.FetchMember(7), Times.Once);
+
+            _databaseWrapperMock.VerifyNoOtherCalls();
+        }
+
+
+        [TestMethod]
+        public void DoesMemberExistInDatabase_NotSupposedToAndExist()
+        {
+            MemberRecord memberRecord = new MemberRecord(new Dictionary<string, object>())
+            {
+                Name = "Alex Burbank",
+                Number = 1,
+                City = "OC",
+                State = "OR",
+                Zip = 1,
+            };
+
+            _databaseWrapperMock.Setup(c => c.FetchMemberByName("Blah")).Returns(memberRecord);
+
+            var result = _crudValidator.DoesMemberExistInDatabase(false, 0, "Blah");
+
+            Assert.AreEqual(false, result.exists);
+            Assert.AreEqual("Member record already exists", result.errorMessage);
+
+            _databaseWrapperMock.Verify(c => c.FetchMemberByName("Blah"), Times.Once);
+
+            _databaseWrapperMock.VerifyNoOtherCalls();
+        }
+
+        [TestMethod]
+        public void DoesMemberExistInDatabase_NotSupposedToAndDoesNotExist()
+        {
+            _databaseWrapperMock.Setup(c => c.FetchMemberByName("Blah")).Returns((MemberRecord) null);
+
+            var result = _crudValidator.DoesMemberExistInDatabase(false, 0, "Blah");
+
+            Assert.AreEqual(true, result.exists);
+            Assert.AreEqual("", result.errorMessage);
+
+            _databaseWrapperMock.Verify(c => c.FetchMemberByName("Blah"), Times.Once);
+
+            _databaseWrapperMock.VerifyNoOtherCalls();
+        }
+
+        #endregion DoesMemberExistInDatabase
+
+        #region DoesProviderExistInDatabase
+
+        [TestMethod]
+        public void DoesProviderExistInDatabase_SupposedToAndExists()
+        {
+            ProviderRecord providerRecord = new ProviderRecord(new Dictionary<string, object>())
+            {
+                Name = "Alex Burbank",
+                Number = 1,
+                City = "OC",
+                State = "OR",
+                Zip = 1,
+            };
+
+            _databaseWrapperMock.Setup(c => c.FetchProvider(7)).Returns(providerRecord);
+
+            var result = _crudValidator.DoesProviderExistInDatabase(true, 7);
+
+            Assert.AreEqual(true, result.exists);
+            Assert.AreEqual("", result.errorMessage);
+
+            _databaseWrapperMock.Verify(c => c.FetchProvider(7), Times.Once);
+
+            _databaseWrapperMock.VerifyNoOtherCalls();
+        }
+
+        [TestMethod]
+        public void DoesProviderExistInDatabase_SupposedToAndDoesNotExists()
+        {
+            _databaseWrapperMock.Setup(c => c.FetchProvider(7)).Returns((ProviderRecord)null);
+
+            var result = _crudValidator.DoesProviderExistInDatabase(true, 7);
+
+            Assert.AreEqual(false, result.exists);
+            Assert.AreEqual("Provider record does not exist", result.errorMessage);
+
+            _databaseWrapperMock.Verify(c => c.FetchProvider(7), Times.Once);
+
+            _databaseWrapperMock.VerifyNoOtherCalls();
+        }
+
+
+        [TestMethod]
+        public void DoesProviderExistInDatabase_NotSupposedToAndExist()
+        {
+            ProviderRecord providerRecord = new ProviderRecord(new Dictionary<string, object>())
+            {
+                Name = "Alex Burbank",
+                Number = 1,
+                City = "OC",
+                State = "OR",
+                Zip = 1,
+            };
+
+            _databaseWrapperMock.Setup(c => c.FetchProviderByName("Blah")).Returns(providerRecord);
+
+            var result = _crudValidator.DoesProviderExistInDatabase(false, 0, "Blah");
+
+            Assert.AreEqual(false, result.exists);
+            Assert.AreEqual("Provider record already exists", result.errorMessage);
+
+            _databaseWrapperMock.Verify(c => c.FetchProviderByName("Blah"), Times.Once);
+
+            _databaseWrapperMock.VerifyNoOtherCalls();
+        }
+
+        [TestMethod]
+        public void DoesProviderExistInDatabase_NotSupposedToAndDoesNotExist()
+        {
+            _databaseWrapperMock.Setup(c => c.FetchProviderByName("Blah")).Returns((ProviderRecord)null);
+
+            var result = _crudValidator.DoesProviderExistInDatabase(false, 0, "Blah");
+
+            Assert.AreEqual(true, result.exists);
+            Assert.AreEqual("", result.errorMessage);
+
+            _databaseWrapperMock.Verify(c => c.FetchProviderByName("Blah"), Times.Once);
+
+            _databaseWrapperMock.VerifyNoOtherCalls();
+        }
+
+        #endregion DoesProviderExistInDatabase
+
+        [DataRow("1", 1, true, "")]
+        [DataRow("0", 0, false, "Needs to have a valid number")]
+        [DataRow("-1", -1, false, "Needs to have a valid number")]
+        [TestMethod]
+        public void RemovalIdValid(
+            string testName,
+            int number,
+            bool expectedResult,
+            string expectedMessage
+        )
+        {
+            var result = _crudValidator.RemovalIdValid(number);
+
+            Assert.AreEqual(expectedResult, result.successful);
+            Assert.AreEqual(expectedMessage, result.errorMessage);
+        }
+
     }
 }
