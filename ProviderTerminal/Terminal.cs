@@ -20,8 +20,6 @@ namespace ProviderTerminal {
 
     class Terminal {
         private int providerId, activeMember;
-        private List<int> members;
-        private bool breakRequested;
         private Database db;
         private String providerName;
 
@@ -126,11 +124,15 @@ namespace ProviderTerminal {
             Console.WriteLine(providerName + "\n\n\n\n\n\n\n");
             activeMember = GetInputInt("Please enter the member id: ");
 
+            //EDIT THIS
+            //we need to check is member is valid, suspended, doesnt exist in database
             bool memberIsValid = true;
             if (memberIsValid) {
                 Console.WriteLine("Member '" + activeMember + "' is valid.");
+                Console.ReadLine();
             } else {
                 Console.WriteLine("Member '" + activeMember + "' is not valid.");
+                Console.ReadLine();
             }
             return memberIsValid;
         }
