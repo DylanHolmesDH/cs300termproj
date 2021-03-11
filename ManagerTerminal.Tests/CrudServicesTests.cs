@@ -2,7 +2,6 @@
 using ChocAnDatabase.records;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
 using System.Collections.Generic;
 
 namespace ManagerTerminal.Tests {
@@ -16,15 +15,39 @@ namespace ManagerTerminal.Tests {
         private CrudServices _crudServices;
 
         [TestInitialize]
-        public void Setup() {
+        public void Setup()
+        {
             _databaseWrapperMock = new Mock<IDatabaseWrapper>();
             _servicesFactoryMock = new Mock<IServicesFactory>();
             _crudValidatorMock = new Mock<ICrudValidator>();
             _converterMock = new Mock<IConverter>();
-            
+
             _crudServices = new CrudServices();
         }
 
+        [DataRow("Option to add memeber", 4, TypeOfCrudAction.AddMember)]
+        [DataRow("Option to add memeber", 5, TypeOfCrudAction.AddProvider)]
+        [DataRow("Option to add memeber", 6, TypeOfCrudAction.UpdateMember)]
+        [DataRow("Option to add memeber", 7, TypeOfCrudAction.UpdateProvider)]
+        [DataRow("Option to add memeber", 8, TypeOfCrudAction.RemoveMember)]
+        [DataRow("Option to add memeber", 9, TypeOfCrudAction.RemoveProvider)]
+        [DataRow("Option to add memeber", 0, TypeOfCrudAction.Unknown)]
+        [TestMethod]
+        public void DetermineTypeOfCrudAction(
+            string testName,
+            int optionNumber,
+            TypeOfCrudAction expectedResult
+            )
+        {
+            var result = _crudServices.DetermineTypeOfCrudAction(optionNumber);
+
+            Assert.IsInstanceOfType(result, typeof(TypeOfCrudAction));
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [DataRow("Unknown report", TypeOfCrudAction.Unknown, 0, "Alex Burbank", false, false, true, "", 1, false, "", 1, 0, false, "Unknown")]
+        [DataRow("Unknown report", (TypeOfCrudAction)10, 0, "Alex Burbank", false, false, true, "", 1, false, "", 1, 0, false, "No such action")]
+        
         [DataRow("Add member record successful", TypeOfCrudAction.AddMember, 0, "Alex Burbank", false, false, true, "", 1, false, "", 1, 1, true, "")]
         [DataRow("Add member record invalid - Not all fields filled", TypeOfCrudAction.AddMember, 0, "Alex Burbank", false, false, false, "Needs to have a valid number", 0, false, "", 0, 0, false, "Needs to have a valid number")]
         [DataRow("Add member record invalid - already exists in the database", TypeOfCrudAction.AddMember, 0, "Alex Burbank", false, false, true, "", 1, true, "Blah", 0, 0, false, "Blah")]
@@ -58,7 +81,7 @@ namespace ManagerTerminal.Tests {
             int numberOfTimesDoesExistInDatabase,
             bool expectedResultDoesMemberExistInDatabase,
             string expectedMessageDoesMemberExistInDatabase,
-            int numberOfTimesAdd,
+            int numberOfTimesAction,
             int numberOfTimesSave,
             bool expectedResult,
             string expectedMessage
@@ -85,8 +108,7 @@ namespace ManagerTerminal.Tests {
             var areAllFieldsFilledIn = (expectedResultAreAllFieldsFilledIn, expectedMessageAreAllFieldsFilledIn);
             var doesMemberExistInDatabase = (expectedResultDoesMemberExistInDatabase, expectedMessageDoesMemberExistInDatabase);
 
-            switch (typeOfCrudAction)
-            {
+            switch (typeOfCrudAction) {
                 case TypeOfCrudAction.AddMember:
                     _converterMock.Setup(c => c.ConvertRecordToMemberRecord(userInterfaceRecord)).Returns(memberRecord);
                     _crudValidatorMock.Setup(c => c.AreAllFieldsFilledIn(memberRecord, checkForId)).Returns(areAllFieldsFilledIn);
@@ -136,46 +158,44 @@ namespace ManagerTerminal.Tests {
             _servicesFactoryMock.Verify(c => c.CreateConverter(), Times.Once);
 
 
-            switch (typeOfCrudAction)
-            {
+            switch (typeOfCrudAction) {
                 case TypeOfCrudAction.AddMember:
                     _converterMock.Verify(c => c.ConvertRecordToMemberRecord(userInterfaceRecord), Times.Once);
                     _crudValidatorMock.Verify(c => c.AreAllFieldsFilledIn(memberRecord, checkForId), Times.Once);
                     _crudValidatorMock.Verify(c => c.DoesMemberExistInDatabase(shouldExist, number, name), Times.Exactly(numberOfTimesDoesExistInDatabase));
-                    _databaseWrapperMock.Verify(c => c.AddMember(memberRecord), Times.Exactly(numberOfTimesAdd));
+                    _databaseWrapperMock.Verify(c => c.AddMember(memberRecord), Times.Exactly(numberOfTimesAction));
                     break;
                 case TypeOfCrudAction.AddProvider:
                     _converterMock.Verify(c => c.ConvertRecordToProviderRecord(userInterfaceRecord), Times.Once);
                     _crudValidatorMock.Verify(c => c.AreAllFieldsFilledIn(providerRecord, checkForId), Times.Once);
                     _crudValidatorMock.Verify(c => c.DoesProviderExistInDatabase(shouldExist, number, name), Times.Exactly(numberOfTimesDoesExistInDatabase));
-                    _databaseWrapperMock.Verify(c => c.AddProvider(providerRecord), Times.Exactly(numberOfTimesAdd));
+                    _databaseWrapperMock.Verify(c => c.AddProvider(providerRecord), Times.Exactly(numberOfTimesAction));
                     break;
                 case TypeOfCrudAction.UpdateMember:
                     _converterMock.Verify(c => c.ConvertRecordToMemberRecord(userInterfaceRecord), Times.Once);
                     _crudValidatorMock.Verify(c => c.AreAllFieldsFilledIn(memberRecord, checkForId), Times.Once);
                     _crudValidatorMock.Verify(c => c.DoesMemberExistInDatabase(shouldExist, number, ""), Times.Exactly(numberOfTimesDoesExistInDatabase));
-                    _databaseWrapperMock.Verify(c => c.UpdateMember(memberRecord), Times.Exactly(numberOfTimesAdd));
+                    _databaseWrapperMock.Verify(c => c.UpdateMember(memberRecord), Times.Exactly(numberOfTimesAction));
                     break;
                 case TypeOfCrudAction.UpdateProvider:
                     _converterMock.Verify(c => c.ConvertRecordToProviderRecord(userInterfaceRecord), Times.Once);
                     _crudValidatorMock.Verify(c => c.AreAllFieldsFilledIn(providerRecord, checkForId), Times.Once);
                     _crudValidatorMock.Verify(c => c.DoesProviderExistInDatabase(shouldExist, number, ""), Times.Exactly(numberOfTimesDoesExistInDatabase));
-                    _databaseWrapperMock.Verify(c => c.UpdateProvider(providerRecord), Times.Exactly(numberOfTimesAdd));
+                    _databaseWrapperMock.Verify(c => c.UpdateProvider(providerRecord), Times.Exactly(numberOfTimesAction));
                     break;
                 case TypeOfCrudAction.RemoveMember:
                     _crudValidatorMock.Verify(c => c.RemovalIdValid(number), Times.Once);
                     _crudValidatorMock.Verify(c => c.DoesMemberExistInDatabase(shouldExist, number, ""), Times.Exactly(numberOfTimesDoesExistInDatabase));
-                    _databaseWrapperMock.Verify(c => c.RemoveMember(number), Times.Exactly(numberOfTimesAdd));
+                    _databaseWrapperMock.Verify(c => c.RemoveMember(number), Times.Exactly(numberOfTimesAction));
                     break;
                 case TypeOfCrudAction.RemoveProvider:
                     _crudValidatorMock.Verify(c => c.RemovalIdValid(number), Times.Once);
                     _crudValidatorMock.Verify(c => c.DoesProviderExistInDatabase(shouldExist, number, ""), Times.Exactly(numberOfTimesDoesExistInDatabase));
-                    _databaseWrapperMock.Verify(c => c.RemoveProvider(number), Times.Exactly(numberOfTimesAdd));
+                    _databaseWrapperMock.Verify(c => c.RemoveProvider(number), Times.Exactly(numberOfTimesAction));
                     break;
                 default:
                     break;
             }
-
 
             _databaseWrapperMock.Verify(c => c.Save(), Times.Exactly(numberOfTimesSave));
 
