@@ -76,7 +76,7 @@ namespace ProviderTerminal {
                 Console.WriteLine("LOGIN");
                 Console.WriteLine("---------------------------------------------------");
                 Console.WriteLine("Please enter your ID number. To exit this program, type 'quit' instead.\n\n");
-                input = GetInput("ID Number: ");
+                input = GetInputString("ID Number: ");
                 provider_num = Convert.ToInt32(input);
 
                 if (input == "quit" || input == "'quit'" || input == "q")
@@ -126,56 +126,32 @@ namespace ProviderTerminal {
             }
             return memberIsValid;
         }
-        
+
+        void GenerateProviderDirectory() {
+            List<Record> services = db.FetchServices();
+			foreach (Record service in services) {
+                Console.WriteLine(service.ToString());
+            }
+        }
+
         void BillMember() {
             if (!VerifyAndSetActiveMember()) {
                 return;
             }
             Dictionary<String, object> newRecordData = new Dictionary<String, object>();
-
-            //public ConsultationRecord(Dictionary<String, object> keyValues) : base(keyValues) {
-            //    this.recordDate = (DateTime)Get("record_date");
-            //    this.serviceDate = (DateTime)Get("service_date");
-            //    this.memberNumber = GetInteger("member_number");
-            //    this.serviceNumber = GetInteger("service_number");
-            //    this.providerNumber = GetInteger("provider_number");
-            //    this.comments = GetString("comments");
-            //}
-
             newRecordData.Add("record_date", GetInputDate("Record date: "));
             newRecordData.Add("service_date", GetInputDate("Service date: "));
             while (!VerifyAndSetActiveMember()) {
                 Console.WriteLine("Please try again.");
             }
-            newRecordData.Add("record_date", activeMember);
-
-            //    this.serviceNumber = GetInteger("service_number");
-            //    this.providerNumber = GetInteger("provider_number");
-
-
-            // Provider directory lookup
-            // Key in service code
-
+            newRecordData.Add("member_number", activeMember);
+            newRecordData.Add("provider_number", providerId);
+            GenerateProviderDirectory();
+            newRecordData.Add("service_number", GetInputInt("Service code: "));
             newRecordData.Add("comments", GetInputString("Any extra comments? "));
             db.InsertConsultation(new ConsultationRecord(newRecordData));
-            // Write record to database
             // Display fee
-
-
-            // WIP
         }
-
-        int GetServiceIDFromUser() {
-            // WIP
-            // Will be an interactive communication with the user to select a service
-            return 598470;
-        }
-
-
-
-
-
-
 
         String GetInputString(String message = "") {
             Console.WriteLine(message);
@@ -279,25 +255,10 @@ namespace ProviderTerminal {
             return "...";
         }
 
-
-        // Requests the database for a directory of services (AKA ProviderDirectory)
-        // Returns it as a Record, then converts the record into a string.
-        public String GenerateProviderDirectory() {
-
-            int id = this.providerId;
-
-
-            return "...";
-        }
-
         // Writes a message to the terminal.
         public void WriteMessage(String message) {
             Console.WriteLine("[Terminal] " + message);
         }
-
-
-
-
 
     }
 }
