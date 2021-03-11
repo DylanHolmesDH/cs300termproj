@@ -1,55 +1,126 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using ChocAnDatabase;
 using ChocAnDatabase.records;
 
 namespace ProviderTerminal {
     class Terminal {
+
         private int providerId, activeMember;
         private List<int> members;
         private bool breakRequested;
         private Database db;
+        private string providerName;
+
 
         static void Main(string[] args) {
             Terminal term = new Terminal();
             term.Start();
         }
 
-        void Start() {
+        //Start of the Provider Terminal
+        public void Start() {
+            string flag = null;
+            int login_success = 0;
             db = new Database();
-            Login();
-            while (true) {
+
+            //repeats until user either quits or gets the right login
+            do {
+                login_success = Login();
+            } while (login_success == 2);
+
+            //only enters loop if the login was successful
+            do {
                 PrintOptions();
-                int input = GetInputOption();
-                switch (input) {
-                    case 1:
+                flag = Console.ReadLine();
+                switch (flag) {
+                    //checks member number, goes to member sub menu
+                    case "1":
                         VerifyMember();
-                        return;
-                    case 2:
-                        BillMember();
-                        return;
+                        break;
+                    //generates entire provider directory in alphabetical order
+                    case "2":
+                        GenerateProviderDirectory();
+                        break;
+                    //for provider to create a record by filling out a form
+                    case "3":
+                        CreateConsulationRecord();
+                        break;
+                    //checks if record exists in database, and if it does, displays it
+                    case "4":
+                        VerificationofBilling();
+                        break;
+                    //to exit program
+                    case "5":
+                        break;
+                    //otherwise input is bad
+                    default:
+                        Console.WriteLine("Please select a valid option!");
+                        Console.ReadLine();
+                        break;
                 }
-            }
+            } while (flag != "5");
+
             db.Save();
         }
 
-        void Login() {
-            // WIP
-            providerId = 1;
+        private int Login() {
+            string input = null;
+            int provider_num = 0;
+
+            try {
+                //clear the screen of text and display a login "menu"
+                //get the provider number
+                Console.Clear();
+                Console.WriteLine("LOGIN");
+                Console.WriteLine("---------------------------------------------------");
+                Console.WriteLine("Please enter your ID number. To exit this program, type 'quit' instead.\n\n");
+                Console.WriteLine("ID Number: ");
+                input = Console.ReadLine();
+                provider_num = Convert.ToInt32(input);
+
+                if (input == "quit" || input == "'quit'")
+                    return 3;
+
+                var record = db.FetchProvider(provider_num);
+                providerName = record.Name;
+
+                //check if the provider number exists in the database 
+                if (record != null) {
+                    //provider num exists in database
+                    return 1;
+                }
+
+                Console.WriteLine("ID number does not exist. Please try again.");
+                return 2;
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return 2;
+            }
 		}
+
+        void VerificationofBilling() {
+        }
 
         void PrintOptions() {
-            // WIP
-		}
-
-        int GetInputOption() {
-            // WIP
-            return 1;
+            Console.Clear();
+            Console.WriteLine("---------------------------------------------------");
+            //have provider name in line below this comment
+            Console.WriteLine(providerName + "\n");
+            Console.WriteLine("\t[1] Verify a Member");
+            Console.WriteLine("\t[2] Check the Provider Directory");
+            Console.WriteLine("\t[3] Create Consultation Record");
+            Console.WriteLine("\t[4] Verify a Bill");
+            Console.WriteLine("\t[5] Exit\n");
+            Console.WriteLine("Please enter a number: ");
 		}
 
         bool VerifyMember() {
             int memberId = GetInputInt("Please enter the member id: ");
-            bool memberIsValid = db.FetchMember(memberId) != null;
+            // WIP
+            bool memberIsValid = true;
             if (memberIsValid) {
                 Console.WriteLine("Member '" + memberId + "' is valid.");
             } else {
@@ -62,6 +133,8 @@ namespace ProviderTerminal {
             if (!VerifyMember()) {
                 return;
             }
+            // Get date from user
+            // 
             // WIP
 		}
 
@@ -101,7 +174,7 @@ namespace ProviderTerminal {
 
 
         // Start of the Provider Terminal
-        public void Startt() {
+        /*public void Startt() {
             // Initialize variables & connections
             //  db = new Database(...);
 
@@ -118,7 +191,7 @@ namespace ProviderTerminal {
             while (!breakRequested) {
                 UILoop();
             }
-        }
+        }*/
 
         // The Main UI Thread loop.
         public void UILoop() {
