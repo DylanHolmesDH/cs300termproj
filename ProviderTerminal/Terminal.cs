@@ -11,17 +11,17 @@ namespace ProviderTerminal {
         private List<int> members;
         private bool breakRequested;
         private Database db;
-        private string providerName;
+        private String providerName;
 
 
-        static void Main(string[] args) {
+        static void Main(String[] args) {
             Terminal term = new Terminal();
             term.Start();
         }
 
         //Start of the Provider Terminal
         public void Start() {
-            string flag = null;
+            String flag = null;
             int login_success = 0;
             db = new Database();
 
@@ -37,7 +37,7 @@ namespace ProviderTerminal {
                 switch (flag) {
                     //checks member number, goes to member sub menu
                     case "1":
-                        VerifyMember();
+                        VerifyAndSetActiveMember();
                         break;
                     //generates entire provider directory in alphabetical order
                     case "2":
@@ -49,7 +49,7 @@ namespace ProviderTerminal {
                         break;
                     //checks if record exists in database, and if it does, displays it
                     case "4":
-                        VerificationofBilling();
+                        VerificationOfBilling();
                         break;
                     //to exit program
                     case "5":
@@ -66,7 +66,7 @@ namespace ProviderTerminal {
         }
 
         private int Login() {
-            string input = null;
+            String input = null;
             int provider_num = 0;
 
             try {
@@ -80,7 +80,7 @@ namespace ProviderTerminal {
                 input = Console.ReadLine();
                 provider_num = Convert.ToInt32(input);
 
-                if (input == "quit" || input == "'quit'")
+                if (input == "quit" || input == "'quit'" || input == "q")
                     return 3;
 
                 var record = db.FetchProvider(provider_num);
@@ -101,13 +101,12 @@ namespace ProviderTerminal {
             }
 		}
 
-        void VerificationofBilling() {
+        void VerificationOfBilling() {
         }
 
         void PrintOptions() {
             Console.Clear();
             Console.WriteLine("---------------------------------------------------");
-            //have provider name in line below this comment
             Console.WriteLine(providerName + "\n");
             Console.WriteLine("\t[1] Verify a Member");
             Console.WriteLine("\t[2] Check the Provider Directory");
@@ -117,26 +116,55 @@ namespace ProviderTerminal {
             Console.WriteLine("Please enter a number: ");
 		}
 
-        bool VerifyMember() {
-            int memberId = GetInputInt("Please enter the member id: ");
+        bool VerifyAndSetActiveMember() {
+            activeMember = GetInputInt("Please enter the member id: ");
             // WIP
             bool memberIsValid = true;
             if (memberIsValid) {
-                Console.WriteLine("Member '" + memberId + "' is valid.");
+                Console.WriteLine("Member '" + activeMember + "' is valid.");
             } else {
-                Console.WriteLine("Member '" + memberId + "' is not valid.");
+                Console.WriteLine("Member '" + activeMember + "' is not valid.");
             }
             return memberIsValid;
         }
         
         void BillMember() {
-            if (!VerifyMember()) {
+            if (!VerifyAndSetActiveMember()) {
                 return;
             }
-            // Get date from user
-            // 
+            Dictionary<String, object> newRecordData = new Dictionary<String, object>();
+
+            //public ConsultationRecord(Dictionary<String, object> keyValues) : base(keyValues) {
+            //    this.recordDate = (DateTime)Get("record_date");
+            //    this.serviceDate = (DateTime)Get("service_date");
+            //    this.memberNumber = GetInteger("member_number");
+            //    this.serviceNumber = GetInteger("service_number");
+            //    this.providerNumber = GetInteger("provider_number");
+            //    this.comments = GetString("comments");
+            //}
+
+            newRecordData.Add("record_date", GetInputDate("Record date: "));
+            newRecordData.Add("service_date", GetInputDate("Service date: "));
+            while (!VerifyAndSetActiveMember()) {
+                Console.WriteLine("Please try again.");
+            }
+            newRecordData.Add("record_date", activeMember);
+
+            //    this.serviceNumber = GetInteger("service_number");
+            //    this.providerNumber = GetInteger("provider_number");
+
+
+            // Provider directory lookup
+            // Key in service code
+
+            newRecordData.Add("comments", GetInputString("Any extra comments? "));
+            db.InsertConsultation(new ConsultationRecord(newRecordData));
+            // Write record to database
+            // Display fee
+
+
             // WIP
-		}
+        }
 
         int GetServiceIDFromUser() {
             // WIP
@@ -150,16 +178,30 @@ namespace ProviderTerminal {
 
 
 
-        string GetInput(string message) {
+        String GetInputString(String message = "") {
             Console.WriteLine(message);
             return Console.ReadLine();
 
         }
 
-        int GetInputInt(string message) {
+        int GetInputInt(String message = "") {
             Console.WriteLine(message);
-            //return (int)Console.ReadLine();
-            return 1;
+            return Convert.ToInt32(Console.ReadLine());
+        }
+
+        DateTime GetInputDate(String message = "") {
+            Console.WriteLine(message);
+            return DateTime.Parse(Console.ReadLine());
+        }
+
+        List<String> GetInputMultiLine(String message = "") {
+            Console.WriteLine(message);
+            List<String> inputs = new List<String>();
+            String input;
+            while ((input = GetInputString()) != "") {
+                inputs.Add(input);
+            }
+            return inputs;
         }
 
 
@@ -215,7 +257,7 @@ namespace ProviderTerminal {
         }
         // Attempt to Login the Active Provider.
         public String LoginProvider() {
-            String id = GetMultiInput()[0];
+            //String id = GetMultiInput()[0];
 
             return "...";
         }
@@ -223,7 +265,7 @@ namespace ProviderTerminal {
         // Creates a ConsultationRecord for the active Member.
         public String CreateConsulationRecord() {
             // dummy method body to represent how a consultation record might be created
-            var data = new Dictionary<string, object>();
+            var data = new Dictionary<String, object>();
 
             data.Add("current_date", DateTime.Now);
             data.Add("service_date", DateTime.Now);
@@ -254,21 +296,6 @@ namespace ProviderTerminal {
             Console.WriteLine("[Terminal] " + message);
         }
 
-        // Get a Single Line of Input
-        public String GetInput(String message) {
-            return Console.ReadLine();
-        }
-
-        // Gets a Multi-Line of Input terminated when an empty line is entered.
-        public List<String> GetMultiInput() {
-            List<String> inputs = new List<String>();
-            String input = GetInput("");
-            while ((input = GetInput("")) != "") {
-                inputs.Add(input);
-            }
-
-            return inputs;
-        }
 
 
 
