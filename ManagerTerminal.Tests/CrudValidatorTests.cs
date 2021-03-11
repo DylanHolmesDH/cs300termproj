@@ -2,7 +2,6 @@
 using ChocAnDatabase.records;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
 using System.Collections.Generic;
 
 namespace ManagerTerminal.Tests {
@@ -26,8 +25,7 @@ namespace ManagerTerminal.Tests {
         }
 
         [TestMethod]
-        public void AreAllFieldsFilledIn_providerRecordNull()
-        {
+        public void AreAllFieldsFilledIn_providerRecordNull() {
             var result = _crudValidator.AreAllFieldsFilledIn((ProviderRecord)null, false);
 
             Assert.AreEqual(false, result.successful);
@@ -71,8 +69,7 @@ namespace ManagerTerminal.Tests {
             string expectedMessage
             )
         {
-            var memberRecord = new MemberRecord(new Dictionary<string, object>())
-            {
+            var memberRecord = new MemberRecord(new Dictionary<string, object>()) {
                 Number = number,
                 Name = name,
                 Address = address,
@@ -124,8 +121,7 @@ namespace ManagerTerminal.Tests {
             string expectedMessage
             )
         {
-            var providerRecord = new ProviderRecord(new Dictionary<string, object>())
-            {
+            var providerRecord = new ProviderRecord(new Dictionary<string, object>()) {
                 Number = number,
                 Name = name,
                 Address = address,
@@ -165,8 +161,7 @@ namespace ManagerTerminal.Tests {
         }
 
         [TestMethod]
-        public void DoesMemberExistInDatabase_SupposedToAndDoesNotExists()
-        {
+        public void DoesMemberExistInDatabase_SupposedToAndDoesNotExists() {
             _databaseWrapperMock.Setup(c => c.FetchMember(7)).Returns((MemberRecord) null);
 
             var result = _crudValidator.DoesMemberExistInDatabase(true, 7);
@@ -181,10 +176,8 @@ namespace ManagerTerminal.Tests {
 
 
         [TestMethod]
-        public void DoesMemberExistInDatabase_NotSupposedToAndExist()
-        {
-            MemberRecord memberRecord = new MemberRecord(new Dictionary<string, object>())
-            {
+        public void DoesMemberExistInDatabase_NotSupposedToAndExist() {
+            MemberRecord memberRecord = new MemberRecord(new Dictionary<string, object>()) {
                 Name = "Alex Burbank",
                 Number = 1,
                 City = "OC",
@@ -205,8 +198,7 @@ namespace ManagerTerminal.Tests {
         }
 
         [TestMethod]
-        public void DoesMemberExistInDatabase_NotSupposedToAndDoesNotExist()
-        {
+        public void DoesMemberExistInDatabase_NotSupposedToAndDoesNotExist() {
             _databaseWrapperMock.Setup(c => c.FetchMemberByName("Blah")).Returns((MemberRecord) null);
 
             var result = _crudValidator.DoesMemberExistInDatabase(false, 0, "Blah");
@@ -224,10 +216,8 @@ namespace ManagerTerminal.Tests {
         #region DoesProviderExistInDatabase
 
         [TestMethod]
-        public void DoesProviderExistInDatabase_SupposedToAndExists()
-        {
-            ProviderRecord providerRecord = new ProviderRecord(new Dictionary<string, object>())
-            {
+        public void DoesProviderExistInDatabase_SupposedToAndExists() {
+            ProviderRecord providerRecord = new ProviderRecord(new Dictionary<string, object>()) {
                 Name = "Alex Burbank",
                 Number = 1,
                 City = "OC",
@@ -248,8 +238,7 @@ namespace ManagerTerminal.Tests {
         }
 
         [TestMethod]
-        public void DoesProviderExistInDatabase_SupposedToAndDoesNotExists()
-        {
+        public void DoesProviderExistInDatabase_SupposedToAndDoesNotExists() {
             _databaseWrapperMock.Setup(c => c.FetchProvider(7)).Returns((ProviderRecord)null);
 
             var result = _crudValidator.DoesProviderExistInDatabase(true, 7);
@@ -264,10 +253,8 @@ namespace ManagerTerminal.Tests {
 
 
         [TestMethod]
-        public void DoesProviderExistInDatabase_NotSupposedToAndExist()
-        {
-            ProviderRecord providerRecord = new ProviderRecord(new Dictionary<string, object>())
-            {
+        public void DoesProviderExistInDatabase_NotSupposedToAndExist() {
+            ProviderRecord providerRecord = new ProviderRecord(new Dictionary<string, object>()) {
                 Name = "Alex Burbank",
                 Number = 1,
                 City = "OC",
@@ -288,8 +275,7 @@ namespace ManagerTerminal.Tests {
         }
 
         [TestMethod]
-        public void DoesProviderExistInDatabase_NotSupposedToAndDoesNotExist()
-        {
+        public void DoesProviderExistInDatabase_NotSupposedToAndDoesNotExist() {
             _databaseWrapperMock.Setup(c => c.FetchProviderByName("Blah")).Returns((ProviderRecord)null);
 
             var result = _crudValidator.DoesProviderExistInDatabase(false, 0, "Blah");
