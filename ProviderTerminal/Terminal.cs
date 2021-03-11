@@ -93,18 +93,16 @@ namespace ProviderTerminal {
                     return option.quit;
 
                 var record = db.FetchProvider(providerId);
-                providerName = record.Name;
 
                 //check if the provider number exists in the database 
-                if (record != null) {
-                    //provider num exists in database
-                    return option.success;
+                if (record == null) {
+                    Console.WriteLine("ID number does not exist. Please try again.");
+                    return option.fail;
                 }
-
-                Console.WriteLine("ID number does not exist. Please try again.");
-                return option.fail;
-            }
-            catch (Exception e) {
+                //provider num exists in database
+                providerName = record.Name;
+                return option.success;
+            } catch (Exception e) {
                 Console.WriteLine(e.Message);
                 return option.fail;
             }
@@ -191,10 +189,8 @@ namespace ProviderTerminal {
             return DateTime.Parse(Console.ReadLine());
         }
 
-        option GetInputOption(String message = "")
-        {
-            Console.WriteLine(message);
-            return option.(Console.ReadLine());
+        option GetInputOption(String message = "") {
+            return (option)GetInputInt(message);
         }
 
         List<String> GetInputMultiLine(String message = "") {
