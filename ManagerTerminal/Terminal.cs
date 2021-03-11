@@ -20,11 +20,13 @@ namespace ManagerTerminal {
             TypeOfReport typeOfReport = 0;
             TypeOfCrudAction typeOfCrudAction = 0;
             int nextIdAvailable = 300000000;
+            UserInterfaceRecord userInterfaceRecord = new UserInterfaceRecord();
 
             Console.Write("Hello! ");
 
             do {
-                try {
+                try
+                {
                     var optionNumber = DisplayOptions();
 
                     if (optionNumber == 1 || optionNumber == 2) {
@@ -40,17 +42,51 @@ namespace ManagerTerminal {
 
                         DisplayWhetherValid(result);
                     }
-                    else if (optionNumber == 4 || optionNumber == 5 || optionNumber == 6
-                        || optionNumber == 7 || optionNumber == 8 || optionNumber == 9) {
-                        Console.WriteLine("Enter in a record formatted as Name,Address!");
-                        Console.WriteLine("Note that the address needs to be in the format of Address City State Zip!:");
-                        string stringRecord = Console.ReadLine();
 
-                        typeOfCrudAction = crudServices.DetermineTypeOfCrudAction(optionNumber);
+                    if (optionNumber == 4 || optionNumber == 5) {
+                        GetNameAndAddress(userInterfaceRecord);
 
-                        var result = crudServices.DoCrudAction(database, typeOfCrudAction, stringRecord, serviceFactory, nextIdAvailable);
+                        typeOfCrudAction = DoAction(serviceFactory, crudServices, database, nextIdAvailable, userInterfaceRecord, optionNumber);
 
-                        DisplayWhetherValid(result);
+                        nextIdAvailable++;
+                    }
+                    else if (optionNumber == 6 || optionNumber == 7) {
+                        bool successful = false;
+
+                        while (!successful) {
+                            Console.Write("Enter in the number: ");
+                            string number = Console.ReadLine();
+
+                            int realNumber = 0;
+
+                            successful = Int32.TryParse(number, out realNumber);
+
+                            if (successful)
+                                userInterfaceRecord.Number = realNumber;
+                        }
+
+                        GetNameAndAddress(userInterfaceRecord);
+
+                        typeOfCrudAction = DoAction(serviceFactory, crudServices, database, nextIdAvailable, userInterfaceRecord, optionNumber);
+
+                        nextIdAvailable++;
+                    }
+                    else if (optionNumber == 8 || optionNumber == 9) {
+                        bool successful = false;
+
+                        while (!successful) {
+                            Console.Write("Enter in the number: ");
+                            string number = Console.ReadLine();
+
+                            int realNumber = 0;
+
+                            successful = Int32.TryParse(number, out realNumber);
+
+                            if (successful)
+                                userInterfaceRecord.Number = realNumber;
+                        }
+
+                        typeOfCrudAction = DoAction(serviceFactory, crudServices, database, nextIdAvailable, userInterfaceRecord, optionNumber);
 
                         nextIdAvailable++;
                     }
@@ -65,6 +101,39 @@ namespace ManagerTerminal {
                     Console.WriteLine();
                 }
             } while (!end);
+        }
+
+        private static TypeOfCrudAction DoAction(ServicesFactory serviceFactory, ICrudServices crudServices, IDatabaseWrapper database, int nextIdAvailable, UserInterfaceRecord userInterfaceRecord, int optionNumber) {
+            TypeOfCrudAction typeOfCrudAction = crudServices.DetermineTypeOfCrudAction(optionNumber);
+            var result = crudServices.DoCrudAction(database, typeOfCrudAction, userInterfaceRecord, serviceFactory, nextIdAvailable);
+
+            DisplayWhetherValid(result);
+            return typeOfCrudAction;
+        }
+
+        private static void GetNameAndAddress(UserInterfaceRecord userInterfaceRecord) {
+            Console.Write("Enter in the Name: ");
+            userInterfaceRecord.Name = Console.ReadLine();
+            Console.Write("Enter in the Street address: ");
+            userInterfaceRecord.Address = Console.ReadLine();
+            Console.Write("Enter in the City: ");
+            userInterfaceRecord.City = Console.ReadLine();
+            Console.Write("Enter in the State: ");
+            userInterfaceRecord.State = Console.ReadLine();
+
+            bool successful = false;
+
+            while (!successful) {
+                Console.Write("Enter in the Zip code: ");
+                string zip = Console.ReadLine();
+
+                int realZip = 0;
+
+                successful = Int32.TryParse(zip, out realZip);
+
+                if (successful)
+                    userInterfaceRecord.Zip = realZip;
+            }
         }
 
         private static bool ProceedWithGeneratingReport(string proceed) {

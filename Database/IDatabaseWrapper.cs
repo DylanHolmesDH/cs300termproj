@@ -15,5 +15,9 @@ namespace ChocAnDatabase {
         List<Record> FetchMembers();
         MemberRecord FetchMemberByName(string name);
         ProviderRecord FetchProviderByName(string name);
+        void UpdateProvider(ProviderRecord providerRecord);
+        void UpdateMember(MemberRecord memberRecord);
+        void RemoveMember(int number);
+        void RemoveProvider(int number);
     }
 }

@@ -1,5 +1,5 @@
 ﻿using ChocAnDatabase;
-using System.Collections.Generic;
+using ChocAnDatabase.records;
 
 namespace ManagerTerminal {
     public class CrudValidator : ICrudValidator {
@@ -9,32 +9,51 @@ namespace ManagerTerminal {
             _database = database;
         }
 
-        public (bool successful, string errorMessage) AreAllFieldsFilledIn(string stringRecord) {
-            int addressIndex = 1;
+        public (bool successful, string errorMessage) AreAllFieldsFilledIn(MemberRecord memberRecord, bool checkForId) {
+            if (checkForId && memberRecord.Number <= 0)
+                return (false, "Needs to have a valid number");
 
-            var recordArray = stringRecord.Split(',');
+            if (!string.IsNullOrWhiteSpace(memberRecord.Name))
+                return (false, "Needs to have a name");
 
-            if (recordArray.Length != 2)
-                return (false, "Needs to have 2 fields. Name, Address");
+            if (!string.IsNullOrWhiteSpace(memberRecord.Address))
+                return (false, "Needs to have an address");
 
-            foreach (var i in recordArray)
-                if (string.IsNullOrWhiteSpace(i))
-                    return (false, "Field cannot be empty");
+            if (!string.IsNullOrWhiteSpace(memberRecord.City))
+                return (false, "Needs to have a city");
 
-            var address = recordArray[addressIndex].Split(' ');
+            if (!string.IsNullOrWhiteSpace(memberRecord.State))
+                return (false, "Needs to have a state");
 
-            if (address.Length != 4)
-                return (false, "Needs to have 4 fields. The full address must be specified: Address, City, State, and Zip");
+            if (memberRecord.Zip == 0)
+                return (false, "Needs to have a zip code");
 
-            foreach (var i in address)
-                if (string.IsNullOrWhiteSpace(i))
-                    return (false, "Field cannot be empty");
+            return (true, "");
+        }
+
+        public (bool successful, string errorMessage) AreAllFieldsFilledIn(ProviderRecord providerRecord, bool checkForId) {
+            if (checkForId && providerRecord.Number <= 0)
+                return (false, "Needs to have a valid number");
+
+            if (!string.IsNullOrWhiteSpace(providerRecord.Name))
+                return (false, "Needs to have a name");
+
+            if (!string.IsNullOrWhiteSpace(providerRecord.Address))
+                return (false, "Needs to have an address");
+
+            if (!string.IsNullOrWhiteSpace(providerRecord.City))
+                return (false, "Needs to have a city");
+
+            if (!string.IsNullOrWhiteSpace(providerRecord.State))
+                return (false, "Needs to have a state");
+
+            if (providerRecord.Zip == 0)
+                return (false, "Needs to have a zip code");
 
             return (true, "");
         }
 
         public (bool exists, string errorMessage) DoesMemberExistInDatabase(bool shouldExist = true, int id = 0, string name = "") {
-
             if (shouldExist) {
                 var memberRecord = _database.FetchMember(id);
 
@@ -64,6 +83,13 @@ namespace ManagerTerminal {
                 if (memberRecord != null)
                     return (false, "Provider record already exists");
             }
+
+            return (true, "");
+        }
+
+        public (bool successful, string errorMessage) RemoveFieldsValid(int id) {
+            if (id <= 0)
+                return (false, "Needs to have a valid number");
 
             return (true, "");
         }

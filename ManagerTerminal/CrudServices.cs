@@ -1,4 +1,5 @@
 ﻿using ChocAnDatabase;
+using ChocAnDatabase.records;
 
 namespace ManagerTerminal {
     public class CrudServices : ICrudServices {
@@ -9,53 +10,122 @@ namespace ManagerTerminal {
                 case 5:
                     return TypeOfCrudAction.AddProvider;
                 case 6:
-                    return TypeOfCrudAction.AddMember;
+                    return TypeOfCrudAction.UpdateMember;
                 case 7:
-                    return TypeOfCrudAction.AddMember;
+                    return TypeOfCrudAction.UpdateProvider;
                 case 8:
-                    return TypeOfCrudAction.AddMember;
+                    return TypeOfCrudAction.RemoveMember;
                 case 9:
-                    return TypeOfCrudAction.AddMember;
+                    return TypeOfCrudAction.RemoveProvider;
                 default:
                     return TypeOfCrudAction.Unknown;
             }
         }
 
-        public (bool successful, string errorMessage) DoCrudAction(IDatabaseWrapper database, TypeOfCrudAction typeOfCrudAction, string stringRecord, IServicesFactory servicesFactory, int nextIdAvailable) {
+        public (bool successful, string errorMessage) DoCrudAction(IDatabaseWrapper database, TypeOfCrudAction typeOfCrudAction, UserInterfaceRecord userInterfaceRecord, IServicesFactory servicesFactory, int nextIdAvailable) {
 
             var validator = servicesFactory.CreateCrudValidator(database);
             var converter = servicesFactory.CreateConverter();
+
+            MemberRecord memberRecord;
+            ProviderRecord providerRecord;
+            (bool successful, string errorMessage) allFieldsFilled;
+            (bool exists, string errorMessage) recordExists;
 
             switch (typeOfCrudAction) {
                 case TypeOfCrudAction.Unknown:
                     return (false, "Unknown");
                 case TypeOfCrudAction.AddMember:
-                    var memberRecordResult = validator.AreAllFieldsFilledIn(stringRecord);
+                    memberRecord = converter.ConvertRecordToMemberRecord(userInterfaceRecord, nextIdAvailable);
+                   
+                    allFieldsFilled = validator.AreAllFieldsFilledIn(memberRecord, false);
 
-                    if (!memberRecordResult.successful)
-                        return (false, memberRecordResult.errorMessage);
+                    if (!allFieldsFilled.successful)
+                        return (false, allFieldsFilled.errorMessage);
 
-                    var memberRecord = converter.ConvertRecordToMemberRecord(stringRecord, nextIdAvailable);
-                    var memberExists = validator.DoesMemberExistInDatabase(false, 0, memberRecord.Name);
+                    recordExists = validator.DoesMemberExistInDatabase(false, 0, memberRecord.Name);
 
-                    if (memberExists.exists)
-                        return (false, memberExists.errorMessage);
+                    if (recordExists.exists)
+                        return (false, recordExists.errorMessage);
 
                     database.AddMember(memberRecord);
+                    database.Save();
                     break;
                 case TypeOfCrudAction.AddProvider:
-                    var providerRecordResult = validator.AreAllFieldsFilledIn(stringRecord);
+                    providerRecord = converter.ConvertRecordToProviderRecord(userInterfaceRecord, nextIdAvailable);
 
-                    if (!providerRecordResult.successful)
-                        return (false, providerRecordResult.errorMessage);
+                    allFieldsFilled = validator.AreAllFieldsFilledIn(providerRecord, false);
 
-                    var providerRecord = converter.ConvertRecordToProviderRecord(stringRecord, nextIdAvailable);
-                    var providerExists = validator.DoesProviderExistInDatabase(false, 0, providerRecord.Name);
+                    if (!allFieldsFilled.successful)
+                        return (false, allFieldsFilled.errorMessage);
 
-                    if (providerExists.exists)
-                        return (false, providerExists.errorMessage);
+                    recordExists = validator.DoesProviderExistInDatabase(false, 0, providerRecord.Name);
+
+                    if (recordExists.exists)
+                        return (false, recordExists.errorMessage);
 
                     database.AddProvider(providerRecord);
+                    database.Save();
+                    break;
+                case TypeOfCrudAction.UpdateMember:
+                    memberRecord = converter.ConvertRecordToMemberRecord(userInterfaceRecord, nextIdAvailable);
+
+                    allFieldsFilled = validator.AreAllFieldsFilledIn(memberRecord, true);
+
+                    if (!allFieldsFilled.successful)
+                        return (false, allFieldsFilled.errorMessage);
+
+                    recordExists = validator.DoesMemberExistInDatabase(true, memberRecord.Number);
+
+                    if (!recordExists.exists)
+                        return (true, recordExists.errorMessage);
+
+                    database.UpdateMember(memberRecord);
+                    database.Save();
+                    break;
+                case TypeOfCrudAction.UpdateProvider:
+                    providerRecord = converter.ConvertRecordToProviderRecord(userInterfaceRecord, nextIdAvailable);
+
+                    allFieldsFilled = validator.AreAllFieldsFilledIn(providerRecord, true);
+
+                    if (!allFieldsFilled.successful)
+                        return (false, allFieldsFilled.errorMessage);
+
+                    recordExists = validator.DoesProviderExistInDatabase(false, providerRecord.Number);
+
+                    if (recordExists.exists)
+                        return (false, recordExists.errorMessage);
+
+                    database.UpdateProvider(providerRecord);
+                    database.Save();
+                    break;
+                case TypeOfCrudAction.RemoveMember:
+                    allFieldsFilled = validator.RemoveFieldsValid(userInterfaceRecord.Number);
+
+                    if (!allFieldsFilled.successful)
+                        return (false, allFieldsFilled.errorMessage);
+
+                    recordExists = validator.DoesMemberExistInDatabase(true, userInterfaceRecord.Number);
+
+                    if (recordExists.exists)
+                        return (false, recordExists.errorMessage);
+
+                    database.RemoveMember(userInterfaceRecord.Number);
+                    database.Save();
+                    break;
+                case TypeOfCrudAction.RemoveProvider:
+                    allFieldsFilled = validator.RemoveFieldsValid(userInterfaceRecord.Number);
+
+                    if (!allFieldsFilled.successful)
+                        return (false, allFieldsFilled.errorMessage);
+
+                    recordExists = validator.DoesMemberExistInDatabase(true, userInterfaceRecord.Number);
+
+                    if (recordExists.exists)
+                        return (false, recordExists.errorMessage);
+
+                    database.RemoveProvider(userInterfaceRecord.Number);
+                    database.Save();
                     break;
                 default:
                     return (false, "No such action");

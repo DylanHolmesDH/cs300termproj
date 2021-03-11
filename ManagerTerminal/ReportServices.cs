@@ -18,7 +18,6 @@ namespace ManagerTerminal {
         }
 
         public (bool created, string errorMessage) CreateReport(IDatabaseWrapper databaseWrapper, IReportFactory reportFactory, TypeOfReport typeOfReport, int id, int daysBack = 7) {
-
             // This is how you call the report generator
             var processor = reportFactory.CreateProcessor();
 

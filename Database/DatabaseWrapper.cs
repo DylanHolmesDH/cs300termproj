@@ -80,5 +80,21 @@ namespace ChocAnDatabase {
         public ProviderRecord FetchProviderByName(string name) {
             throw new NotImplementedException();
         }
+
+        public void UpdateProvider(ProviderRecord providerRecord) {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateMember(MemberRecord memberRecord) {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveMember(int number) {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveProvider(int number) {
+            throw new NotImplementedException();
+        }
     }
 }

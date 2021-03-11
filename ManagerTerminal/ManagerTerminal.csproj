@@ -49,16 +49,17 @@
     <Compile Include="Converter.cs" />
     <Compile Include="CrudServices.cs" />
     <Compile Include="CrudValidator.cs" />
-    <Compile Include="IConverter.cs" />
-    <Compile Include="ICrudServices.cs" />
-    <Compile Include="ICrudValidator.cs" />
-    <Compile Include="IReportServices.cs" />
-    <Compile Include="IServicesFactory.cs" />
+    <Compile Include="Interfaces\IConverter.cs" />
+    <Compile Include="Interfaces\ICrudServices.cs" />
+    <Compile Include="Interfaces\ICrudValidator.cs" />
+    <Compile Include="Interfaces\IReportServices.cs" />
+    <Compile Include="Interfaces\IServicesFactory.cs" />
     <Compile Include="ReportServices.cs" />
     <Compile Include="ServicesFactory.cs" />
     <Compile Include="Terminal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeOfCrudAction.cs" />
+    <Compile Include="UserInterfaceRecord.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
