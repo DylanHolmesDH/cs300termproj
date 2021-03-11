@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using ChocAnDatabase;
@@ -19,13 +19,11 @@ namespace ProviderTerminal {
     }
 
     class Terminal {
-
         private int providerId, activeMember;
         private List<int> members;
         private bool breakRequested;
         private Database db;
         private String providerName;
-
 
         static void Main(String[] args) {
             Terminal term = new Terminal();
@@ -110,9 +108,6 @@ namespace ProviderTerminal {
                 Console.WriteLine(e.Message);
                 return option.fail;
             }
-		}
-
-        void VerificationOfBilling() {
         }
 
         void PrintOptions() {
@@ -141,56 +136,44 @@ namespace ProviderTerminal {
             }
             return memberIsValid;
         }
-        
-        void BillMember() {
+
+        void GenerateProviderDirectory() {
+            List<Record> services = db.FetchServices();
+            foreach (Record service in services) {
+                Console.WriteLine(service.ToString());
+            }
+        }
+
+        void CreateConsulationRecord() {
             if (!VerifyAndSetActiveMember()) {
                 return;
             }
             Dictionary<String, object> newRecordData = new Dictionary<String, object>();
-
-            //public ConsultationRecord(Dictionary<String, object> keyValues) : base(keyValues) {
-            //    this.recordDate = (DateTime)Get("record_date");
-            //    this.serviceDate = (DateTime)Get("service_date");
-            //    this.memberNumber = GetInteger("member_number");
-            //    this.serviceNumber = GetInteger("service_number");
-            //    this.providerNumber = GetInteger("provider_number");
-            //    this.comments = GetString("comments");
-            //}
-
             newRecordData.Add("record_date", GetInputDate("Record date: "));
             newRecordData.Add("service_date", GetInputDate("Service date: "));
             while (!VerifyAndSetActiveMember()) {
                 Console.WriteLine("Please try again.");
             }
-            newRecordData.Add("record_date", activeMember);
-
-            //    this.serviceNumber = GetInteger("service_number");
-            //    this.providerNumber = GetInteger("provider_number");
-
-
-            // Provider directory lookup
-            // Key in service code
-
+            newRecordData.Add("member_number", activeMember);
+            newRecordData.Add("provider_number", providerId);
+            GenerateProviderDirectory();
+            newRecordData.Add("service_number", GetInputInt("Service code: "));
             newRecordData.Add("comments", GetInputString("Any extra comments? "));
             db.InsertConsultation(new ConsultationRecord(newRecordData));
-            // Write record to database
             // Display fee
-
-
-            // WIP
         }
 
-        int GetServiceIDFromUser() {
-            // WIP
-            // Will be an interactive communication with the user to select a service
-            return 598470;
+        void VerificationOfBilling() {
+            GenerateProviderDirectory();
+            if (db.FetchConsultation(
+                    GetInputInt("Member ID: "),
+                    GetInputInt("Service code: "),
+                    providerId,
+                    GetInputDate("Record date: "),
+                    GetInputDate("Service date: ")) != null) {
+                Console.WriteLine("The info entered pertains to an existing record in the database.");
+            }
         }
-
-
-
-
-
-
 
         String GetInputString(String message = "") {
             Console.WriteLine(message);
@@ -223,102 +206,5 @@ namespace ProviderTerminal {
             }
             return inputs;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-        // Start of the Provider Terminal
-        /*public void Startt() {
-            // Initialize variables & connections
-            //  db = new Database(...);
-
-            //if (!db.IsConnected()) {
-            //  ...
-            //return;
-            //}
-            db = new Database();
-
-            CreateConsulationRecord();
-
-            db.Save();
-            // Continously update UI Thread until break has been requested.
-            while (!breakRequested) {
-                UILoop();
-            }
-        }*/
-
-        // The Main UI Thread loop.
-        public void UILoop() {
-            //...
-        }
-
-        // Sets the active Member
-        public void SetActiveMember(int memberId) {
-            this.activeMember = memberId;
-        }
-
-        // Get the Active Member
-        public int GetActiveMember() {
-            return this.activeMember;
-        }
-
-        // Checks the Provided member id
-        public String CheckinMember(int memberId) {
-
-            return "Validated";
-        }
-        // Attempt to Login the Active Provider.
-        public String LoginProvider() {
-            //String id = GetMultiInput()[0];
-
-            return "...";
-        }
-
-        // Creates a ConsultationRecord for the active Member.
-        public String CreateConsulationRecord() {
-            // dummy method body to represent how a consultation record might be created
-            var data = new Dictionary<String, object>();
-
-            data.Add("current_date", DateTime.Now);
-            data.Add("service_date", DateTime.Now);
-
-            data.Add("provider_number", 1);
-            data.Add("member_number", 333);
-
-            data.Add("comments", "None");
-            data.Add("service_number", 1);
-
-            db.InsertConsultation(new ConsultationRecord(data));
-            return "...";
-        }
-
-
-        // Requests the database for a directory of services (AKA ProviderDirectory)
-        // Returns it as a Record, then converts the record into a string.
-        public String GenerateProviderDirectory() {
-
-            int id = this.providerId;
-
-
-            return "...";
-        }
-
-        // Writes a message to the terminal.
-        public void WriteMessage(String message) {
-            Console.WriteLine("[Terminal] " + message);
-        }
-
-
-
-
-
     }
 }
