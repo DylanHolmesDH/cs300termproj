@@ -54,6 +54,24 @@ namespace ChocAnDatabase {
             return (ProviderRecord) FetchRecordByNumber(id, providers);
         }
 
+        public ProviderRecord FetchProviderByName(String name) {
+            foreach (Record record in providers) {
+                if (record.GetString("name").Equals(name)) {
+                    return (ProviderRecord)record;
+                }
+            }
+            return null;
+        }
+
+        public MemberRecord FetchMemberByName(String name) {
+            foreach (Record record in members) {
+                if (record.GetString("name").Equals(name)) {
+                    return (MemberRecord)record;
+                }
+            }
+            return null;
+        }
+
         public ConsultationRecord FetchConsultation(int memberID, int serviceID, int providerID, DateTime recDate, DateTime serviceDate) {
             foreach (var record in consultations) {
                 ConsultationRecord rec = (ConsultationRecord)record;

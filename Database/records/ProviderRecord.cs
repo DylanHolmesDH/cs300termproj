@@ -2,14 +2,30 @@
 using System.Collections.Generic;
 
 namespace ChocAnDatabase.records {
-    public class ProviderRecord : MemberRecord {
+    public class ProviderRecord : Record {
 
-        public ProviderRecord(Dictionary<string, object> keyValues) : base(keyValues) {        }
+        private String name, address, city, state;
+        private int number, zip;
 
+        public ProviderRecord(Dictionary<string, object> keyValues) : base(keyValues) {
+            this.Name = GetString("name");
+            this.Address = GetString("address");
+            this.City = GetString("city");
+            this.State = GetString("state");
+            this.Zip = GetInteger("zip");
+            this.Number = GetInteger("number");
+        }
+
+        public string Name { get => name; set => name = value; }
+        public string Address { get => address; set => address = value; }
+        public string City { get => city; set => city = value; }
+        public string State { get => state; set => state = value; }
+        public int Number { get => number; set => number = value; }
+        public int Zip { get => zip; set => zip = value; }
 
 
         public static ProviderRecord FromString(String line) {
-            string x = "hello"; String[] data = line.Trim().Split(';');
+            String[] data = line.Trim().Split(';');
             Dictionary<String, Object> dataMap = new Dictionary<string, object>();
             dataMap.Add("name", data[0]);
             dataMap.Add("number", int.Parse(data[1]));

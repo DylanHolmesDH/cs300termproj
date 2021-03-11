@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace ChocAnDatabase.records {
     public class MemberRecord : Record {
         private String name, address, city, state;
+        private Boolean validated;
         private int number, zip;
 
         public MemberRecord(Dictionary<string, object> keyValues) : base(keyValues) {
@@ -13,7 +14,7 @@ namespace ChocAnDatabase.records {
             this.State = GetString("state");
             this.Zip = GetInteger("zip");
             this.Number = GetInteger("number");
-
+            this.Validated = GetBoolean("validated");
         }
 
         public string Name { get => name; set => name = value; }
@@ -22,6 +23,7 @@ namespace ChocAnDatabase.records {
         public string State { get => state; set => state = value; }
         public int Number { get => number; set => number = value; }
         public int Zip { get => zip; set => zip = value; }
+        public Boolean Validated { get => validated; set => validated = value; }
 
 
         public override string ToString() {
@@ -37,6 +39,8 @@ namespace ChocAnDatabase.records {
             dataMap.Add("city", data[3]);
             dataMap.Add("state", data[4]);
             dataMap.Add("zip", int.Parse(data[5]));
+            dataMap.Add("validated", Boolean.Parse(data[6]));
+
 
             return new MemberRecord(dataMap);
         }

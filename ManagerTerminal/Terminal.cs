@@ -1,5 +1,6 @@
 ﻿using ChocAnDatabase;
 using ChocAnDatabase.records;
+using ReportGenerator;
 using ReportGenerator.Factory;
 using System;
 using System.Collections.Generic;
@@ -10,16 +11,22 @@ namespace ManagerTerminal {
             bool end = false;
 
             var serviceFactory = new ServicesFactory();
-            var reportServices = serviceFactory.CreateReportServices();
-            var database = serviceFactory.CreateDatabaseWrapper();
             var reportFactory = new ReportFactory();
-            var crudServices = new CrudServices();
-            var id = 0;
+
+            var reportServices = serviceFactory.CreateReportServices();
+            var crudServices = serviceFactory.CreateCrudServices();
+            var database = serviceFactory.CreateDatabaseWrapper();
+            int id = 0;
+            TypeOfReport typeOfReport = 0;
+            TypeOfCrudAction typeOfCrudAction = 0;
+            int nextIdAvailable = 300000000;
+            UserInterfaceRecord userInterfaceRecord = new UserInterfaceRecord();
 
             Console.Write("Hello! ");
 
             do {
-                try {
+                try
+                {
                     var optionNumber = DisplayOptions();
 
                     if (optionNumber == 1 || optionNumber == 2) {
@@ -29,18 +36,59 @@ namespace ManagerTerminal {
                     }
 
                     if (optionNumber == 1 || optionNumber == 2 || optionNumber == 3) {
-                        var result = reportServices.CreateReport(database, reportFactory, optionNumber, id);
+                        typeOfReport = reportServices.DetermineTypeOfReport(optionNumber);
 
-                        DisplayWhetherReportGenerated(result);
+                        var result = reportServices.CreateReport(database, reportFactory, typeOfReport, id);
+
+                        DisplayWhetherValid(result);
                     }
-                    else if (optionNumber == 4 || optionNumber == 5 || optionNumber == 6
-                        || optionNumber == 7 || optionNumber == 8 || optionNumber == 9) {
-                        Console.WriteLine("Enter in a record (FirstName LastName Address City State Zip): ");
-                        string stringRecord = Console.ReadLine();
 
-                        var record = ConvertStringRecordToRecord(stringRecord);
+                    if (optionNumber == 4 || optionNumber == 5) {
+                        GetNameAndAddress(userInterfaceRecord);
 
-                        crudServices.AddUpdateRemove(database, optionNumber, record);
+                        typeOfCrudAction = DoAction(serviceFactory, crudServices, database, nextIdAvailable, userInterfaceRecord, optionNumber);
+
+                        nextIdAvailable++;
+                    }
+                    else if (optionNumber == 6 || optionNumber == 7) {
+                        bool successful = false;
+
+                        while (!successful) {
+                            Console.Write("Enter in the number: ");
+                            string number = Console.ReadLine();
+
+                            int realNumber = 0;
+
+                            successful = Int32.TryParse(number, out realNumber);
+
+                            if (successful)
+                                userInterfaceRecord.Number = realNumber;
+                        }
+
+                        GetNameAndAddress(userInterfaceRecord);
+
+                        typeOfCrudAction = DoAction(serviceFactory, crudServices, database, nextIdAvailable, userInterfaceRecord, optionNumber);
+
+                        nextIdAvailable++;
+                    }
+                    else if (optionNumber == 8 || optionNumber == 9) {
+                        bool successful = false;
+
+                        while (!successful) {
+                            Console.Write("Enter in the number: ");
+                            string number = Console.ReadLine();
+
+                            int realNumber = 0;
+
+                            successful = Int32.TryParse(number, out realNumber);
+
+                            if (successful)
+                                userInterfaceRecord.Number = realNumber;
+                        }
+
+                        typeOfCrudAction = DoAction(serviceFactory, crudServices, database, nextIdAvailable, userInterfaceRecord, optionNumber);
+
+                        nextIdAvailable++;
                     }
                     else {
                         DisplayPartingMessage();
@@ -55,30 +103,37 @@ namespace ManagerTerminal {
             } while (!end);
         }
 
-        private static Record ConvertStringRecordToRecord(string stringRecord) {
-            if (stringRecord == null)
-                throw new ApplicationException("Record cannot be null");
+        private static TypeOfCrudAction DoAction(ServicesFactory serviceFactory, ICrudServices crudServices, IDatabaseWrapper database, int nextIdAvailable, UserInterfaceRecord userInterfaceRecord, int optionNumber) {
+            TypeOfCrudAction typeOfCrudAction = crudServices.DetermineTypeOfCrudAction(optionNumber);
+            var result = crudServices.DoCrudAction(database, typeOfCrudAction, userInterfaceRecord, serviceFactory, nextIdAvailable);
 
-            if (stringRecord.Length == 0)
-                throw new ApplicationException("Record cannot be empty");
+            DisplayWhetherValid(result);
+            return typeOfCrudAction;
+        }
 
-            string[] recordArray = stringRecord.Split(' ');
+        private static void GetNameAndAddress(UserInterfaceRecord userInterfaceRecord) {
+            Console.Write("Enter in the Name: ");
+            userInterfaceRecord.Name = Console.ReadLine();
+            Console.Write("Enter in the Street address: ");
+            userInterfaceRecord.Address = Console.ReadLine();
+            Console.Write("Enter in the City: ");
+            userInterfaceRecord.City = Console.ReadLine();
+            Console.Write("Enter in the State: ");
+            userInterfaceRecord.State = Console.ReadLine();
 
-            if (recordArray.Length != 6)
-                throw new ApplicationException("Record must have the format: FirstName LastName Address City State Zip");
+            bool successful = false;
 
-            Dictionary<string, object> recordDictionary = new Dictionary<string, object>();
+            while (!successful) {
+                Console.Write("Enter in the Zip code: ");
+                string zip = Console.ReadLine();
 
-            recordDictionary.Add("name", recordArray[0] + " " + recordArray[1]);
-            recordDictionary.Add("number", recordArray[2]);
-            recordDictionary.Add("address", recordArray[3]);
-            recordDictionary.Add("city", recordArray[4]);
-            recordDictionary.Add("state", recordArray[5]);
-            recordDictionary.Add("zip", recordArray[6]);
+                int realZip = 0;
 
-            Record record = new Record(recordDictionary);
+                successful = Int32.TryParse(zip, out realZip);
 
-            return record;
+                if (successful)
+                    userInterfaceRecord.Zip = realZip;
+            }
         }
 
         private static bool ProceedWithGeneratingReport(string proceed) {
@@ -240,8 +295,8 @@ namespace ManagerTerminal {
             return id;
         }
 
-        private static void DisplayWhetherReportGenerated((bool created, string errorMessage) result) {
-            if (!result.created) {
+        private static void DisplayWhetherValid((bool successful, string errorMessage) result) {
+            if (!result.successful) {
                 if (!string.IsNullOrWhiteSpace(result.errorMessage)) {
                     Console.WriteLine("Unsuccessful! See message below:");
                     Console.WriteLine("\t" + "\"" + result.errorMessage + "\"");
