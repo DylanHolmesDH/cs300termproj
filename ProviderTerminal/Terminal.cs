@@ -5,6 +5,19 @@ using ChocAnDatabase;
 using ChocAnDatabase.records;
 
 namespace ProviderTerminal {
+
+    //possible options. includes success and failure for verfication purposes
+    enum option
+    {
+        member = 1,
+        providerDir = 2,
+        consultRec = 3,
+        veriBill = 4,
+        quit = 5,
+        success = 6,
+        fail = 7
+    }
+
     class Terminal {
 
         private int providerId, activeMember;
@@ -21,38 +34,38 @@ namespace ProviderTerminal {
 
         //Start of the Provider Terminal
         public void Start() {
-            String flag = null;
-            int login_success = 0;
+            option flag;
+            option login_success;
             db = new Database();
 
             //repeats until user either quits or gets the right login
             do {
                 login_success = Login();
-            } while (login_success == 2);
+            } while (login_success == option.fail);
 
             //only enters loop if the login was successful
             do {
                 PrintOptions();
-                flag = Console.ReadLine();
+                flag = GetInputOption("Please enter a number: ");
                 switch (flag) {
                     //checks member number, goes to member sub menu
-                    case "1":
+                    case option.member:
                         VerifyAndSetActiveMember();
                         break;
                     //generates entire provider directory in alphabetical order
-                    case "2":
+                    case option.providerDir:
                         GenerateProviderDirectory();
                         break;
                     //for provider to create a record by filling out a form
-                    case "3":
+                    case option.consultRec:
                         CreateConsulationRecord();
                         break;
                     //checks if record exists in database, and if it does, displays it
-                    case "4":
+                    case option.veriBill:
                         VerificationOfBilling();
                         break;
                     //to exit program
-                    case "5":
+                    case option.quit:
                         break;
                     //otherwise input is bad
                     default:
@@ -60,14 +73,13 @@ namespace ProviderTerminal {
                         Console.ReadLine();
                         break;
                 }
-            } while (flag != "5");
+            } while (flag != option.quit);
 
             db.Save();
         }
 
-        private int Login() {
+        private option Login() {
             String input = null;
-            int provider_num = 0;
 
             try {
                 //clear the screen of text and display a login "menu"
@@ -76,27 +88,27 @@ namespace ProviderTerminal {
                 Console.WriteLine("LOGIN");
                 Console.WriteLine("---------------------------------------------------");
                 Console.WriteLine("Please enter your ID number. To exit this program, type 'quit' instead.\n\n");
-                input = GetInput("ID Number: ");
-                provider_num = Convert.ToInt32(input);
+                input = GetInputString("ID Number: ");
+                providerId = Convert.ToInt32(input);
 
                 if (input == "quit" || input == "'quit'" || input == "q")
-                    return 3;
+                    return option.quit;
 
-                var record = db.FetchProvider(provider_num);
+                var record = db.FetchProvider(providerId);
                 providerName = record.Name;
 
                 //check if the provider number exists in the database 
                 if (record != null) {
                     //provider num exists in database
-                    return 1;
+                    return option.success;
                 }
 
                 Console.WriteLine("ID number does not exist. Please try again.");
-                return 2;
+                return option.fail;
             }
             catch (Exception e) {
                 Console.WriteLine(e.Message);
-                return 2;
+                return option.fail;
             }
 		}
 
@@ -107,17 +119,20 @@ namespace ProviderTerminal {
             Console.Clear();
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine(providerName + "\n");
-            Console.WriteLine("\t[1] Verify a Member");
-            Console.WriteLine("\t[2] Check the Provider Directory");
-            Console.WriteLine("\t[3] Create Consultation Record");
-            Console.WriteLine("\t[4] Verify a Bill");
-            Console.WriteLine("\t[5] Exit\n");
-            Console.WriteLine("Please enter a number: ");
+            Console.WriteLine("\t[" + (int)option.member + "] Verify a Member");
+            Console.WriteLine("\t[" + (int)option.providerDir + "] Check the Provider Directory");
+            Console.WriteLine("\t[" + (int)option.consultRec + "] Create Consultation Record");
+            Console.WriteLine("\t[" + (int)option.veriBill + "] Verify a Bill");
+            Console.WriteLine("\t[" + (int)option.quit + "] Exit\n");
 		}
 
+        //checks if a member number is valid, if their membership is suspended, or if they were never a member
         bool VerifyAndSetActiveMember() {
+            Console.Clear();
+            Console.WriteLine("---------------------------------------------------");
+            Console.WriteLine(providerName + "\n\n\n\n\n\n\n");
             activeMember = GetInputInt("Please enter the member id: ");
-            // WIP
+
             bool memberIsValid = true;
             if (memberIsValid) {
                 Console.WriteLine("Member '" + activeMember + "' is valid.");
@@ -191,6 +206,12 @@ namespace ProviderTerminal {
         DateTime GetInputDate(String message = "") {
             Console.WriteLine(message);
             return DateTime.Parse(Console.ReadLine());
+        }
+
+        option GetInputOption(String message = "")
+        {
+            Console.WriteLine(message);
+            return option.(Console.ReadLine());
         }
 
         List<String> GetInputMultiLine(String message = "") {
