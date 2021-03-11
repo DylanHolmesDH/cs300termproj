@@ -1,17 +1,17 @@
 *MEMBERS:
-DYLAN;333;OTHER ADDRESS;Hillsboro;OR;97124
-Anakin Skywalker;298742383;22 Where Fun Begins Rd;Jamesville;NM;82382
-Robocop;298709242;22 Come Quietly St;Detroit;MI;30232
-Bill & Ted;234324327;69 Dudes St;Malibu;CA;90110
-Stevie Wonder;678892863;1234 TOFU DINNER ST;Scottsdale;AZ;90567
-Al Yankovic;298724332;72892 HAHA RD;Reno;NV;92347
-Robert Smith;872043268;2309 CHICKEN LITTLE ST;Smallville;OK;36292
-Paul Hogan;234987024;4520 KICKAPOO LN;Salt Lake City;UT;90062
-William Shakespeare;820472394;43200 SWEET SORROW Rd;Springfield;MT;26383
-Dwayne Johnson;298370284;2240 BAYVIEW ST;Corona;CA;92660
-McBain;243987234;2343 Bye Book LN;Springfield;IL;28324
-Tony Stark;234892873;3000 Robotic Dr;Palos Verdes;CA;92402
-Obi-Wan Kenobi;234897902;Hello There Ln;Havasu City;AZ;92348
+DYLAN;333;OTHER ADDRESS;Hillsboro;OR;97124;true
+Anakin Skywalker;298742383;22 Where Fun Begins Rd;Jamesville;NM;82382;true
+Robocop;298709242;22 Come Quietly St;Detroit;MI;30232;true
+Bill & Ted;234324327;69 Dudes St;Malibu;CA;90110;true
+Stevie Wonder;678892863;1234 TOFU DINNER ST;Scottsdale;AZ;90567;true
+Al Yankovic;298724332;72892 HAHA RD;Reno;NV;92347;true
+Robert Smith;872043268;2309 CHICKEN LITTLE ST;Smallville;OK;36292;true
+Paul Hogan;234987024;4520 KICKAPOO LN;Salt Lake City;UT;90062;true
+William Shakespeare;820472394;43200 SWEET SORROW Rd;Springfield;MT;26383;true
+Dwayne Johnson;298370284;2240 BAYVIEW ST;Corona;CA;92660;true
+McBain;243987234;2343 Bye Book LN;Springfield;IL;28324;true
+Tony Stark;234892873;3000 Robotic Dr;Palos Verdes;CA;92402;true
+Obi-Wan Kenobi;234897902;Hello There Ln;Havasu City;AZ;92348;true
 *PROVIDERS:
 TUALITY;1;SOME ADDRESS;Hillsboro;OR;97123
 Dr. Nick's Clinic;6 Stitch Don't Snitch St;Springfield;IL;29834

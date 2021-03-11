@@ -1,6 +1,5 @@
 ﻿using ChocAnDatabase;
 using ChocAnDatabase.records;
-
 namespace ManagerTerminal {
     public class CrudServices : ICrudServices {
         public TypeOfCrudAction DetermineTypeOfCrudAction(int optionNumber) {
