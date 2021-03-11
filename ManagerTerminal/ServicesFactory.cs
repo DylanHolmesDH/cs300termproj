@@ -14,11 +14,11 @@ namespace ManagerTerminal {
             return new DatabaseWrapper();
         }
 
-        public CrudValidator CreateCrudValidator(IDatabaseWrapper databaseWrapper) {
+        public ICrudValidator CreateCrudValidator(IDatabaseWrapper databaseWrapper) {
             return new CrudValidator(databaseWrapper);
         }
 
-        public Converter CreateConverter() {
+        public IConverter CreateConverter() {
             return new Converter();
         }
     }

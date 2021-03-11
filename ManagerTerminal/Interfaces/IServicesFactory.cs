@@ -5,7 +5,7 @@ namespace ManagerTerminal {
         ICrudServices CreateCrudServices();
         IDatabaseWrapper CreateDatabaseWrapper();
         IReportServices CreateReportServices();
-        CrudValidator CreateCrudValidator(IDatabaseWrapper databaseWrapper);
-        Converter CreateConverter();
+        ICrudValidator CreateCrudValidator(IDatabaseWrapper databaseWrapper);
+        IConverter CreateConverter();
     }
 }

@@ -41,7 +41,7 @@ namespace ManagerTerminal {
                     allFieldsFilled = validator.AreAllFieldsFilledIn(memberRecord, false);
 
                     if (!allFieldsFilled.successful)
-                        return (false, allFieldsFilled.errorMessage);
+                        return allFieldsFilled;
 
                     recordExists = validator.DoesMemberExistInDatabase(false, 0, memberRecord.Name);
 
@@ -57,7 +57,7 @@ namespace ManagerTerminal {
                     allFieldsFilled = validator.AreAllFieldsFilledIn(providerRecord, false);
 
                     if (!allFieldsFilled.successful)
-                        return (false, allFieldsFilled.errorMessage);
+                        return allFieldsFilled;
 
                     recordExists = validator.DoesProviderExistInDatabase(false, 0, providerRecord.Name);
 
@@ -73,12 +73,12 @@ namespace ManagerTerminal {
                     allFieldsFilled = validator.AreAllFieldsFilledIn(memberRecord, true);
 
                     if (!allFieldsFilled.successful)
-                        return (false, allFieldsFilled.errorMessage);
+                        return allFieldsFilled;
 
                     recordExists = validator.DoesMemberExistInDatabase(true, memberRecord.Number);
 
                     if (!recordExists.exists)
-                        return (true, recordExists.errorMessage);
+                        return (false, recordExists.errorMessage);
 
                     database.UpdateMember(memberRecord);
                     database.Save();
@@ -89,11 +89,11 @@ namespace ManagerTerminal {
                     allFieldsFilled = validator.AreAllFieldsFilledIn(providerRecord, true);
 
                     if (!allFieldsFilled.successful)
-                        return (false, allFieldsFilled.errorMessage);
+                        return allFieldsFilled;
 
-                    recordExists = validator.DoesProviderExistInDatabase(false, providerRecord.Number);
+                    recordExists = validator.DoesProviderExistInDatabase(true, providerRecord.Number);
 
-                    if (recordExists.exists)
+                    if (!recordExists.exists)
                         return (false, recordExists.errorMessage);
 
                     database.UpdateProvider(providerRecord);
@@ -103,11 +103,11 @@ namespace ManagerTerminal {
                     allFieldsFilled = validator.RemovalIdValid(userInterfaceRecord.Number);
 
                     if (!allFieldsFilled.successful)
-                        return (false, allFieldsFilled.errorMessage);
+                        return allFieldsFilled;
 
                     recordExists = validator.DoesMemberExistInDatabase(true, userInterfaceRecord.Number);
 
-                    if (recordExists.exists)
+                    if (!recordExists.exists)
                         return (false, recordExists.errorMessage);
 
                     database.RemoveMember(userInterfaceRecord.Number);
@@ -117,11 +117,11 @@ namespace ManagerTerminal {
                     allFieldsFilled = validator.RemovalIdValid(userInterfaceRecord.Number);
 
                     if (!allFieldsFilled.successful)
-                        return (false, allFieldsFilled.errorMessage);
+                        return allFieldsFilled;
 
-                    recordExists = validator.DoesMemberExistInDatabase(true, userInterfaceRecord.Number);
+                    recordExists = validator.DoesProviderExistInDatabase(true, userInterfaceRecord.Number);
 
-                    if (recordExists.exists)
+                    if (!recordExists.exists)
                         return (false, recordExists.errorMessage);
 
                     database.RemoveProvider(userInterfaceRecord.Number);
