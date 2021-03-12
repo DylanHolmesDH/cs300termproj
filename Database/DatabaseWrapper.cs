@@ -74,11 +74,13 @@ namespace ChocAnDatabase {
         public MemberRecord FetchMemberByName(string name) {
             EnsureDatabaseIsAvailable();
 
-            throw new NotImplementedException();
+            return _database.FetchMemberByName(name);
         }
 
         public ProviderRecord FetchProviderByName(string name) {
-            throw new NotImplementedException();
+            EnsureDatabaseIsAvailable();
+
+            return _database.FetchProviderByName(name);
         }
 
         public void UpdateProvider(ProviderRecord providerRecord) {
