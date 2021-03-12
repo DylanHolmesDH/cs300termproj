@@ -32,13 +32,13 @@ namespace ProviderTerminal {
                 if (input == "" || exitWords.Contains(input)) {
                     return;
                 }
-				try {
+                try {
                     provider = db.FetchProvider(Convert.ToInt32(input));
-				} catch (FormatException) {
-					Console.WriteLine("Please enter a valid number (or 'quit')");
+                } catch (FormatException) {
+                    Console.WriteLine("Please enter a valid number (or 'quit')");
                     continue;
-				}
-				if (provider == null) {
+                }
+                if (provider == null) {
                     Console.WriteLine("ID number does not exist. Please try again.");
                     continue;
                 }
