@@ -189,7 +189,7 @@ namespace ManagerTerminal.Tests {
 
             var result = _crudValidator.DoesMemberExistInDatabase(false, 0, "Blah");
 
-            Assert.AreEqual(false, result.exists);
+            Assert.AreEqual(true, result.exists);
             Assert.AreEqual("Member record already exists", result.errorMessage);
 
             _databaseWrapperMock.Verify(c => c.FetchMemberByName("Blah"), Times.Once);
@@ -203,7 +203,7 @@ namespace ManagerTerminal.Tests {
 
             var result = _crudValidator.DoesMemberExistInDatabase(false, 0, "Blah");
 
-            Assert.AreEqual(true, result.exists);
+            Assert.AreEqual(false, result.exists);
             Assert.AreEqual("", result.errorMessage);
 
             _databaseWrapperMock.Verify(c => c.FetchMemberByName("Blah"), Times.Once);

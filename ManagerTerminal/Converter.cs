@@ -5,28 +5,28 @@ namespace ManagerTerminal {
     public class Converter : IConverter {
         public MemberRecord ConvertRecordToMemberRecord(UserInterfaceRecord userInterfaceRecord) {
 
-            MemberRecord memberRecord = new MemberRecord(new Dictionary<string, object>()) {
-                Name = userInterfaceRecord.Name,
-                Number = userInterfaceRecord.Number,
-                Address = userInterfaceRecord.Address,
-                City = userInterfaceRecord.City,
-                State = userInterfaceRecord.State,
-                Zip = userInterfaceRecord.Zip
-            };
+            var dictionary = new Dictionary<string, object>();
+            dictionary.Add("name", userInterfaceRecord.Name);
+            dictionary.Add("number", userInterfaceRecord.Number);
+            dictionary.Add("address", userInterfaceRecord.Address);
+            dictionary.Add("city", userInterfaceRecord.City);
+            dictionary.Add("state", userInterfaceRecord.State);
+            dictionary.Add("zip", userInterfaceRecord.Zip);
+            MemberRecord memberRecord = new MemberRecord(dictionary);
 
             return memberRecord;
         }
 
         public ProviderRecord ConvertRecordToProviderRecord(UserInterfaceRecord userInterfaceRecord) {
 
-            ProviderRecord providerRecord = new ProviderRecord(new Dictionary<string, object>()) {
-                Name = userInterfaceRecord.Name,
-                Address = userInterfaceRecord.Address,
-                City = userInterfaceRecord.City,
-                State = userInterfaceRecord.State,
-                Number = userInterfaceRecord.Number,
-                Zip = userInterfaceRecord.Zip
-            };
+            var dictionary = new Dictionary<string, object>();
+            dictionary.Add("name", userInterfaceRecord.Name);
+            dictionary.Add("number", userInterfaceRecord.Number);
+            dictionary.Add("address", userInterfaceRecord.Address);
+            dictionary.Add("city", userInterfaceRecord.City);
+            dictionary.Add("state", userInterfaceRecord.State);
+            dictionary.Add("zip", userInterfaceRecord.Zip);
+            ProviderRecord providerRecord = new ProviderRecord(dictionary);
 
             return providerRecord;
         }
