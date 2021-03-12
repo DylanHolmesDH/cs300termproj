@@ -129,12 +129,12 @@ namespace ChocAnDatabase {
         }
 
         public int GetNexAvailableMemberNumber() {
-            var counter = 0;
+            var counter = 0; // Runs through all the number options
             while (true) {
                 counter++;
 
                 bool found = false;
-                foreach (Record record in members) {
+                foreach (Record record in members) { // Checks to see if the number in "count" is currently taken
                     if (record.GetInteger("number").Equals(counter)) {
                         found = true;
                         break;
@@ -149,12 +149,12 @@ namespace ChocAnDatabase {
         }
 
         public int GetNexAvailableProviderNumber() {
-            var counter = 0;
+            var counter = 0; // Runs through all the number options
             while (true) {
                 counter++;
 
                 bool found = false;
-                foreach (Record record in providers) {
+                foreach (Record record in providers) { // Checks to see if the number in "count" is currently taken
                     if (record.GetInteger("number").Equals(counter)) {
                         found = true;
                         break;
@@ -165,7 +165,6 @@ namespace ChocAnDatabase {
                     return counter;
             }
         }
-
 
         public void InsertMember(MemberRecord record) {
             this.members.Add(record);
