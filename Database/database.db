@@ -1,22 +1,25 @@
 *MEMBERS:
-DYLAN;333;OTHER ADDRESS;Hillsboro;OR;97124;true
-Anakin Skywalker;298742383;22 Where Fun Begins Rd;Jamesville;NM;82382;true
-Robocop;298709242;22 Come Quietly St;Detroit;MI;30232;true
-Bill & Ted;234324327;69 Dudes St;Malibu;CA;90110;true
-Stevie Wonder;678892863;1234 TOFU DINNER ST;Scottsdale;AZ;90567;true
-Al Yankovic;298724332;72892 HAHA RD;Reno;NV;92347;true
-Robert Smith;872043268;2309 CHICKEN LITTLE ST;Smallville;OK;36292;true
-Paul Hogan;234987024;4520 KICKAPOO LN;Salt Lake City;UT;90062;true
-William Shakespeare;820472394;43200 SWEET SORROW Rd;Springfield;MT;26383;true
-Dwayne Johnson;298370284;2240 BAYVIEW ST;Corona;CA;92660;true
-McBain;243987234;2343 Bye Book LN;Springfield;IL;28324;true
-Tony Stark;234892873;3000 Robotic Dr;Palos Verdes;CA;92402;true
-Obi-Wan Kenobi;234897902;Hello There Ln;Havasu City;AZ;92348;true
+DYLAN;333;OTHER ADDRESS;Hillsboro;OR;97124;True
+Anakin Skywalker;1;22 Where Fun Begins Rd;Jamesville;NM;82382;True
+Admiral Ackbar;2;22 It's A Trap St;Van Nuys;CA;97006;True
+Britney Spears;123123123;22 Free Britney St;Malibu;CA;90110;True
+McBain;111222333;2343 Bye Book LN;Springfield;IL;28324;True
+Al Yankovic;555666777;722 PENTIUMS BABY RD;Reno;NV;92347;True
+Paul Hogan;4;4520 KICKAPOO LN;Salt Lake City;UT;90062;True
+Obi-Wan Kenobi;5;Hello There Ln;Havasu City;AZ;92348;True
+William Shakespeare;6;43200 SWEET SORROW Rd;Springfield;MT;26383;True
+Robocop;7;22 Come Quietly St;Detroit;MI;30232;True
+Dwayne Johnson;8;2240 BAYVIEW ST;Corona;CA;92660;True
+Stevie Wonder;9;1234 TOFU DINNER ST;Scottsdale;AZ;90567;True
+Tony Stark;10;3000 Robotic Dr;Palos Verdes;CA;92402;True
+Robert Smith;11;2309 CHICKEN LITTLE ST;Smallville;OK;36292;True
 *PROVIDERS:
 TUALITY;1;SOME ADDRESS;Hillsboro;OR;97123
-Dr. Nick's Clinic;6 Stitch Don't Snitch St;Springfield;IL;29834
-Herbert Family Practice;22 Doris Ln;Springfield;IL;29834
-UrgentCare;12 Main St;Hillsboro;OR;94000
+Dr. Nick's Clinic;2;6 Stitch Don't Snitch St;Springfield;IL;29834
+Herbert Family Practice;3;22 Doris Ln;Springfield;IL;29834
+UrgentCare;4;12 Main St;Hillsboro;OR;94000
+Dr. Frasier Crane;5;22 I'm Listening Ln;Seattle;WA;98101
+Deanna Troi;6;1701 Enterprise Rd;Seattle;WA;98001
 *SERVICES:
 AEROBICS;1;50
 AROMATHERAPY;2;70
@@ -39,4 +42,14 @@ RADIOLOGY;18;110
 SCREENING;19;80
 SPA;20;70
 *CONSULTATIONS:
-2/12/2021 8:54:22 PM;2/12/2021 8:54:22 PM;1;333;1;None
+2/12/2021 10:25:00 AM;2/12/2021 12:00:00 AM;1;333;1;None
+3/6/2021 9:00:00 AM;3/6/2021 12:00:00 AM;5;1;15;None
+3/6/2021 10:00:00 AM;3/6/2021 12:00:00 AM;6;1;16;None
+3/6/2021 3:00:00 PM;3/6/2021 12:00:00 AM;6;5;4;The force is strong with this one
+3/7/2021 2:00:00 PM;3/7/2021 12:00:00 AM;5;2;15;None
+3/7/2021 2:30:00 PM;3/7/2021 12:00:00 AM;5;123123123;15;None
+3/7/2021 2:30:00 PM;3/7/2021 12:00:00 AM;3;10;8;Said they needed an American cheeseburger. Cheeseburger first.
+3/7/2021 2:30:00 PM;3/7/2021 12:00:00 AM;3;123123123;8;None
+3/11/2021 5:25:35 PM;3/11/2021 5:25:35 PM;1;333;1;None
+3/11/2021 5:28:03 PM;3/11/2021 5:28:03 PM;1;333;1;None
+3/11/2021 5:28:07 PM;3/11/2021 5:28:07 PM;1;333;1;None

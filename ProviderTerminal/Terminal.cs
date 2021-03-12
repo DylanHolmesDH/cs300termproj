@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using ChocAnDatabase;
 using ChocAnDatabase.records;
+using ChocAnDatabase;
 
 namespace ProviderTerminal {
     class Terminal {
@@ -65,7 +65,7 @@ namespace ProviderTerminal {
             // dummy method body to represent how a consultation record might be created
             var data = new Dictionary<string, object>();
 
-            data.Add("current_date", DateTime.Now);
+            data.Add("record_date", DateTime.Now);
             data.Add("service_date", DateTime.Now);
 
             data.Add("provider_number", 1);

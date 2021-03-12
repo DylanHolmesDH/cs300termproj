@@ -27,7 +27,7 @@ namespace ChocAnDatabase.records {
 
 
         public override string ToString() {
-            return name + ";" + number + ";" + address + ";" + city + ";" + state + ";" + zip;
+            return name + ";" + number + ";" + address + ";" + city + ";" + state + ";" + zip + ";" + validated;
         }
 
         public static MemberRecord FromString(String line) {
