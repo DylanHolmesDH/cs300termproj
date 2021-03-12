@@ -13,22 +13,14 @@ namespace ProviderTerminal {
         
         static void Main(String[] args) {
             Terminal term = new Terminal();
-            term.Start();
+            term.MainMenu();
         }
 
-        public void Start() {
+
+        //////////////// Main Menu ////////////////
+
+        public void MainMenu() {
             db = new Database();
-            Dictionary<string, object> temp = new Dictionary<string, object>();
-            provider = new ProviderRecord(temp);
-            provider.Name = "Emerson";
-            provider.Number = 69;
-            provider.State = "OR";
-            provider.Zip = 97531;
-            provider.Address = "SrawberryLn";
-            provider.City = "Portland";
-            db.InsertProvider(provider);
-            db.Save();
-            return;
 
             // Login
             Console.Clear();
@@ -55,24 +47,21 @@ namespace ProviderTerminal {
 
             // Main menu
             bool exit = false;
-			while (!exit) {
+            while (!exit) {
                 Console.Clear();
                 Console.WriteLine("---------------------------------------------------");
-                Console.WriteLine("Welcome, " + provider.Name + ".\n");
-                Console.WriteLine("\t[1] Check-in Member");              // Checks member number, goes to member sub menu
-                Console.WriteLine("\t[2] Check the Provider Directory"); // Generates entire provider directory in alphabetical order
-                Console.WriteLine("\t[3] Create Consultation Record");   // For provider to create a record by filling out a form
-                Console.WriteLine("\t[4] Verify a Bill");                // Checks if record exists in database, and if it does, displays it
+                Console.WriteLine("Hello, " + provider.Name + ".\n");
+                Console.WriteLine("\t[1] Member Menu");
+                Console.WriteLine("\t[2] Check the Provider Directory");
+                Console.WriteLine("\t[3] Verify a Bill");
                 Console.WriteLine("\t[0] Exit\n");
                 while (true) {
                     String input = GetInputString("Please enter an option: ");
                     if (input == "1") {
-                        CheckinMember();
+                        MemberMenu();
                     } else if (input == "2") {
                         GenerateProviderDirectory();
                     } else if (input == "3") {
-                        CreateConsulationRecord();
-                    } else if (input == "4") {
                         VerificationOfBilling();
                     } else if (input == "0" || input == "" || exitWords.Contains(input)) {
                         exit = true;
@@ -84,16 +73,30 @@ namespace ProviderTerminal {
                     break;
                 }
             }
+
             db.Save();
         }
 
-        // Checks if a member number is valid, if their membership is suspended, or if they were never a member
-        void CheckinMember() {
+        void VerificationOfBilling() {
+            GenerateProviderDirectory();
+            if (db.FetchConsultation(
+                    GetInputInt("Member ID: "),
+                    GetInputInt("Service code: "),
+                    provider.Number,
+                    GetInputDate("Record date: "),
+                    GetInputDate("Service date: ")) != null) {
+                Console.WriteLine("The info entered pertains to an existing record in the database.");
+            }
+        }
+
+
+        //////////////// Member Menu ////////////////
+
+        void MemberMenu() {
+            // Get a valid member from user
             Console.Clear();
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine(provider.Name + "\n\n\n\n\n\n\n");
-
-            // Get a valid member from user
             while (true) {
                 String input = GetInputString("Please enter the member id (swipe card): ");
                 if (input == "" || exitWords.Contains(input)) {
@@ -113,21 +116,21 @@ namespace ProviderTerminal {
                     Console.WriteLine("Sorry, member '" + member.Name + "' is not a valid member (anymore).");
                     return;
                 }
-                Console.WriteLine("Member '" + member.Name + "' is now checked in.");
                 break;
             }
 
             // Member menu
+            Console.Clear();
             Console.WriteLine("---------------------------------------------------");
-            Console.WriteLine(provider.Name + "; now serving " + member.Name + ".\n");
-            Console.WriteLine("\t[1] ");
+            Console.WriteLine("Hello " + provider.Name + ", you're now serving " + member.Name + ".\n");
+            Console.WriteLine("\t[1] Create Consultation Record");
             Console.WriteLine("\t[0] Main menu\n");
             while (true) {
                 String option = GetInputString("Please enter an option: ");
                 if (option == "1") {
-
-                } else if (option == "2") {
-
+                    CreateConsulationRecord();
+                //} else if (option == "2") {
+                //    Console.WriteLine("Yay! Option 2!");
                 } else if (option == "0" || option == "" || exitWords.Contains(option)) {
                     Console.WriteLine("Going back to main menu.");
                     return;
@@ -139,41 +142,26 @@ namespace ProviderTerminal {
             }
         }
 
-        void GenerateProviderDirectory() {
-            List<Record> services = db.FetchServices();
-            foreach (Record service in services) {
-                Console.WriteLine(service.ToString());
-            }
-        }
-
         void CreateConsulationRecord() {
-            //if (!CheckinMember()) {
-            //    return;
-            //}
+            GenerateProviderDirectory();
             Dictionary<String, object> newRecordData = new Dictionary<String, object>();
             newRecordData.Add("record_date", GetInputDate("Record date: "));
             newRecordData.Add("service_date", GetInputDate("Service date: "));
-            //while (!CheckinMember()) {
-            //    Console.WriteLine("Please try again.");
-            //}
-            newRecordData.Add("member_number", member);
+            newRecordData.Add("member_number", member.Number);
             newRecordData.Add("provider_number", provider.Number);
-            GenerateProviderDirectory();
             newRecordData.Add("service_number", GetInputInt("Service code: "));
             newRecordData.Add("comments", GetInputString("Any extra comments? "));
             db.InsertConsultation(new ConsultationRecord(newRecordData));
             // Display fee
         }
 
-        void VerificationOfBilling() {
-            GenerateProviderDirectory();
-            if (db.FetchConsultation(
-                    GetInputInt("Member ID: "),
-                    GetInputInt("Service code: "),
-                    provider.Number,
-                    GetInputDate("Record date: "),
-                    GetInputDate("Service date: ")) != null) {
-                Console.WriteLine("The info entered pertains to an existing record in the database.");
+
+        //////////////// Tools ////////////////
+
+        void GenerateProviderDirectory() {
+            List<Record> services = db.FetchServices();
+            foreach (Record service in services) {
+                Console.WriteLine(service.ToString());
             }
         }
 
