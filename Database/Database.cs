@@ -9,10 +9,10 @@ namespace ChocAnDatabase {
         private List<Record> providers = new List<Record>();
         private List<Record> services = new List<Record>();
         private List<Record> consultations = new List<Record>();
-        private String rootPath;
+        private String pathToFile;
 
-        public Database() {
-            rootPath = "./";
+        public Database(String pathToFile) { 
+            this.pathToFile = pathToFile;
 
             Load();
         }
@@ -145,7 +145,8 @@ namespace ChocAnDatabase {
         }
 
         private void Load() {
-            StreamReader inStream = new StreamReader(File.Open(rootPath + "database.db", FileMode.OpenOrCreate, FileAccess.Read));
+
+            StreamReader inStream = new StreamReader(File.Open(pathToFile, FileMode.OpenOrCreate, FileAccess.Read));
             
             String activeType = "";
             while (!inStream.EndOfStream) {
@@ -178,7 +179,7 @@ namespace ChocAnDatabase {
         }
 
         public void Save() {
-            StreamWriter outStream = new StreamWriter(File.Open(rootPath + "database.db", FileMode.Truncate, FileAccess.Write));
+            StreamWriter outStream = new StreamWriter(File.Open(pathToFile, FileMode.Truncate, FileAccess.Write));
             
             outStream.WriteLine("*MEMBERS:");
             foreach (var memb in members) {

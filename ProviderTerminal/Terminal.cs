@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 using ChocAnDatabase.records;
@@ -20,7 +20,7 @@ namespace ProviderTerminal {
         //////////////// Main Menu ////////////////
 
         public void MainMenu() {
-            db = new Database();
+            db = new Database("./database.db");
 
             // Login
             Console.Clear();

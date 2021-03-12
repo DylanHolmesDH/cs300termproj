@@ -57,17 +57,17 @@ namespace ManagerTerminal.Tests {
 
         [DataRow("Update member record successful", TypeOfCrudAction.UpdateMember, 7, "Alex Burbank", true, true, true, "", 1, true, "", 1, 1, true, "")]
         [DataRow("Update member record invalid - Not all fields filled", TypeOfCrudAction.UpdateMember, 7, "Alex Burbank", true, true, false, "Needs to have a valid number", 0, true, "", 0, 0, false, "Needs to have a valid number")]
-        [DataRow("Update member record invalid - Not exists in the database", TypeOfCrudAction.UpdateMember, 7, "Alex Burbank", true, true, true, "", 1, false, "Blah", 0, 0, false, "Blah")]
+        [DataRow("Update member record invalid - Does not exist in the database", TypeOfCrudAction.UpdateMember, 7, "Alex Burbank", true, true, true, "", 1, false, "Blah", 0, 0, false, "Blah")]
         [DataRow("Update provider record successful", TypeOfCrudAction.UpdateProvider, 7, "Alex Burbank", true, true, true, "", 1, true, "", 1, 1, true, "")]
         [DataRow("Update provider record invalid - Not all fields filled", TypeOfCrudAction.UpdateProvider, 7, "Alex Burbank", true, true, false, "Needs to have a valid number", 0, true, "", 0, 0, false, "Needs to have a valid number")]
-        [DataRow("Update provider record invalid - Not exists in the database", TypeOfCrudAction.UpdateProvider, 7, "Alex Burbank", true, true, true, "", 1, false, "Blah", 0, 0, false, "Blah")]
+        [DataRow("Update provider record invalid - Does not exist in the database", TypeOfCrudAction.UpdateProvider, 7, "Alex Burbank", true, true, true, "", 1, false, "Blah", 0, 0, false, "Blah")]
 
         [DataRow("Remove member record successful", TypeOfCrudAction.RemoveMember, 7, "Alex Burbank", true, true, true, "", 1, true, "", 1, 1, true, "")]
         [DataRow("Remove member record invalid - Not all fields filled", TypeOfCrudAction.RemoveMember, 7, "Alex Burbank", true, true, false, "Needs to have a valid number", 0, true, "", 0, 0, false, "Needs to have a valid number")]
-        [DataRow("Remove member record invalid - Not exists in the database", TypeOfCrudAction.RemoveMember, 7, "Alex Burbank", true, true, true, "", 1, false, "Blah", 0, 0, false, "Blah")]
+        [DataRow("Remove member record invalid - Does not exist in the database", TypeOfCrudAction.RemoveMember, 7, "Alex Burbank", true, true, true, "", 1, false, "Blah", 0, 0, false, "Blah")]
         [DataRow("Remove provider record successful", TypeOfCrudAction.RemoveProvider, 7, "Alex Burbank", true, true, true, "", 1, true, "", 1, 1, true, "")]
         [DataRow("Remove provider record invalid - Not all fields filled", TypeOfCrudAction.RemoveProvider, 7, "Alex Burbank", true, true, false, "Needs to have a valid number", 0, true, "", 0, 0, false, "Needs to have a valid number")]
-        [DataRow("Remove provider record invalid - Not exists in the database", TypeOfCrudAction.RemoveProvider, 7, "Alex Burbank", true, true, true, "", 1, false, "Blah", 0, 0, false, "Blah")]
+        [DataRow("Remove provider record invalid - Does not exist in the database", TypeOfCrudAction.RemoveProvider, 7, "Alex Burbank", true, true, true, "", 1, false, "Blah", 0, 0, false, "Blah")]
         [TestMethod]
         public void DoCrudAction(
             string testName,

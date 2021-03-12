@@ -65,15 +65,17 @@ namespace ManagerTerminal {
 
                 if (memberRecord == null)
                     return (false, "Member record does not exist");
+
+                return (true, "");
             }
             else {
                 var memberRecord = _database.FetchMemberByName(name);
 
                 if (memberRecord != null)
-                    return (false, "Member record already exists");
-            }
+                    return (true, "Member record already exists");
 
-            return (true, "");
+                return (false, "");
+            }
         }
 
         public (bool exists, string errorMessage) DoesProviderExistInDatabase(bool shouldExist = true, int id = 0, string name = "") {

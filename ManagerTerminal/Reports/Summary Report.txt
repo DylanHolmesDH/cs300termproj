@@ -1,9 +1,10 @@
 
 Provider name                 Consultations  Fee            
 _________________________________________________________
-Dr. Nick's Clinic             1              $175.00        
-Herbert Family Practice       1              $70.00         
-UrgentCare                    1              $70.00         
+TUALITY                       3              $150.00        
+Herbert Family Practice       2              $600.00        
+Dr. Frasier Crane             3              $525.00        
+Deanna Troi                   2              $200.00        
 _________________________________________________________
 _________________________________________________________
-3                             3              $315.00        
+4                             10             $1,475.00      
