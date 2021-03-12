@@ -149,14 +149,13 @@ namespace ManagerTerminal.Tests {
 
             _databaseWrapperMock.Setup(c => c.Save());
 
-            var result = _crudServices.DoCrudAction(_databaseWrapperMock.Object, typeOfCrudAction, userInterfaceRecord, _servicesFactoryMock.Object, 0);
+            var result = _crudServices.DoCrudAction(_databaseWrapperMock.Object, typeOfCrudAction, userInterfaceRecord, _servicesFactoryMock.Object);
 
             Assert.AreEqual(expectedResult, result.successful);
             Assert.AreEqual(expectedMessage, result.errorMessage);
 
             _servicesFactoryMock.Verify(c => c.CreateCrudValidator(_databaseWrapperMock.Object), Times.Once);
             _servicesFactoryMock.Verify(c => c.CreateConverter(), Times.Once);
-
 
             switch (typeOfCrudAction) {
                 case TypeOfCrudAction.AddMember:

@@ -39,15 +39,23 @@ namespace ManagerTerminal.Tests {
         [DataRow("Name Null", 1, null, "a", "c", "s", 11111, true, false, "Needs to have a name")]
         [DataRow("Name Blank", 1, "", "a", "c", "s", 11111, true, false, "Needs to have a name")]
         [DataRow("Name Space", 1, " ", "a", "c", "s", 11111, true, false, "Needs to have a name")]
+        [DataRow("Name 25 characters", 1, "nnnnnnnnnnnnnnnnnnnnnnnnn", "a", "c", "s", 11111, true, true, "")]
+        [DataRow("Name 26 characters", 1, "nnnnnnnnnnnnnnnnnnnnnnnnnn", "a", "c", "s", 11111, true, false, "Name cannot be over 25 characters long")]
         [DataRow("Address Null", 1, "n", null, "c", "s", 11111, true, false, "Needs to have an address")]
         [DataRow("Address Blank", 1, "n", "", "c", "s", 11111, true, false, "Needs to have an address")]
         [DataRow("Address Space", 1, "n", " ", "c", "s", 11111, true, false, "Needs to have an address")]
+        [DataRow("Address 25 characters", 1, "n", "aaaaaaaaaaaaaaaaaaaaaaaaa", "c", "s", 11111, true, true, "")]
+        [DataRow("Address 26 characters", 1, "n", "aaaaaaaaaaaaaaaaaaaaaaaaaa", "c", "s", 11111, true, false, "Street address cannot be over 25 characters long")]
         [DataRow("City Null", 1, "n", "a", null, "s", 11111, true, false, "Needs to have a city")]
         [DataRow("City Blank", 1, "n", "a", "", "s", 11111, true, false, "Needs to have a city")]
         [DataRow("City Space", 1, "n", "a", " ", "s", 11111, true, false, "Needs to have a city")]
+        [DataRow("City 14 characters", 1, "n", "a", "cccccccccccccc", "s", 11111, true, true, "")]
+        [DataRow("City 15 characters", 1, "n", "a", "ccccccccccccccc", "s", 11111, true, false, "City cannot be over 14 characters long")]
         [DataRow("State Null", 1, "n", "a", "c", null, 11111, true, false, "Needs to have a state")]
         [DataRow("State Blank", 1, "n", "a", "c", "", 11111, true, false, "Needs to have a state")]
         [DataRow("State Space", 1, "n", "a", "c", " ", 11111, true, false, "Needs to have a state")]
+        [DataRow("State 2 characters", 1, "n", "a", "c", "ss", 11111, true, true, "")]
+        [DataRow("State 3 characters", 1, "n", "a", "c", "sss", 11111, true, false, "State initials are to be provided! 2 characters (Ex: OR)")]
         [DataRow("Zip Code Lower Bound", 1, "n", "a", "c", "s", 9999, true, false, "Needs to have a 5 digit zip code")]
         [DataRow("Zip Code Upper Bound", 1, "n", "a", "c", "s", 100000, true, false, "Needs to have a 5 digit zip code")]
 
@@ -91,15 +99,23 @@ namespace ManagerTerminal.Tests {
         [DataRow("Name Null", 1, null, "a", "c", "s", 11111, true, false, "Needs to have a name")]
         [DataRow("Name Blank", 1, "", "a", "c", "s", 11111, true, false, "Needs to have a name")]
         [DataRow("Name Space", 1, " ", "a", "c", "s", 11111, true, false, "Needs to have a name")]
+        [DataRow("Name 25 characters", 1, "nnnnnnnnnnnnnnnnnnnnnnnnn", "a", "c", "s", 11111, true, true, "")]
+        [DataRow("Name 26 characters", 1, "nnnnnnnnnnnnnnnnnnnnnnnnnn", "a", "c", "s", 11111, true, false, "Name cannot be over 25 characters long")]
         [DataRow("Address Null", 1, "n", null, "c", "s", 11111, true, false, "Needs to have an address")]
         [DataRow("Address Blank", 1, "n", "", "c", "s", 11111, true, false, "Needs to have an address")]
         [DataRow("Address Space", 1, "n", " ", "c", "s", 11111, true, false, "Needs to have an address")]
+        [DataRow("Address 25 characters", 1, "n", "aaaaaaaaaaaaaaaaaaaaaaaaa", "c", "s", 11111, true, true, "")]
+        [DataRow("Address 26 characters", 1, "n", "aaaaaaaaaaaaaaaaaaaaaaaaaa", "c", "s", 11111, true, false, "Street address cannot be over 25 characters long")]
         [DataRow("City Null", 1, "n", "a", null, "s", 11111, true, false, "Needs to have a city")]
         [DataRow("City Blank", 1, "n", "a", "", "s", 11111, true, false, "Needs to have a city")]
         [DataRow("City Space", 1, "n", "a", " ", "s", 11111, true, false, "Needs to have a city")]
+        [DataRow("City 14 characters", 1, "n", "a", "cccccccccccccc", "s", 11111, true, true, "")]
+        [DataRow("City 15 characters", 1, "n", "a", "ccccccccccccccc", "s", 11111, true, false, "City cannot be over 14 characters long")]
         [DataRow("State Null", 1, "n", "a", "c", null, 11111, true, false, "Needs to have a state")]
         [DataRow("State Blank", 1, "n", "a", "c", "", 11111, true, false, "Needs to have a state")]
         [DataRow("State Space", 1, "n", "a", "c", " ", 11111, true, false, "Needs to have a state")]
+        [DataRow("State 2 characters", 1, "n", "a", "c", "ss", 11111, true, true, "")]
+        [DataRow("State 3 characters", 1, "n", "a", "c", "sss", 11111, true, false, "State initials are to be provided! 2 characters (Ex: OR)")]
         [DataRow("Zip Code Lower Bound", 1, "n", "a", "c", "s", 9999, true, false, "Needs to have a 5 digit zip code")]
         [DataRow("Zip Code Upper Bound", 1, "n", "a", "c", "s", 100000, true, false, "Needs to have a 5 digit zip code")]
 
@@ -266,7 +282,7 @@ namespace ManagerTerminal.Tests {
 
             var result = _crudValidator.DoesProviderExistInDatabase(false, 0, "Blah");
 
-            Assert.AreEqual(false, result.exists);
+            Assert.AreEqual(true, result.exists);
             Assert.AreEqual("Provider record already exists", result.errorMessage);
 
             _databaseWrapperMock.Verify(c => c.FetchProviderByName("Blah"), Times.Once);
@@ -280,7 +296,7 @@ namespace ManagerTerminal.Tests {
 
             var result = _crudValidator.DoesProviderExistInDatabase(false, 0, "Blah");
 
-            Assert.AreEqual(true, result.exists);
+            Assert.AreEqual(false, result.exists);
             Assert.AreEqual("", result.errorMessage);
 
             _databaseWrapperMock.Verify(c => c.FetchProviderByName("Blah"), Times.Once);

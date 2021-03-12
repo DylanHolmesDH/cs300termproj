@@ -7,6 +7,9 @@ namespace ReportGenerator.Member {
             if (data == null)
                 return (false, "Report data object cannot be null");
 
+            if (data.MemberRecord == null)
+                return (false, "No member record");
+
             if (string.IsNullOrWhiteSpace(data.MemberRecord.Name))
                 return (false, "Member record must contain a name");
 

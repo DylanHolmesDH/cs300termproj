@@ -7,6 +7,9 @@ namespace ReportGenerator.Provider {
             if (data == null)
                 return (false, "Report data object cannot be null");
 
+            if (data.ProviderRecord == null)
+                return (false, "No provider record");
+
             if (string.IsNullOrWhiteSpace(data.ProviderRecord.Name))
                 return (false, "Provider record must contain a name");
 

@@ -21,7 +21,7 @@ namespace ManagerTerminal {
             }
         }
 
-        public (bool successful, string errorMessage) DoCrudAction(IDatabaseWrapper database, TypeOfCrudAction typeOfCrudAction, UserInterfaceRecord userInterfaceRecord, IServicesFactory servicesFactory, int nextIdAvailable) {
+        public (bool successful, string errorMessage) DoCrudAction(IDatabaseWrapper database, TypeOfCrudAction typeOfCrudAction, UserInterfaceRecord userInterfaceRecord, IServicesFactory servicesFactory) {
 
             var validator = servicesFactory.CreateCrudValidator(database);
             var converter = servicesFactory.CreateConverter();

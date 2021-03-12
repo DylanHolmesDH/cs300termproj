@@ -128,6 +128,45 @@ namespace ChocAnDatabase {
             return records;
         }
 
+        public int GetNexAvailableMemberNumber() {
+            var counter = 0;
+            while (true) {
+                counter++;
+
+                bool found = false;
+                foreach (Record record in members) {
+                    if (record.GetInteger("number").Equals(counter)) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found)
+                    break;
+            }
+
+            return counter;
+        }
+
+        public int GetNexAvailableProviderNumber() {
+            var counter = 0;
+            while (true) {
+                counter++;
+
+                bool found = false;
+                foreach (Record record in providers) {
+                    if (record.GetInteger("number").Equals(counter)) {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found)
+                    return counter;
+            }
+        }
+
+
         public void InsertMember(MemberRecord record) {
             this.members.Add(record);
         }
@@ -143,6 +182,33 @@ namespace ChocAnDatabase {
         public void InsertConsultation(ConsultationRecord record) {
             this.consultations.Add(record);
         }
+
+        public void UpdateMember(MemberRecord newRecord) {
+            var oldRecord = FetchMember(newRecord.Number);
+
+            this.members.Remove(oldRecord);
+            InsertMember(newRecord);
+        }
+
+        public void UpdateProvider(ProviderRecord newRecord) {
+            var oldRecord = FetchProvider(newRecord.Number);
+
+            this.providers.Remove(oldRecord);
+            InsertProvider(newRecord);
+        }
+
+        public void RemoveMember(int id) {
+            var record = FetchMember(id);
+
+            this.members.Remove(record);
+        }
+
+        public void RemoveProvider(int id) {
+            var record = FetchProvider(id);
+
+            this.providers.Remove(record);
+        }
+
 
         private void Load() {
 

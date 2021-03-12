@@ -1,10 +1,14 @@
 ﻿using ChocAnDatabase.records;
-using System;
 using System.Collections.Generic;
 
 namespace ChocAnDatabase {
     public class DatabaseWrapper : IDatabaseWrapper {
         Database _database;
+
+        private void EnsureDatabaseIsAvailable() {
+            if (_database == null)
+                _database = new Database("./database.db");
+        }
 
         public MemberRecord FetchMember(int id) {
             EnsureDatabaseIsAvailable();
@@ -48,25 +52,21 @@ namespace ChocAnDatabase {
             return _database.FetchProviders();
         }
 
-        private void EnsureDatabaseIsAvailable() {
-            if (_database == null)
-                _database = new Database("./database.db");
-        }
-
         public void AddMember(MemberRecord record) {
             EnsureDatabaseIsAvailable();
+            var number = _database.GetNexAvailableMemberNumber();
+
+            record.Number = number;
 
             _database.InsertMember(record);
         }
 
-        public void Save() {
-            EnsureDatabaseIsAvailable();
-
-            _database.Save();
-        }
-
         public void AddProvider(ProviderRecord record) {
             EnsureDatabaseIsAvailable();
+
+            var number = _database.GetNexAvailableProviderNumber();
+
+            record.Number = number;
 
             _database.InsertProvider(record);
         }
@@ -83,22 +83,34 @@ namespace ChocAnDatabase {
             return _database.FetchProviderByName(name);
         }
 
-        public void UpdateProvider(ProviderRecord providerRecord) {
-            throw new NotImplementedException();
-        }
-
         public void UpdateMember(MemberRecord memberRecord) {
             EnsureDatabaseIsAvailable();
 
-           
+            _database.UpdateMember(memberRecord);
         }
 
-        public void RemoveMember(int number) {
-            throw new NotImplementedException();
+        public void UpdateProvider(ProviderRecord providerRecord) {
+            EnsureDatabaseIsAvailable();
+
+            _database.UpdateProvider(providerRecord);
         }
 
-        public void RemoveProvider(int number) {
-            throw new NotImplementedException();
+        public void RemoveMember(int id) {
+            EnsureDatabaseIsAvailable();
+
+            _database.RemoveMember(id);
+        }
+
+        public void RemoveProvider(int id) {
+            EnsureDatabaseIsAvailable();
+
+            _database.RemoveProvider(id);
+        }
+
+        public void Save() {
+            EnsureDatabaseIsAvailable();
+
+            _database.Save();
         }
     }
 }

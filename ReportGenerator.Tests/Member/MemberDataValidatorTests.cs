@@ -23,6 +23,21 @@ namespace ReportGenerator.Tests.Member {
             Assert.AreEqual("Report data object cannot be null", result.errorMessage);
         }
 
+
+        [TestMethod]
+        public void ValidateData_reportDataNullProviderRecord() {
+            ReportData reportData = new ReportData {
+                MemberRecord = null,
+                ProvidedServices = null
+            };
+
+            var result = _memberDataValidator.ValidateData(reportData);
+
+            Assert.AreEqual(false, result.valid);
+            Assert.AreEqual("No member record", result.errorMessage);
+        }
+
+
         [TestMethod]
         public void ValidateData_reportDataNoMemberName() {
             ReportData reportData = new ReportData {

@@ -19,19 +19,23 @@ namespace ManagerTerminal {
             int id = 0;
             TypeOfReport typeOfReport = 0;
             TypeOfCrudAction typeOfCrudAction = 0;
-            int nextIdAvailable = 300000000;
             UserInterfaceRecord userInterfaceRecord = new UserInterfaceRecord();
 
             Console.Write("Hello! ");
 
             do {
                 try {
+                    string stringId = string.Empty;
+
                     var optionNumber = DisplayOptions();
 
-                    if (optionNumber == 1 || optionNumber == 2)
-                    {
+                    if (optionNumber != 3 && optionNumber > 0 && optionNumber < 10) {
                         var records = GetMemberOrProviderRecord(optionNumber, database);
-                        var stringId = DisplayRecords(records);
+                        DisplayRecords(records);
+                    }
+
+                    if (optionNumber == 1 || optionNumber == 2) {
+                        stringId = GetResponseToWhatReportToGenerate();
                         id = ReturnIdFromStringId(stringId);
                     }
 
@@ -45,9 +49,7 @@ namespace ManagerTerminal {
                     else if (optionNumber == 4 || optionNumber == 5) {
                         GetNameAndAddress(userInterfaceRecord);
 
-                        typeOfCrudAction = DoAction(serviceFactory, crudServices, database, nextIdAvailable, userInterfaceRecord, optionNumber);
-
-                        nextIdAvailable++;
+                        typeOfCrudAction = DoAction(serviceFactory, crudServices, database, userInterfaceRecord, optionNumber);
                     }
                     else if (optionNumber == 6 || optionNumber == 7) {
                         bool successful = false;
@@ -66,9 +68,7 @@ namespace ManagerTerminal {
 
                         GetNameAndAddress(userInterfaceRecord);
 
-                        typeOfCrudAction = DoAction(serviceFactory, crudServices, database, nextIdAvailable, userInterfaceRecord, optionNumber);
-
-                        nextIdAvailable++;
+                        typeOfCrudAction = DoAction(serviceFactory, crudServices, database, userInterfaceRecord, optionNumber);
                     }
                     else if (optionNumber == 8 || optionNumber == 9) {
                         bool successful = false;
@@ -85,9 +85,7 @@ namespace ManagerTerminal {
                                 userInterfaceRecord.Number = realNumber;
                         }
 
-                        typeOfCrudAction = DoAction(serviceFactory, crudServices, database, nextIdAvailable, userInterfaceRecord, optionNumber);
-
-                        nextIdAvailable++;
+                        typeOfCrudAction = DoAction(serviceFactory, crudServices, database, userInterfaceRecord, optionNumber);
                     }
                     else {
                         DisplayPartingMessage();
@@ -102,9 +100,9 @@ namespace ManagerTerminal {
             } while (!end);
         }
 
-        private static TypeOfCrudAction DoAction(ServicesFactory serviceFactory, ICrudServices crudServices, IDatabaseWrapper database, int nextIdAvailable, UserInterfaceRecord userInterfaceRecord, int optionNumber) {
+        private static TypeOfCrudAction DoAction(ServicesFactory serviceFactory, ICrudServices crudServices, IDatabaseWrapper database, UserInterfaceRecord userInterfaceRecord, int optionNumber) {
             TypeOfCrudAction typeOfCrudAction = crudServices.DetermineTypeOfCrudAction(optionNumber);
-            var result = crudServices.DoCrudAction(database, typeOfCrudAction, userInterfaceRecord, serviceFactory, nextIdAvailable);
+            var result = crudServices.DoCrudAction(database, typeOfCrudAction, userInterfaceRecord, serviceFactory);
 
             DisplayWhetherValid(result);
             return typeOfCrudAction;
@@ -243,17 +241,17 @@ namespace ManagerTerminal {
             if (database == null)
                 return records;
 
-            if (optionNumber == 1)
+            if (optionNumber == 1 || optionNumber == 4 || optionNumber == 6 || optionNumber == 8)
                 records = database.FetchMembers();
-            else if (optionNumber == 2)
+            else if (optionNumber == 2 || optionNumber == 5 || optionNumber == 7 || optionNumber == 9)
                 records = database.FetchProviders();
 
             return records;
         }
 
-        private static string DisplayRecords(List<Record> records) {
+        private static void DisplayRecords(List<Record> records) {
             if (records == null)
-                return string.Empty;
+                return;
 
             int id = 0;
             string name = string.Empty;
@@ -264,7 +262,9 @@ namespace ManagerTerminal {
 
                 Console.WriteLine(id.ToString().PadLeft(9, '0') + "\t\t" + name);
             }
+        }
 
+        private static string GetResponseToWhatReportToGenerate() {
             Console.Write("Enter the 9 digit id of the person that you want to generate a report for (Ex: 999999999): ");
             string stringId = Console.ReadLine();
 
