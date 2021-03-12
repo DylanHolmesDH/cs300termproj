@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 
-using ChocAnDatabase;
 using ChocAnDatabase.records;
+using ChocAnDatabase;
 
 namespace ProviderTerminal {
     class Terminal {

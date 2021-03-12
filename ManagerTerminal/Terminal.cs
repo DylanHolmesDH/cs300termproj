@@ -25,11 +25,11 @@ namespace ManagerTerminal {
             Console.Write("Hello! ");
 
             do {
-                try
-                {
+                try {
                     var optionNumber = DisplayOptions();
 
-                    if (optionNumber == 1 || optionNumber == 2) {
+                    if (optionNumber == 1 || optionNumber == 2)
+                    {
                         var records = GetMemberOrProviderRecord(optionNumber, database);
                         var stringId = DisplayRecords(records);
                         id = ReturnIdFromStringId(stringId);
@@ -42,8 +42,7 @@ namespace ManagerTerminal {
 
                         DisplayWhetherValid(result);
                     }
-
-                    if (optionNumber == 4 || optionNumber == 5) {
+                    else if (optionNumber == 4 || optionNumber == 5) {
                         GetNameAndAddress(userInterfaceRecord);
 
                         typeOfCrudAction = DoAction(serviceFactory, crudServices, database, nextIdAvailable, userInterfaceRecord, optionNumber);

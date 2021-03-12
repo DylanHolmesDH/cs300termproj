@@ -23,6 +23,9 @@ namespace ChocAnDatabase.records {
         public int Number { get => number; set => number = value; }
         public int Zip { get => zip; set => zip = value; }
 
+        public override string ToString() {
+            return name + ";" + number + ";" + address + ";" + city + ";" + state + ";" + zip;
+        }
 
         public static ProviderRecord FromString(String line) {
             String[] data = line.Trim().Split(';');
