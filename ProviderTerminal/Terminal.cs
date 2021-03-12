@@ -22,7 +22,7 @@ namespace ProviderTerminal {
             //  ...
             //return;
             //}
-            db = new Database();
+            db = new Database("");
 
             CreateConsulationRecord();
 

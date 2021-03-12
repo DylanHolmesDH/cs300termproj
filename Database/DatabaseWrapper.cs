@@ -50,7 +50,7 @@ namespace ChocAnDatabase {
 
         private void EnsureDatabaseIsAvailable() {
             if (_database == null)
-                _database = new Database();
+                _database = new Database("./database.db");
         }
 
         public void AddMember(MemberRecord record) {
