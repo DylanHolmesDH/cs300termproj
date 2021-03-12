@@ -88,7 +88,9 @@ namespace ChocAnDatabase {
         }
 
         public void UpdateMember(MemberRecord memberRecord) {
-            throw new NotImplementedException();
+            EnsureDatabaseIsAvailable();
+
+           
         }
 
         public void RemoveMember(int number) {
