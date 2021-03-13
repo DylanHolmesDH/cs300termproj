@@ -1,121 +1,216 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.IO;
 using ChocAnDatabase.records;
 using ChocAnDatabase;
 
 namespace ProviderTerminal {
-    class Terminal {
+    public class Terminal {
+        Database db;
+        ProviderRecord provider;
+        MemberRecord member;
+        List<String> exitWords = new List<String>{ "e", "E", "exit", "Exit", "q", "Q", "quit", "Quit", };
+        
+        static void Main(String[] args) {
+            Terminal term = new Terminal();
+            term.MainMenu();
+        }
 
-        private int providerId, activeMember;
-        private List<int> members;
-        //private Database db;
-        private bool breakRequested;
-        private Database db;
 
-        // Start of the Provider Terminal
-        public void Start() {
-            // Initialize variables & connections
-            //  db = new Database(...);
+        //////////////// Main Menu ////////////////
 
-            //if (!db.IsConnected()) {
-            //  ...
-            //return;
-            //}
-            db = new Database("");
+        public void MainMenu() {
+            db = new Database("./database.db");
 
-            CreateConsulationRecord();
+            // Login
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine("LOGIN");
+            Console.WriteLine("---------------------------------------------------");
+            Console.WriteLine("Please enter your ID number. To exit this program, type 'quit' instead.\n");
+            while (true) {
+                String input = GetInputString("ID Number: ");
+                if (input == "" || exitWords.Contains(input)) {
+                    return;
+                }
+                try {
+                    provider = db.FetchProvider(Convert.ToInt32(input));
+                } catch (FormatException) {
+                    Console.WriteLine("Please enter a valid number (or 'quit')");
+                    continue;
+                }
+                if (provider == null) {
+                    Console.WriteLine("ID number does not exist. Please try again.");
+                    continue;
+                }
+                break;
+            }
+
+            // Main menu
+            bool exit = false;
+            Console.Clear();
+            while (!exit) {
+                Console.WriteLine();
+                Console.WriteLine("---------------------------------------------------");
+                Console.WriteLine("Hello, " + provider.Name + ".\n");
+                Console.WriteLine("\t[1] Member Menu");
+                Console.WriteLine("\t[2] Generate Provider Directory");
+                Console.WriteLine("\t[3] Verify a Bill");
+                Console.WriteLine("\t[0] Exit\n");
+                while (true) {
+                    String input = GetInputString("Please enter an option: ");
+                    if (input == "1") {
+                        MemberMenu();
+                    } else if (input == "2") {
+                        GenerateProviderDirectory();
+                    } else if (input == "3") {
+                        VerificationOfBilling();
+                    } else if (input == "0" || input == "" || exitWords.Contains(input)) {
+                        exit = true;
+                        Console.WriteLine("See ya!");
+                    } else {
+                        Console.WriteLine("Sorry, that's not a valid option.");
+                        continue;
+                    }
+                    break;
+                }
+            }
 
             db.Save();
-            // Continously update UI Thread until break has been requested.
-            while (!breakRequested) {
-                UILoop();
+        }
+
+        public void VerificationOfBilling() {
+            GenerateProviderDirectory();
+            if (db.FetchConsultation(
+                    GetInputInt("Member ID: "),
+                    GetInputInt("Service code: "),
+                    provider.Number,
+                    GetInputDate("Record date: "),
+                    GetInputDate("Service date: ")) != null) {
+                Console.WriteLine("The info entered pertains to an existing record in the database.");
             }
         }
 
-        // The Main UI Thread loop.
-        public void UILoop() {
-            //...
+
+        //////////////// Member Menu ////////////////
+
+        public void MemberMenu() {
+            // Get a valid member from user
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine("---------------------------------------------------");
+            Console.WriteLine(provider.Name + "\n\n");
+            while (true) {
+                String input = GetInputString("Please enter the member id: ");
+                if (input == "" || exitWords.Contains(input)) {
+                    return;
+                }
+                try {
+                    member = db.FetchMember(Convert.ToInt32(input));
+                } catch (FormatException) {
+                    Console.WriteLine("Please enter a valid number (or 'quit')");
+                    continue;
+                }
+                if (member == null) {
+                    Console.WriteLine("Sorry, that's not an existing member.");
+                    continue;
+                }
+                if (!member.Validated) {
+                    Console.WriteLine("Sorry, member '" + member.Name + "' is not a valid member (anymore).");
+                    return;
+                }
+                break;
+            }
+
+            // Member menu
+            Console.Clear();
+            Console.WriteLine("---------------------------------------------------");
+            Console.WriteLine("Hello " + provider.Name + ", you're now serving " + member.Name + ".\n");
+            Console.WriteLine("\t[1] Create Consultation Record");
+            Console.WriteLine("\t[0] Main menu\n");
+            while (true) {
+                String option = GetInputString("Please enter an option: ");
+                if (option == "1") {
+                    CreateConsulationRecord();
+                } else if (option == "0" || option == "" || exitWords.Contains(option)) {
+                    Console.WriteLine("Going back to main menu.");
+                    return;
+                } else {
+                    Console.WriteLine("Sorry, that's not a valid option.");
+                    continue;
+                }
+                break;
+            }
         }
 
-        // Sets the active Member
-        public void SetActiveMember(int memberId) {
-            this.activeMember = memberId;
-        }
-
-        // Get the Active Member
-        public int GetActiveMember() {
-            return this.activeMember;
-        }
-
-        // Checks the Provided member id
-        public String CheckinMember(int memberId) {
-
-            return "Validated";
-        }
-        // Attempt to Login the Active Provider.
-        public String LoginProvider() {
-            String id = GetMultiInput()[0];
-
-            return "...";
-        }
-
-        // Creates a ConsultationRecord for the active Member.
-        public String CreateConsulationRecord() {
-            // dummy method body to represent how a consultation record might be created
-            var data = new Dictionary<string, object>();
-
-            data.Add("record_date", DateTime.Now);
-            data.Add("service_date", DateTime.Now);
-
-            data.Add("provider_number", 1);
-            data.Add("member_number", 333);
-
-            data.Add("comments", "None");
-            data.Add("service_number", 1);
-
-            db.InsertConsultation(new ConsultationRecord(data));
-            return "...";
+        public void CreateConsulationRecord() {
+            GenerateProviderDirectory();
+            Dictionary<String, object> newRecordData = new Dictionary<String, object>();
+            newRecordData.Add("record_date", GetInputDate("Record date: "));
+            newRecordData.Add("service_date", GetInputDate("Service date: "));
+            newRecordData.Add("member_number", member.Number);
+            newRecordData.Add("provider_number", provider.Number);
+            ServiceRecord service;
+            while (true) {
+                int input = GetInputInt("Service code: ");
+                service = db.FetchService(input);
+                if (service == null) {
+                    Console.WriteLine("The service id '" + input + "' does not exist. Please try again.");
+                    continue;
+                }
+                newRecordData.Add("service_number", input);
+                break;
+            }
+            newRecordData.Add("comments", GetInputString("Any extra comments? "));
+            db.InsertConsultation(new ConsultationRecord(newRecordData));
+            Console.Clear();
+            Console.WriteLine("Successfully submitted Consultation Record!");
+            Console.WriteLine("The member's fee is: " + service.Fee);
         }
 
 
-        // Requests the database for a directory of services (AKA ProviderDirectory)
-        // Returns it as a Record, then converts the record into a string.
-        public String GenerateProviderDirectory() {
+        //////////////// Tools ////////////////
 
-            int id = this.providerId;
-
-
-            return "...";
+        public void GenerateProviderDirectory() {
+            List<Record> services = db.FetchServices();
+            String contents = "";
+            foreach (var rec in services) {
+                ServiceRecord record = (ServiceRecord) rec;
+                contents += record.Name + ": " + record.Fee + "\n";
+            }
+            File.WriteAllText("./ProviderDirectory.txt", contents);
+            Console.Clear();
+            Console.WriteLine("The Provider Directory has been successfully generated ./ProviderDirectory.txt!");
         }
 
-        // Writes a message to the terminal.
-        public void WriteMessage(String message) {
-            Console.WriteLine("[Terminal] " + message);
-        }
-
-        // Get a Single Line of Input
-        public String GetInput(String message) {
+        String GetInputString(String message = "") {
+            Console.WriteLine(message);
             return Console.ReadLine();
+
         }
 
-        // Gets a Multi-Line of Input terminated when an empty line is entered.
-        public List<String> GetMultiInput() {
-            List<String> inputs = new List<String>();
-            String input = GetInput("");
-            while ((input = GetInput("")) != "") {
-                inputs.Add(input);
+        int GetInputInt(String message = "") {
+            while (true) {
+                String input = GetInputString(message);
+                try {
+                    return Convert.ToInt32(input);
+                } catch (FormatException) {
+                    Console.WriteLine("Sorry, that's not a valid number. Please enter a whole number using only digits.");
+                    continue;
+                }
             }
-
-            return inputs;
         }
 
-
-
-        static void Main(string[] args) {
-            Terminal p = new Terminal();
-
-            p.Start();
+        DateTime GetInputDate(String message = "") {
+            while (true) {
+                String input = GetInputString(message);
+                try {
+                    return DateTime.Parse(input);
+                } catch (FormatException) {
+                    Console.WriteLine("Sorry, that's not a recognized date format. Try using MM/DD/YYYY.");
+                    continue;
+                }
+            }
         }
     }
 }
