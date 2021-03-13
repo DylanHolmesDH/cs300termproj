@@ -13,25 +13,6 @@ namespace ProviderTerminal.Tests {
         }
 
         [TestMethod]
-        public void TestMainMenu() {
-        }
-
-        [TestMethod]
-        public void TestVerificationOfBilling() {
-
-        }
-
-        [TestMethod]
-        public void TestMemberMenu() {
-
-        }
-
-        [TestMethod]
-        public void TestCreateConsultationMethod() {
-
-        }
-
-        [TestMethod]
         public void TestGenerateProviderDirectory() {
 
         }
