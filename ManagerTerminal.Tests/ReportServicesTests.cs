@@ -47,6 +47,15 @@ namespace ManagerTerminal.Tests {
         }
 
         [TestMethod]
+        public void DetermineTypeOfReport_Eft() {
+            var result = _reportServices.DetermineTypeOfReport(4);
+
+            Assert.IsInstanceOfType(result, typeof(TypeOfReport));
+            Assert.AreEqual(result, TypeOfReport.EftData);
+        }
+
+
+        [TestMethod]
         public void DetermineTypeOfReport_Unknown() {
             var result = _reportServices.DetermineTypeOfReport(0);
 

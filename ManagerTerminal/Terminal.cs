@@ -29,7 +29,7 @@ namespace ManagerTerminal {
 
                     var optionNumber = DisplayOptions();
 
-                    if (optionNumber != 3 && optionNumber > 0 && optionNumber < 10) {
+                    if (optionNumber != 3 && optionNumber != 4 && optionNumber > 0 && optionNumber <= 10) {
                         var records = GetMemberOrProviderRecord(optionNumber, database);
                         DisplayRecords(records);
                     }
@@ -39,19 +39,19 @@ namespace ManagerTerminal {
                         id = ReturnIdFromStringId(stringId);
                     }
 
-                    if (optionNumber == 1 || optionNumber == 2 || optionNumber == 3) {
+                    if (optionNumber == 1 || optionNumber == 2 || optionNumber == 3 || optionNumber == 4) {
                         typeOfReport = reportServices.DetermineTypeOfReport(optionNumber);
 
                         var result = reportServices.CreateReport(database, reportFactory, typeOfReport, id);
 
                         DisplayWhetherValid(result);
                     }
-                    else if (optionNumber == 4 || optionNumber == 5) {
+                    else if (optionNumber == 5 || optionNumber == 6) {
                         GetNameAndAddress(userInterfaceRecord);
 
                         typeOfCrudAction = DoAction(serviceFactory, crudServices, database, userInterfaceRecord, optionNumber);
                     }
-                    else if (optionNumber == 6 || optionNumber == 7) {
+                    else if (optionNumber == 7 || optionNumber == 8) {
                         bool successful = false;
 
                         while (!successful) {
@@ -70,7 +70,7 @@ namespace ManagerTerminal {
 
                         typeOfCrudAction = DoAction(serviceFactory, crudServices, database, userInterfaceRecord, optionNumber);
                     }
-                    else if (optionNumber == 8 || optionNumber == 9) {
+                    else if (optionNumber == 9 || optionNumber == 10) {
                         bool successful = false;
 
                         while (!successful) {
@@ -152,14 +152,15 @@ namespace ManagerTerminal {
                 Console.WriteLine("\t1) Generate a member report");
                 Console.WriteLine("\t2) Generate a provider report");
                 Console.WriteLine("\t3) Generate a summary report");
-                Console.WriteLine("\t4) Add a member");
-                Console.WriteLine("\t5) Add a provider");
-                Console.WriteLine("\t6) Update a member");
-                Console.WriteLine("\t7) Update a provider");
-                Console.WriteLine("\t8) Remove a member");
-                Console.WriteLine("\t9) Remove a provider");
+                Console.WriteLine("\t4) Generate an EFT report");
+                Console.WriteLine("\t5) Add a member");
+                Console.WriteLine("\t6) Add a provider");
+                Console.WriteLine("\t7) Update a member");
+                Console.WriteLine("\t8) Update a provider");
+                Console.WriteLine("\t9) Remove a member");
+                Console.WriteLine("\t10) Remove a provider");
                 Console.WriteLine("\t0) Quit");
-                Console.Write("Please enter the option number (0-9) before each action as shown above: ");
+                Console.Write("Please enter the option number (0-10) before each action as shown above: ");
                 string option = Console.ReadLine();
                 Console.WriteLine();
 
@@ -183,40 +184,46 @@ namespace ManagerTerminal {
                         optionNumber = 3;
                         break;
                     case "4":
-                    case "Add member":
-                    case "add member":
-                        optionNumber = 4;
+                    case "Generate eft report":
+                    case "generate eft report":
                         invalid = false;
+                        optionNumber = 4;
                         break;
                     case "5":
-                    case "Add provider":
-                    case "add provider":
+                    case "Add member":
+                    case "add member":
                         optionNumber = 5;
                         invalid = false;
                         break;
                     case "6":
-                    case "Update member":
-                    case "update member":
+                    case "Add provider":
+                    case "add provider":
                         optionNumber = 6;
                         invalid = false;
                         break;
                     case "7":
+                    case "Update member":
+                    case "update member":
+                        optionNumber = 7;
+                        invalid = false;
+                        break;
+                    case "8":
                     case "Update provider":
                     case "update provider":
                         invalid = false;
-                        optionNumber = 7;
-                        break;
-                    case "8":
-                    case "Remove member":
-                    case "remove member":
                         optionNumber = 8;
-                        invalid = false;
                         break;
                     case "9":
+                    case "Remove member":
+                    case "remove member":
+                        optionNumber = 9;
+                        invalid = false;
+                        break;
+                    case "10":
                     case "Remove provider":
                     case "remove provider":
                         invalid = false;
-                        optionNumber = 9;
+                        optionNumber = 10;
                         break;
                     case "0":
                     case "Quit":
@@ -241,9 +248,9 @@ namespace ManagerTerminal {
             if (database == null)
                 return records;
 
-            if (optionNumber == 1 || optionNumber == 4 || optionNumber == 6 || optionNumber == 8)
+            if (optionNumber == 1 || optionNumber == 5 || optionNumber == 7 || optionNumber == 9)
                 records = database.FetchMembers();
-            else if (optionNumber == 2 || optionNumber == 5 || optionNumber == 7 || optionNumber == 9)
+            else if (optionNumber == 2 || optionNumber == 6 || optionNumber == 8 || optionNumber == 10)
                 records = database.FetchProviders();
 
             return records;
