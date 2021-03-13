@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.IO;
 using ChocAnDatabase.records;
 using ChocAnDatabase;
 
@@ -54,7 +54,7 @@ namespace ProviderTerminal {
                 Console.WriteLine("---------------------------------------------------");
                 Console.WriteLine("Hello, " + provider.Name + ".\n");
                 Console.WriteLine("\t[1] Member Menu");
-                Console.WriteLine("\t[2] Check the Provider Directory");
+                Console.WriteLine("\t[2] Generate Provider Directory");
                 Console.WriteLine("\t[3] Verify a Bill");
                 Console.WriteLine("\t[0] Exit\n");
                 while (true) {
@@ -96,6 +96,7 @@ namespace ProviderTerminal {
 
         public void MemberMenu() {
             // Get a valid member from user
+            Console.Clear();
             Console.WriteLine();
             Console.WriteLine("---------------------------------------------------");
             Console.WriteLine(provider.Name + "\n\n");
@@ -162,6 +163,8 @@ namespace ProviderTerminal {
             }
             newRecordData.Add("comments", GetInputString("Any extra comments? "));
             db.InsertConsultation(new ConsultationRecord(newRecordData));
+            Console.Clear();
+            Console.WriteLine("Successfully submitted Consultation Record!");
             Console.WriteLine("The member's fee is: " + service.Fee);
         }
 
@@ -170,9 +173,14 @@ namespace ProviderTerminal {
 
         public void GenerateProviderDirectory() {
             List<Record> services = db.FetchServices();
-            foreach (Record service in services) {
-                Console.WriteLine(service.ToString());
+            String contents = "";
+            foreach (var rec in services) {
+                ServiceRecord record = (ServiceRecord) rec;
+                contents += record.Name + ": " + record.Fee + "\n";
             }
+            File.WriteAllText("./ProviderDirectory.txt", contents);
+            Console.Clear();
+            Console.WriteLine("The Provider Directory has been successfully generated ./ProviderDirectory.txt!");
         }
 
         String GetInputString(String message = "") {
