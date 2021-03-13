@@ -176,7 +176,7 @@ namespace ProviderTerminal {
             String contents = "";
             foreach (var rec in services) {
                 ServiceRecord record = (ServiceRecord) rec;
-                contents += record.Name + ": " + record.Fee + "\n";
+                contents += record.Name + " (" + record.Number.ToString("D9") + "): $" + record.Fee + "\n";
             }
             File.WriteAllText("./ProviderDirectory.txt", contents);
             Console.Clear();
