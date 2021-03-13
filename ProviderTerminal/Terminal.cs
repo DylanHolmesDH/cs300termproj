@@ -24,9 +24,10 @@ namespace ProviderTerminal {
 
             // Login
             Console.Clear();
+            Console.WriteLine();
             Console.WriteLine("LOGIN");
             Console.WriteLine("---------------------------------------------------");
-            Console.WriteLine("Please enter your ID number. To exit this program, type 'quit' instead.\n\n");
+            Console.WriteLine("Please enter your ID number. To exit this program, type 'quit' instead.\n");
             while (true) {
                 String input = GetInputString("ID Number: ");
                 if (input == "" || exitWords.Contains(input)) {
@@ -47,8 +48,9 @@ namespace ProviderTerminal {
 
             // Main menu
             bool exit = false;
+            Console.Clear();
             while (!exit) {
-                Console.Clear();
+                Console.WriteLine();
                 Console.WriteLine("---------------------------------------------------");
                 Console.WriteLine("Hello, " + provider.Name + ".\n");
                 Console.WriteLine("\t[1] Member Menu");
@@ -94,11 +96,11 @@ namespace ProviderTerminal {
 
         void MemberMenu() {
             // Get a valid member from user
-            Console.Clear();
+            Console.WriteLine();
             Console.WriteLine("---------------------------------------------------");
-            Console.WriteLine(provider.Name + "\n\n\n\n\n\n\n");
+            Console.WriteLine(provider.Name + "\n\n");
             while (true) {
-                String input = GetInputString("Please enter the member id (swipe card): ");
+                String input = GetInputString("Please enter the member id: ");
                 if (input == "" || exitWords.Contains(input)) {
                     return;
                 }
@@ -129,8 +131,6 @@ namespace ProviderTerminal {
                 String option = GetInputString("Please enter an option: ");
                 if (option == "1") {
                     CreateConsulationRecord();
-                //} else if (option == "2") {
-                //    Console.WriteLine("Yay! Option 2!");
                 } else if (option == "0" || option == "" || exitWords.Contains(option)) {
                     Console.WriteLine("Going back to main menu.");
                     return;
@@ -149,10 +149,20 @@ namespace ProviderTerminal {
             newRecordData.Add("service_date", GetInputDate("Service date: "));
             newRecordData.Add("member_number", member.Number);
             newRecordData.Add("provider_number", provider.Number);
-            newRecordData.Add("service_number", GetInputInt("Service code: "));
+            ServiceRecord service;
+            while (true) {
+                int input = GetInputInt("Service code: ");
+                service = db.FetchService(input);
+                if (service == null) {
+                    Console.WriteLine("The service id '" + input + "' does not exist. Please try again.");
+                    continue;
+                }
+                newRecordData.Add("service_number", input);
+                break;
+            }
             newRecordData.Add("comments", GetInputString("Any extra comments? "));
             db.InsertConsultation(new ConsultationRecord(newRecordData));
-            // Display fee
+            Console.WriteLine("The member's fee is: " + service.Fee);
         }
 
 
@@ -172,23 +182,27 @@ namespace ProviderTerminal {
         }
 
         int GetInputInt(String message = "") {
-            Console.WriteLine(message);
-            return Convert.ToInt32(Console.ReadLine());
+            while (true) {
+                String input = GetInputString(message);
+                try {
+                    return Convert.ToInt32(input);
+                } catch (FormatException) {
+                    Console.WriteLine("Sorry, that's not a valid number. Please enter a whole number using only digits.");
+                    continue;
+                }
+            }
         }
 
         DateTime GetInputDate(String message = "") {
-            Console.WriteLine(message);
-            return DateTime.Parse(Console.ReadLine());
-        }
-
-        List<String> GetInputMultiLine(String message = "") {
-            Console.WriteLine(message);
-            List<String> inputs = new List<String>();
-            String input;
-            while ((input = GetInputString()) != "") {
-                inputs.Add(input);
+            while (true) {
+                String input = GetInputString(message);
+                try {
+                    return DateTime.Parse(input);
+                } catch (FormatException) {
+                    Console.WriteLine("Sorry, that's not a recognized date format. Try using MM/DD/YYYY.");
+                    continue;
+                }
             }
-            return inputs;
         }
     }
 }
