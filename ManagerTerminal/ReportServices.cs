@@ -12,14 +12,15 @@ namespace ManagerTerminal {
                     return TypeOfReport.ProviderReport;
                 case 3:
                     return TypeOfReport.SummaryReport;
+                case 4:
+                    return TypeOfReport.EftData;
                 default:
                     return TypeOfReport.Unknown;
             }
         }
 
         public (bool created, string errorMessage) CreateReport(IDatabaseWrapper databaseWrapper, IReportFactory reportFactory, TypeOfReport typeOfReport, int id, int daysBack = 7) {
-            // This is how you call the report generator
-            var processor = reportFactory.CreateProcessor();
+            var processor = reportFactory.CreateProcessor(); // This is how you call the report generator
 
             (bool created, string errorMessage) result = processor.GenerateReport(typeOfReport, databaseWrapper, reportFactory, id, daysBack);
 

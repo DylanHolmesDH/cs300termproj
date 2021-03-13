@@ -25,12 +25,12 @@ namespace ManagerTerminal.Tests {
             _crudServices = new CrudServices();
         }
 
-        [DataRow("Option to add memeber", 4, TypeOfCrudAction.AddMember)]
-        [DataRow("Option to add memeber", 5, TypeOfCrudAction.AddProvider)]
-        [DataRow("Option to add memeber", 6, TypeOfCrudAction.UpdateMember)]
-        [DataRow("Option to add memeber", 7, TypeOfCrudAction.UpdateProvider)]
-        [DataRow("Option to add memeber", 8, TypeOfCrudAction.RemoveMember)]
-        [DataRow("Option to add memeber", 9, TypeOfCrudAction.RemoveProvider)]
+        [DataRow("Option to add memeber", 5, TypeOfCrudAction.AddMember)]
+        [DataRow("Option to add memeber", 6, TypeOfCrudAction.AddProvider)]
+        [DataRow("Option to add memeber", 7, TypeOfCrudAction.UpdateMember)]
+        [DataRow("Option to add memeber", 8, TypeOfCrudAction.UpdateProvider)]
+        [DataRow("Option to add memeber", 9, TypeOfCrudAction.RemoveMember)]
+        [DataRow("Option to add memeber", 10, TypeOfCrudAction.RemoveProvider)]
         [DataRow("Option to add memeber", 0, TypeOfCrudAction.Unknown)]
         [TestMethod]
         public void DetermineTypeOfCrudAction(

@@ -1,4 +1,5 @@
 ﻿using ChocAnDatabase;
+using ReportGenerator.EftData;
 using ReportGenerator.Interfaces;
 using ReportGenerator.Member;
 using ReportGenerator.Provider;
@@ -28,6 +29,12 @@ namespace ReportGenerator.Factory {
                         new SummaryDataGetter(database),
                         new SummaryDataValidator(),
                         new SummaryDataFormatter(),
+                        reportDistributor);
+                case TypeOfReport.EftData:
+                    return new Report(
+                        new EftDataGetter(database),
+                        new EftDataValidator(),
+                        new EftDataFormatter(),
                         reportDistributor);
 
                 default:

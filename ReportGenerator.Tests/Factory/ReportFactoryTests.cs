@@ -1,5 +1,6 @@
 ﻿using ChocAnDatabase;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ReportGenerator.EftData;
 using ReportGenerator.Interfaces;
 using ReportGenerator.Member;
 using ReportGenerator.Provider;
@@ -54,6 +55,16 @@ namespace ReportGenerator.Tests.Factory {
             Assert.IsInstanceOfType(result.DataGetter, typeof(SummaryDataGetter));
             Assert.IsInstanceOfType(result.DataValidator, typeof(SummaryDataValidator));
             Assert.IsInstanceOfType(result.DataFormatter, typeof(SummaryDataFormatter));
+        }
+
+        [TestMethod]
+        public void CreateReport_Eft() {
+            var result = _factory.CreateReport(TypeOfReport.EftData, _database);
+
+            Assert.IsInstanceOfType(result, typeof(IReport));
+            Assert.IsInstanceOfType(result.DataGetter, typeof(EftDataGetter));
+            Assert.IsInstanceOfType(result.DataValidator, typeof(EftDataValidator));
+            Assert.IsInstanceOfType(result.DataFormatter, typeof(EftDataFormatter));
         }
 
         [TestMethod]

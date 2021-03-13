@@ -4,17 +4,17 @@ namespace ManagerTerminal {
     public class CrudServices : ICrudServices {
         public TypeOfCrudAction DetermineTypeOfCrudAction(int optionNumber) {
             switch (optionNumber) {
-                case 4:
-                    return TypeOfCrudAction.AddMember;
                 case 5:
-                    return TypeOfCrudAction.AddProvider;
+                    return TypeOfCrudAction.AddMember;
                 case 6:
-                    return TypeOfCrudAction.UpdateMember;
+                    return TypeOfCrudAction.AddProvider;
                 case 7:
-                    return TypeOfCrudAction.UpdateProvider;
+                    return TypeOfCrudAction.UpdateMember;
                 case 8:
-                    return TypeOfCrudAction.RemoveMember;
+                    return TypeOfCrudAction.UpdateProvider;
                 case 9:
+                    return TypeOfCrudAction.RemoveMember;
+                case 10:
                     return TypeOfCrudAction.RemoveProvider;
                 default:
                     return TypeOfCrudAction.Unknown;
