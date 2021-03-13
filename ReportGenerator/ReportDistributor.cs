@@ -15,9 +15,9 @@ namespace ReportGenerator {
                 return (false, "No filename for report");
 
             // Open up a file with the name from the reportOutput
-            string path = @"../../Reports/" + reportOutput.FileName;
+            string path = "./Reports/" + reportOutput.FileName;
 
-            StreamWriter streamWriter = new StreamWriter(path);
+            StreamWriter streamWriter = new StreamWriter(File.Create(path));
 
             // Write all lines to the file
             foreach (var line in reportOutput.OutputLines) {
