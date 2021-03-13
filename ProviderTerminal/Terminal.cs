@@ -5,7 +5,7 @@ using ChocAnDatabase.records;
 using ChocAnDatabase;
 
 namespace ProviderTerminal {
-    class Terminal {
+    public class Terminal {
         Database db;
         ProviderRecord provider;
         MemberRecord member;
@@ -79,7 +79,7 @@ namespace ProviderTerminal {
             db.Save();
         }
 
-        void VerificationOfBilling() {
+        public void VerificationOfBilling() {
             GenerateProviderDirectory();
             if (db.FetchConsultation(
                     GetInputInt("Member ID: "),
@@ -94,7 +94,7 @@ namespace ProviderTerminal {
 
         //////////////// Member Menu ////////////////
 
-        void MemberMenu() {
+        public void MemberMenu() {
             // Get a valid member from user
             Console.WriteLine();
             Console.WriteLine("---------------------------------------------------");
@@ -142,7 +142,7 @@ namespace ProviderTerminal {
             }
         }
 
-        void CreateConsulationRecord() {
+        public void CreateConsulationRecord() {
             GenerateProviderDirectory();
             Dictionary<String, object> newRecordData = new Dictionary<String, object>();
             newRecordData.Add("record_date", GetInputDate("Record date: "));
@@ -168,7 +168,7 @@ namespace ProviderTerminal {
 
         //////////////// Tools ////////////////
 
-        void GenerateProviderDirectory() {
+        public void GenerateProviderDirectory() {
             List<Record> services = db.FetchServices();
             foreach (Record service in services) {
                 Console.WriteLine(service.ToString());
